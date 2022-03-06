@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from order.views import cart_products, checkout, order_success, wish_list
 from core.views import error_404, about, contact, faq, index
+from user.views import login
 
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     path('checkout/' , checkout ),
     path('order-success/' , order_success),
     path('wishlist/' , wish_list),
+    path('login/' , login),
     path('error/' , error_404),
     path('about/' , about),
     path('contact/' , contact),

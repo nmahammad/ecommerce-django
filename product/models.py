@@ -10,13 +10,13 @@ class Data(models.Model):
   abstract = True
 
 
-class Praduct (Data):
+class Product (Data):
  description = models.CharField('Description', max_length=250)
  details = models.CharField('Details', max_length=250)
  
  class Meta:
-  verbose_name = 'Praduct'
-  verbose_name_plural = 'Praduct'
+  verbose_name = 'Product'
+  verbose_name_plural = 'Product'
 
  def __str__(self):
   return self.description

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-
-# Create your views here.
-=======
 from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -24,4 +19,3 @@ def search(request):
 
 def vendor(request):
  return render(request,'vendor-profile.html',)
->>>>>>> kamran

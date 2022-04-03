@@ -17,20 +17,28 @@ from django.contrib import admin
 from django.urls import path
 from order.views import cart_products, checkout, order_success, wish_list
 from core.views import error_404, about, contact, faq, index
+from user.views import login, forget_password,profile
+from product.views import category,product,search,vendor
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cart/' , cart_products),
     path('checkout/' , checkout ),
-    path('order-success/' , order_success),
+    path('order-success/' , order_success, name='order-success'),
     path('wishlist/' , wish_list),
+    path('login/' , login),
     path('error/' , error_404),
     path('about/' , about),
     path('contact/' , contact),
     path('faq/' , faq),
     path('' , index),
-    
+    path('forget-password/' , forget_password),
+    path('category/' , category),
+    path('product/' , product),                     #in this page you can see the products
+    path('search/' , search),                       #in this page you can filter and search peoducts
+    path('vendor/' , vendor),                       #in this page you can see the vendor profile
+    path('profile/' , profile),                     #in this page, contact and billing details models exist
 ]
 
 

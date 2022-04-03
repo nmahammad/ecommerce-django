@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'product',
     'user',
     'core',
+    'accounts',
     
 
 ]
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.custom_context_processor.subscriber_renderer',
             ],
         },
     },
@@ -80,17 +82,24 @@ WSGI_APPLICATION = 'multikart.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'multikart',
-        'USER': 'user',
-        'PASSWORD': '12345',
-        'PORT': 5432,
-        'HOST': 'localhost',
 
-    }
-}
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': 'multikart',
+         'USER': 'user',
+         'PASSWORD': '12345',
+         'PORT': 5432,
+         'HOST': 'localhost',
+     }
+ }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': 'mydatabase',
+#    }
+#}
 
 
 # Password validation
@@ -130,7 +139,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    
     BASE_DIR / 'static/'
 
 ]
@@ -139,3 +147,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.User'

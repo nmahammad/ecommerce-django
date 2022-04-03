@@ -1,8 +1,9 @@
-from django.contrib import admin
+# from django.contrib import admin
 
-# Register your models here.
+# # Register your models here.
 
-from user.models import  WishList, BasketItems, Basket
+# from user.models import  WishList, BasketItems, Basket
 
-admin.site.register([WishList, BasketItems, Basket])
+# admin.site.register([WishList, BasketItems, Basket])
+
 

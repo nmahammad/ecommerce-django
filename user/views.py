@@ -18,3 +18,8 @@ def login(request):
 
 def register(request):
  return render(request,'register.html',)
+
+
+def forget_password(request):
+    return render(request, 'forget_pwd.html' )
+

@@ -1,15 +1,8 @@
 from django import forms
-
 from order.models import BillingDetail
 
 class OrderForm(forms.ModelForm):
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        print( 'cleaned data:' , cleaned_data)
-        return super().clean()
-
- 
     class Meta:
         model = BillingDetail
         fields = (
@@ -21,19 +14,16 @@ class OrderForm(forms.ModelForm):
             'address',
             'state',
             'postal_code',
-            'town_city',
-            'create_account'
-        )
+            'city_town',
 
+        )
         widgets = {
-            'address' : forms.TextInput(attrs = {
-                
-                'placeholder' : 'Street address'
-            
+            'address': forms.TextInput(attrs={
+                    
+                    'placeholder': 'Street Address'
             }),
             
-            'country' : forms.Select(attrs = {
-
+            'country': forms.Select(attrs={
+                
             })
-        }
-
+        } 

@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
+from core.models import Contact 
 # Create your views here.
 
 def error_404(request):
@@ -11,7 +12,11 @@ def about(request):
 
 
 def contact(request):
-    return render(request, 'contact.html' )
+    contacts_list = Contact.objects.all()
+    context = {
+        'contacts' : contacts_list
+    }
+    return render(request, 'contact.html' , context)
 
 
 def faq(request):

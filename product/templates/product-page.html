@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static custom_tags %}
 
 {% block content %}
 
@@ -444,91 +444,51 @@
                         </div>
                         <!-- side-bar single product slider start -->
                         <div class="theme-card">
-                            <h5 class="title-border">new product</h5>
+                            <h5 class="title-border">new products</h5>
+                            {% get_product_versions as product_versions %}
+                            {% for product_version in product_versions %}  
                             <div class="offer-slider slide-1">
                                 <div>
                                     <div class="media">
+                                        {% for img in product_version.image_set.all %}
+                                            
+                                            <a href=""><img class="img-fluid blur-up lazyload"
+                                                src="/{{ img.image }}" style="height: 150px; width: 100px;" alt=""></a>
+
+                                            
+                                        {% endfor %}
+                                        <!-- {% comment %}
+                                            {{ img.image }}
+                                        {% get_product_images as product_images %}
+                                        {% for product_image in product_images %}
                                         <a href=""><img class="img-fluid blur-up lazyload"
-                                                src="../assets/images/pro/1.jpg" alt=""></a>
+                                            src="/{{ product_image.image_url }}" style="height: 150px; width: 100px;" alt=""></a>
+                                            
+                                        {% endfor %}
+
+                                        <a href=""><img class="img-fluid blur-up lazyload"
+                                            src="{{ img.image.url }}" style="height: 150px; width: 100px;" alt=""></a>
+
+                                        {% endcomment %}
+                                         -->
                                         <div class="media-body align-self-center">
                                             <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
                                                     class="fa fa-star"></i> <i class="fa fa-star"></i> <i
                                                     class="fa fa-star"></i></div><a
                                                 href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
+                                                <h6>{{ product_version.title }}</h6>
                                             </a>
-                                            <h4>$500.00</h4>
+                                            <h4>{{ product_version.price }}</h4>
                                         </div>
                                     </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload"
-                                                src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i></div><a
-                                                href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload"
-                                                src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i></div><a
-                                                href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload"
-                                                src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i></div><a
-                                                href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload"
-                                                src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i></div><a
-                                                href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload"
-                                                src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i></div><a
-                                                href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
+                           
+                            
+                            {% endfor %}
+                            {{ endblock }}   
+                        
                         </div>
                         <!-- side-bar single product slider end -->
                     </div>

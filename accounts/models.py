@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    phone_number = models.BigIntegerField('mobile number')
+    phone_number = models.BigIntegerField('mobile number' , null=True)
 
     country_choices = (
         ('1' , 'India'),
@@ -19,3 +19,6 @@ class User(AbstractUser):
     state = models.CharField('State/Country' , max_length=50)
     postal_code = models.CharField('Postal Code' , max_length=30)
     flat = models.CharField('Flat' , max_length=50)
+
+    def __str__(self) -> str:
+        return self.first_name + self.last_name

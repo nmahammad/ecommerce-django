@@ -34,7 +34,7 @@ class Faq(models.Model):
     
 
 class Subscriber(AbstractModel):
-    email = models.EmailField('e-mail',max_length=30 , blank = True)
+    email = models.EmailField('e-mail',max_length=30 , unique=True ,  blank = True)
 
     def __str__(self):  
         return self.email
@@ -45,4 +45,7 @@ class TeamMember(AbstractModel):
     title = models.CharField('job title' , max_length=50 )
     description = models.TextField('description')
     avatar = models.ImageField()
+
+
+
 

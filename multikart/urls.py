@@ -14,11 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.urls import include, path
 from django.urls import path
 from order.views import cart_products, checkout, order_success, wish_list
 from core.views import error_404, about, contact, faq, index
-from user.views import login, forget_password,profile
+from user.views import profile
 from product.views import category,product,search,vendor
+from accounts.views import login, forget_password, register
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -32,6 +37,7 @@ urlpatterns = [
     path('about/' , about),
     path('contact/' , contact),
     path('faq/' , faq),
+    path('register/' , register),
     path('' , index),
     path('forget-password/' , forget_password),
     path('category/' , category),
@@ -39,7 +45,9 @@ urlpatterns = [
     path('search/' , search),                       #in this page you can filter and search peoducts
     path('vendor/' , vendor),                       #in this page you can see the vendor profile
     path('profile/' , profile),                     #in this page, contact and billing details models exist
-]
+    path('accounts/', include('accounts.urls')),   
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

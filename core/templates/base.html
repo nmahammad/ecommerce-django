@@ -62,16 +62,19 @@
                             <li class="onhover-dropdown mobile-account">
                                 <i class="fa fa-user" aria-hidden="true"></i> My Account
                                 <ul class="onhover-show-div">
+                                    {% if request.user.is_authenticated %}
                                     <li>
-                                        <a href="#" data-lng="en">
-                                            Login
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-lng="es">
+                                        <a href="{% url 'logout' %}" data-lng="en">
                                             Logout
                                         </a>
                                     </li>
+                                    {% else %}
+                                    <li>
+                                        <a href="{% url 'login' %}" data-lng="es">
+                                            Sign in
+                                        </a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </li>
                         </ul>

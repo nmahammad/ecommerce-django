@@ -37,6 +37,9 @@ from product.models import Product, ProductVersion
 # Create your models here.
 User = get_user_model()
 
+
+
+
 class Basket(AbstractModel):
     user_id = models.ForeignKey(User, on_delete = models.CASCADE )  
     total_basket_price = models.FloatField(max_length = 50)

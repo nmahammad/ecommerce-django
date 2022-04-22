@@ -21,4 +21,4 @@ class User(AbstractUser):
     flat = models.CharField('Flat' , max_length=50)
 
     def __str__(self) -> str:
-        return self.first_name + self.last_name
+        return self.first_name + ' ' +  self.last_name

@@ -19,7 +19,7 @@ from django.urls import path
 from order.views import cart_products, checkout, order_success, wish_list
 from core.views import error_404, about, contact, faq, index
 from user.views import profile
-from product.views import category,product,search,vendor
+from product.views import category,product,search,vendor, product_detail
 from accounts.views import login, forget_password, register
 
 from django.conf import settings
@@ -28,6 +28,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('social_django.urls', namespace='social')),
     path('cart/' , cart_products),
     path('checkout/' , checkout ),
     path('order-success/' , order_success, name='order-success'),
@@ -46,6 +47,7 @@ urlpatterns = [
     path('vendor/' , vendor),                       #in this page you can see the vendor profile
     path('profile/' , profile),                     #in this page, contact and billing details models exist
     path('accounts/', include('accounts.urls')),   
+    path('product/<int:id>/', product_detail, name='product_detail'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

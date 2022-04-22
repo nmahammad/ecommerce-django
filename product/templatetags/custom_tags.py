@@ -6,8 +6,35 @@ register = Library()
 
 @register.simple_tag
 def get_product_versions():
-    return ProductVersion.objects.all()
+    return ProductVersion.objects.order_by('-created_at')[0:4]
+
+@register.simple_tag
+def get_products():
+    return Product.objects.all()
     
+
+
+# @register.simple_tag
+# def get_product_version_images():
+#     product_versions = ProductVersion.objects.all().image_set.all()
+#     product_version_images = product_versions.image_set.all()
+#     return product_version_images
+
+
+# @register.simple_tag
+# def get_product_version_images():
+#     product_versions = ProductVersion.objects.all()
+#     for product_version in product_versions:
+#         for product_image in product_version.image_set.all():
+#             return product_image
+
+
+
+
+
+
+#ItemImage.objects.filter(main=True, item__active=True)
+
 
 # @register.simple_tag
 # def get_product_images():

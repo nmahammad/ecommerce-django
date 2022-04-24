@@ -410,8 +410,8 @@
                                         {% get_brands as brands %}
                                         {% for brand in brands %}
                                         <div class="custom-control custom-checkbox collection-filter-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="zara">
-                                            <label class="custom-control-label" for="zara">{{brand.title }}</label>
+                                            <input type="checkbox" class="custom-control-input" id="{{brand.title}}">
+                                            <label class="custom-control-label" for="{{brand.title }}">{{brand.title }}</label>
                                         </div>
                                         {% endfor %}
                                         <!-- <div class="custom-control custom-checkbox collection-filter-checkbox">
@@ -462,8 +462,8 @@
                                         {% get_propertyValueSize as values %}
                                         {% for value in values %}
                                         <div class="custom-control custom-checkbox collection-filter-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="hundred">
-                                            <label class="custom-control-label" for="hundred">{{value.name}}</label>
+                                            <input type="checkbox" class="custom-control-input" id="{{value.name}}">
+                                            <label class="custom-control-label" for="{{value.name}}">{{value.name}}</label>
                                         </div>
                                         {% endfor %}
                                         <!-- <div class="custom-control custom-checkbox collection-filter-checkbox">
@@ -499,68 +499,23 @@
                             <h5 class="title-border">new product</h5>
                             <div class="offer-slider slide-1">
                                 <div>
+                                    {% for product_version in product_version %}
                                     <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload" src="../assets/images/pro/1.jpg" alt=""></a>
+                                        {% for img in product_version.images.all %}
+                                        {% if img.is_main %}
+                                        <a href=""><img src="{{ img.image_url.url }}" alt="product_image"></a>
+                                        {% endif %}
+
+                                        {% endfor %}
                                         <div class="media-body align-self-center">
                                             <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
                                             <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
+                                                <h6>{{product_version}}</h6>
                                             </a>
-                                            <h4>$500.00</h4>
+                                            <h4>{{product_version.price}}</h4>
                                         </div>
                                     </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload" src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload" src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload" src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload" src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <a href=""><img class="img-fluid blur-up lazyload" src="../assets/images/pro/1.jpg" alt=""></a>
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Cotton Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -637,15 +592,20 @@
                                         </div>
                                         <div class="product-wrapper-grid product-load-more">
                                             <div class="row margin-res">
+                                                {% for product_version in product_version %}
                                                 <div class="col-xl-3 col-6 col-grid-box">
                                                     <div class="product-box">
                                                         <div class="img-wrapper">
+                                                            {% for img in product_version.images.all %}
                                                             <div class="front">
-                                                                <a href="#"><img src="../assets/images/pro3/35.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+                                                                <a href="#"><img src="{{img.image_url.url}}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
                                                             </div>
+                                                            {% endfor %}
+                                                            {% for img in product_version.images.all %}
                                                             <div class="back">
                                                                 <a href="#"><img src="../assets/images/pro3/36.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
                                                             </div>
+                                                            {% endfor %}
                                                             <div class="cart-info cart-wrap">
                                                                 <button data-toggle="modal" data-target="#addtocart" title="Add to cart"><i
                                                                         class="ti-shopping-cart"></i></button> <a href="javascript:void(0)" title="Add to Wishlist"><i
@@ -658,7 +618,7 @@
                                                             <div>
                                                                 <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
                                                                 <a href="product-page(no-sidebar).html">
-                                                                    <h6>Slim Fit Cotton Shirt</h6>
+                                                                    <h6>{{product_version.title}}</h6>
                                                                 </a>
                                                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
                                                                     of type and scrambled it to make a type specimen book
@@ -673,7 +633,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-6 col-grid-box">
+                                                {% endfor %}
+                                                <!-- <div class="col-xl-3 col-6 col-grid-box">
                                                     <div class="product-box">
                                                         <div class="img-wrapper">
                                                             <div class="front">
@@ -1500,7 +1461,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="load-more-sec"><a href="javascript:void(0)" class="loadMore">load

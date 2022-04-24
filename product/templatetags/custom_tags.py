@@ -1,6 +1,6 @@
 from atexit import register
 from django.template import Library
-from product.models import Brand, PropertyName, PropertyValue
+from product.models import Brand, ProductVersion, PropertyName, PropertyValue
 
 
 register = Library()
@@ -19,7 +19,8 @@ def get_propertyValueSize():
 
 @register.simple_tag
 def get_propertyValueColor():
- return PropertyValue.objects.filter(property_name_id__name='Colors')
+ return PropertyValue.objects.filter(property_name_id__name='Color')
+
 
 
 

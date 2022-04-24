@@ -1,5 +1,6 @@
 from multiprocessing import context
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from django.contrib import messages
 
 from django.urls import reverse_lazy
@@ -11,7 +12,18 @@ from core.models import Contact
 # Create your views here.
 
 def category(request):
- return render(request,'category-page.html',)
+    product_version = ProductVersion.objects.all().order_by('-created_at')[:1]
+
+
+    context = {
+        'product_version': product_version,
+
+    }
+
+    return render(request,'category-page.html',context)
+
+
+
 
 
 def product(request):
@@ -44,4 +56,7 @@ def search(request):
 
 
 def vendor(request):
- return render(request,'vendor-profile.html',)
+    return render(request,'vendor-profile.html',)
+
+
+

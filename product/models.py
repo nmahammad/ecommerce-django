@@ -126,7 +126,7 @@ class Category(AbstractModel):
 
 
 class PropertyName(AbstractModel):
-    category_id = models.ForeignKey(Category, on_delete = models.CASCADE )
+    category_id = models.ForeignKey(Category,related_name="name", on_delete = models.CASCADE )
     name = models.CharField(max_length=30)
 
     def __str__(self):
@@ -154,7 +154,7 @@ class Product(AbstractModel):
 
 class ProductVersion(AbstractModel):
     property_value = models.ManyToManyField(PropertyValue)
-    product_id = models.ForeignKey(Product, on_delete = models.CASCADE )
+    product_id = models.ForeignKey(Product, related_name="versions", on_delete = models.CASCADE )
     discount_id = models.ForeignKey(Discount, on_delete = models.CASCADE )
     title = models.CharField(max_length = 50)
     price = models.CharField('Price', max_length = 10)
@@ -174,7 +174,7 @@ class Review(AbstractModel):
     body = models.TextField()
 
 class ProductImage(AbstractModel):
-    product_version_id = models.ForeignKey(ProductVersion, on_delete = models.CASCADE )
+    product_version_id = models.ForeignKey(ProductVersion, related_name="images", on_delete = models.CASCADE )
     image_url = models.ImageField(upload_to='media/categories/')
     is_main = models.BooleanField('verified', default=False)
 

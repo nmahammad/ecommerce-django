@@ -26,6 +26,7 @@ urlpatterns = [
     # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path('admin/', admin.site.urls),
+    path('', include('social_django.urls', namespace='social')),
     path('cart/' , cart_products),
     path('checkout/' , checkout ),
     path('order-success/' , order_success),

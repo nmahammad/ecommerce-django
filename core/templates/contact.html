@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+
 
     <!-- breadcrumb start -->
     <div class="breadcrumb-section">
@@ -24,6 +26,17 @@
     </div>
     <!-- breadcrumb End -->
 
+   <div style="border: 2px solid black; height: 300px;"> 
+
+    {% for contact in contacts %}
+        
+        <h3 style="color: blue; background-color: blueviolet;"> {{ contact.first_name }} </h3>
+
+    {% endfor %}
+
+
+   </div>
+        
 
     <!--section start-->
     <section class="contact-page section-b-space">
@@ -38,7 +51,7 @@
                     <div class="contact-right">
                         <ul>
                             <li>
-                                <div class="contact-icon"><img src="../assets/images/icon/phone.png"
+                                <div class="contact-icon"><img src="../static/images/icon/phone.png"
                                         alt="Generic placeholder image">
                                     <h6>Contact Us</h6>
                                 </div>
@@ -57,7 +70,7 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="contact-icon"><img src="../assets/images/icon/email.png"
+                                <div class="contact-icon"><img src="../static/images/icon/email.png"
                                         alt="Generic placeholder image">
                                     <h6>Address</h6>
                                 </div>

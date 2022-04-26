@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- breadcrumb start -->
+<style>
+    #non-field-error {
+
+        border-radius: 1px solid !important;
+        display: inline-block !important;
+        box-shadow: 1px 1px 1px #aaaaaa;
+        margin-top: 10px;
+        color: #D8000C;
+        background-color: #FFD2D2;
+
+    }
+</style>
+
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>create account</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">create account</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+
+
+<!--section start-->
+<section class="register-page section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>create account</h3>
+                <div class="theme-card">
+                    <form action="" method="POST" enctype="multipart/form-data" class="bg-light p-5 contact-form"
+                        name="register">
+                        <a class="navbar-brand center" href="#">Stories<span>.</span></a>
+                        {% csrf_token %}
+                        <br>
+                        <div id="non-field-error">
+                            <br>
+                            {{ register_form.non_field_errors }}
+                            <br>
+                        </div>
+                        <br>
+                        <br>
+                        {% for field in register_form %}
+                        <div class="form-group">
+
+                            {{field}}
+
+                            <ul>
+                                {% for error in field.errors %}
+                                <li>{{error}}</li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+                        {% endfor %}
+                        <!-- <div class="text-right"><a href="#" class="btn-solid btn">Place Order</a></div> -->
+                        <input type="submit" value="Register" class="btn-solid btn">
+                        <div class="register-links">
+                            <a href="{% url 'social:begin' 'google-oauth2' %}">
+
+                                <svg style="margin-left: 400px; margin-top: 35px ; height:30px; width:50px "
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+                                    <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
+                                    <path
+                                        d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
+                                </svg>
+
+
+                            </a>
+
+
+
+
+                        </div>
+
+                </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<!--Section ends-->
+
+
+{% endblock %}

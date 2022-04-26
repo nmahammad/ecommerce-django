@@ -7,14 +7,3 @@ from django.http import HttpResponse
 def profile(request):
  return render(request,'profile.html',)
 
-
-def forgetPwd(request):
- return render(request,'forget_pwd.html',)
-
-
-def login(request):
- return render(request,'login.html',)
-
-
-def register(request):
- return render(request,'register.html',)

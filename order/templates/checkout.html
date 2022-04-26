@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -31,7 +32,8 @@
         <div class="container">
             <div class="checkout-page">
                 <div class="checkout-form">
-                    <form>
+                    <form action="" method="POST">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-6 col-sm-12 col-xs-12">
                                 <div class="checkout-title">
@@ -40,44 +42,84 @@
                                 <div class="row check-out">
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label">First Name</div>
-                                        <input type="text" name="field-name" value="" placeholder="">
+                                        {{order_form.first_name}}
+                                        <ul>
+                                            {% for error in order_form.first_name.errors %}
+                                                <li class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label">Last Name</div>
-                                        <input type="text" name="field-name" value="" placeholder="">
+                                        {{order_form.last_name}}
+                                        <ul>
+                                            {% for error in order_form.last_name.errors %}
+                                                <li class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label">Phone</div>
-                                        <input type="text" name="field-name" value="" placeholder="">
+                                        {{order_form.phone_number}}
+                                        <ul>
+                                            {% for error in order_form.phone_number.errors %}
+                                                <li class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label">Email Address</div>
-                                        <input type="text" name="field-name" value="" placeholder="">
+                                        {{order_form.email}}
+                                        <ul>
+                                            {% for error in order_form.email.errors %}
+                                                <li style="border: 2px solid purple;" class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="field-label">Country</div>
-                                        <select>
-                                            <option>India</option>
-                                            <option>South Africa</option>
-                                            <option>United State</option>
-                                            <option>Australia</option>
-                                        </select>
+                                        {{order_form.country}}
+                                        <ul>
+                                            {% for error in order_form.country.errors %}
+                                                <li class="alert-danger"> {{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="field-label">Address</div>
-                                        <input type="text" name="field-name" value="" placeholder="Street address">
+                                        {{order_form.address}}
+                                        <ul>
+                                            {% for error in order_form.address.errors %}
+                                                <li class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="field-label">Town/City</div>
-                                        <input type="text" name="field-name" value="" placeholder="">
+                                        {{order_form.city_town}}
+                                        <ul>
+                                            {% for error in order_form.city_town.errors %}
+                                                <li class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-md-12 col-sm-6 col-xs-12">
                                         <div class="field-label">State / County</div>
-                                        <input type="text" name="field-name" value="" placeholder="">
+                                        {{order_form.state}}
+                                        <ul>
+                                            {% for error in order_form.state.errors %}
+                                                <li class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-md-12 col-sm-6 col-xs-12">
                                         <div class="field-label">Postal Code</div>
-                                        <input type="text" name="field-name" value="" placeholder="">
+                                        {{order_form.postal_code}}
+                                        <ul>
+                                            {% for error in order_form.postal_code.errors %}
+                                                <li class="alert-danger">{{error}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <input type="checkbox" name="shipping-option" id="account-option"> &ensp;
@@ -148,7 +190,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="text-right"><a href="#" class="btn-solid btn">Place Order</a></div>
+                                        <!-- <div class="text-right"><a href="#" class="btn-solid btn">Place Order</a></div> -->
+                                        <input type="submit"  class="btn-solid btn" value="Place Order"> 
                                     </div>
                                 </div>
                             </div>

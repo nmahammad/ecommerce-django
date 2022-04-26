@@ -4,6 +4,16 @@ from django.http import HttpResponse
 
 # Create your views here.
 
+
+def forgetPwd(request):
+ return render(request,'forget_pwd.html',)
+
+
+
+def register(request):
+ return render(request,'register.html',)
+
+ 
 def profile(request):
  return render(request,'profile.html',)
 

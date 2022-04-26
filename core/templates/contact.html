@@ -3,6 +3,12 @@
 
 {% block content %}
 
+<<<<<<< HEAD
+    <style>
+        li{color: red; display: block;}
+    </style>
+=======
+>>>>>>> 75c85fae32bf79455372972b1f0841993d675f83
 
     <!-- breadcrumb start -->
     <div class="breadcrumb-section">
@@ -94,38 +100,74 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <form class="theme-form">
+                    <form action="" method="POST" class="theme-form">
+                        {% csrf_token %}
                         <div class="form-row">
+
                             <div class="col-md-6">
                                 <label for="name">First Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter Your name"
-                                    required="">
+                                {{ form.first_name}}
+                                <ul>
+                                    {% for error in form.first_name.errors %}
+                                        <li class="alert-danger">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                             <div class="col-md-6">
-                                <label for="email">Last Name</label>
-                                <input type="text" class="form-control" id="last-name" placeholder="Email" required="">
+                                <label for="name">Last Name</label>
+                                {{ form.last_name}}
+                                <ul>
+                                    {% for error in form.last_name.errors %}
+                                        <li class="alert-danger">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                             <div class="col-md-6">
-                                <label for="review">Phone number</label>
-                                <input type="text" class="form-control" id="review" placeholder="Enter your number"
-                                    required="">
+                                <label for="name">Phone Number</label>
+                                {{ form.phone_number}}
+                                <ul>
+                                    {% for error in form.phone_number.errors %}
+                                        <li class="alert-danger">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                             <div class="col-md-6">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" placeholder="Email" required="">
+                                <label for="name">Email</label>
+                                {{ form.email}}
+                                <ul>
+                                    {% for error in form.email.errors %}
+                                        <li class="alert-danger">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
-                            <div class="col-md-12">
-                                <label for="review">Write Your Message</label>
-                                <textarea class="form-control" placeholder="Write Your Message"
-                                    id="exampleFormControlTextarea1" rows="6"></textarea>
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn btn-solid" type="submit">Send Your Message</button>
-                            </div>
+                            <div class="col-md-6">
+                                <label for="name">Write Your Message</label>
+                                {{ form.message}}
+                                <ul>
+                                    {% for error in form.message.errors %}
+                                        <li class="alert-danger">{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>  
+                            <!-- {% csrf_token %}
+                            {% for field in form %}
+                                <div class="col-md-6">
+                                    {{field.label_tag}}
+                                    {{field}}
+                                    <ul>
+                                    {% for error in field.errors %}
+                                        <li class="alert-denger">{{error}}</li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %} -->
+                                <div class="col-md-12">
+                                    <button class="btn btn-solid" type="submit">Send Your Message</button>
+                                </div>
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> 
         </div>
     </section>
     <!--Section ends-->

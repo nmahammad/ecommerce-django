@@ -17,4 +17,3 @@ class UserAdmin(BaseUserAdmin):
 # admin.site.unregister(BaseUserAdmin)
 admin.site.register(User, UserAdmin)
 
- 

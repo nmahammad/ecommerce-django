@@ -29,9 +29,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+AUTH_USER_MODEL = 'accounts.User'
+
+
 # Application definition
 
 INSTALLED_APPS = [
+    # 'jet.dashboard',
+    # 'jet', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'social_django' , 
-
+    'social_django',
+    
     'order',
     'product',
     'user',
@@ -79,6 +84,18 @@ TEMPLATES = [
     },
 ]
 
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '214846323822-p94mc29oo48el7evf2qvmdvf7gp3tslj.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '2015611941953131'   
+SOCIAL_AUTH_FACEBOOK_SECRET = '27a1e6c0a45dc267be879e6fc9eab89a'
+
 WSGI_APPLICATION = 'multikart.wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
@@ -99,7 +116,6 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '23e3675cd1b578322450fcd51a0d79a2'
 
 
 DATABASES = {
-<<<<<<< HEAD
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'multikart',
@@ -109,24 +125,6 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
-=======
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-         'NAME': 'multikart',
-         'USER': 'user',
-         'PASSWORD': '12345',
-         'PORT': 5432,
-         'HOST': 'localhost',
-     }
- }
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': 'mydatabase',
-#    }
-#}
->>>>>>> d90f7187d74b040c27c5cf94e222c971c06858b7
 
 
 # Password validation
@@ -147,6 +145,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = '/login/'
+
+LOGOUT_REDIRECT_URL = '/login/'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 LOGIN_URL = '/accounts/login/'
 
 LOGIN_REDIRECT_URL = '/'
@@ -186,4 +189,38 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+# JET_THEMES = [
+#     {
+#         'theme': 'default', # theme folder name
+#         'color': '#47bac1', # color of the theme's button in user menu
+#         'title': 'Default' # theme title
+#     },
+#     {
+#         'theme': 'green',
+#         'color': '#44b78b',
+#         'title': 'Green'
+#     },
+#     {
+#         'theme': 'light-green',
+#         'color': '#2faa60',
+#         'title': 'Light Green'
+#     },
+#     {
+#         'theme': 'light-violet',
+#         'color': '#a464c4',
+#         'title': 'Light Violet'
+#     },
+#     {
+#         'theme': 'light-blue',
+#         'color': '#5EADDE',
+#         'title': 'Light Blue'
+#     },
+#     {
+#         'theme': 'light-gray',
+#         'color': '#222',
+#         'title': 'Light Gray'
+#     }
+# ]
 AUTH_USER_MODEL = 'accounts.User'

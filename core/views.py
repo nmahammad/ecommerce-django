@@ -1,4 +1,11 @@
-from django.shortcuts import render
+from multiprocessing import context
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+from django.urls import reverse_lazy
+from core.forms import ContactForm
+
+
 from django.http import HttpResponse
 from core.models import Contact 
 # Create your views here.
@@ -12,11 +19,21 @@ def about(request):
 
 
 def contact(request):
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Your message has been saved")
+            return redirect(reverse_lazy('contact'))
     contacts_list = Contact.objects.all()
     context = {
-        'contacts' : contacts_list
+        'form': form,
+        'contacts' : contacts_list,
+
     }
-    return render(request, 'contact.html' , context)
+    return render(request, 'contact.html',context)
+
 
 
 def faq(request):

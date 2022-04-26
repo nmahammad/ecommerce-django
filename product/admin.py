@@ -17,3 +17,7 @@ class ProductVersionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ProductVersion, ProductVersionAdmin)
+
+# class BookAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'author', 'price')
+# admin.site.register(Book, BookAdmin)

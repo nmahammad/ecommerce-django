@@ -19,7 +19,7 @@ from django.urls import path
 from order.views import cart_products, checkout, order_success, wish_list
 from core.views import error_404, about, contact, faq, index
 from user.views import profile
-from product.views import category,product,search,vendor, product_detail
+from product.views import category,product,search,vendor, product_detail, BrandListView
 from accounts.views import login, forget_password, register
 
 from django.conf import settings
@@ -39,7 +39,7 @@ urlpatterns = [
     path('contact/' , contact),
     path('faq/' , faq),
     path('register/' , register),
-    path('' , index),
+    path('' , index, name="/"),
     path('forget-password/' , forget_password),
     path('category/' , category),
     path('product/' , product),                     #in this page you can see the products
@@ -48,6 +48,7 @@ urlpatterns = [
     path('profile/' , profile),                     #in this page, contact and billing details models exist
     path('accounts/', include('accounts.urls')),   
     path('product/<int:id>/', product_detail, name='product_detail'),
+    path('brands/' , BrandListView.as_view(), name = "brands" ),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

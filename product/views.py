@@ -12,15 +12,17 @@ from core.models import Contact
 # Create your views here.
 
 def category(request):
-    product_version = ProductVersion.objects.all().order_by('-created_at')[:1]
+    new_product_version = ProductVersion.objects.all().order_by('-created_at')[:2]
+    product_version = ProductVersion.objects.all()
 
 
     context = {
         'product_version': product_version,
+        'new_product_version' : new_product_version,
 
     }
 
-    return render(request,'category-page.html',context)
+    return render(request,'category-page.html')
 
 
 

@@ -499,18 +499,17 @@
                             <h5 class="title-border">new product</h5>
                             <div class="offer-slider slide-1">
                                 <div>
-                                    {% for product_version in product_version %}
+                                    {% for product_version in new_product_version %}
                                     <div class="media">
-                                        {% for img in product_version.images.all %}
-                                        {% if img.is_main %}
-                                        <a href=""><img src="{{ img.image_url.url }}" alt="product_image"></a>
-                                        {% endif %}
-
-                                        {% endfor %}
+                                    
+                                        <a href=""><img src="{{ product_version.main_image.image_url.url }}" alt="product_image"></a>
+                                    
+                                        
+                                        
                                         <div class="media-body align-self-center">
                                             <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
                                             <a href="product-page(no-sidebar).html">
-                                                <h6>{{product_version}}</h6>
+                                                <h6>{{product_version.title}}</h6>
                                             </a>
                                             <h4>{{product_version.price}}</h4>
                                         </div>
@@ -596,16 +595,14 @@
                                                 <div class="col-xl-3 col-6 col-grid-box">
                                                     <div class="product-box">
                                                         <div class="img-wrapper">
-                                                            {% for img in product_version.images.all %}
+                                                            
+
+                                                            
                                                             <div class="front">
-                                                                <a href="#"><img src="{{img.image_url.url}}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+                                                                <a href="#"><img src="{{ product_version.main_image.image_url.url }}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
                                                             </div>
-                                                            {% endfor %}
-                                                            {% for img in product_version.images.all %}
-                                                            <div class="back">
-                                                                <a href="#"><img src="../assets/images/pro3/36.jpg" class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                                                            </div>
-                                                            {% endfor %}
+                                                            
+                                                        
                                                             <div class="cart-info cart-wrap">
                                                                 <button data-toggle="modal" data-target="#addtocart" title="Add to cart"><i
                                                                         class="ti-shopping-cart"></i></button> <a href="javascript:void(0)" title="Add to Wishlist"><i

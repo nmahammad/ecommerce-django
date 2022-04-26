@@ -20,7 +20,8 @@ from core.views import error_404, about, contact, faq, index
 from user.views import register,forgetPwd
 from product.views import category,product, search, vendor
 from accounts.views import login, profile,logout
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
@@ -46,7 +47,7 @@ urlpatterns = [
     path('search/' , search),
     path('vendor/',vendor),
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

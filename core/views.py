@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from core.forms import ContactForm
 
 
+from django.http import HttpResponse
+from core.models import Contact 
 # Create your views here.
 
 def error_404(request):
@@ -24,10 +26,14 @@ def contact(request):
             form.save()
             messages.add_message(request, messages.SUCCESS, "Your message has been saved")
             return redirect(reverse_lazy('contact'))
+    contacts_list = Contact.objects.all()
     context = {
-        'form': form
+        'form': form,
+        'contacts' : contacts_list,
+
     }
     return render(request, 'contact.html',context)
+
 
 
 def faq(request):

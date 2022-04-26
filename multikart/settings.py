@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
     'user',
     'core',
     'accounts',
-    
 
 ]
 
@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'multikart.urls'
@@ -77,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.custom_context_processor.subscriber_renderer',
             ],
         },
     },
@@ -95,6 +97,18 @@ SOCIAL_AUTH_FACEBOOK_KEY = '2015611941953131'
 SOCIAL_AUTH_FACEBOOK_SECRET = '27a1e6c0a45dc267be879e6fc9eab89a'
 
 WSGI_APPLICATION = 'multikart.wsgi.application'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '214846323822-p94mc29oo48el7evf2qvmdvf7gp3tslj.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1413290132464607'
+SOCIAL_AUTH_FACEBOOK_SECRET = '23e3675cd1b578322450fcd51a0d79a2'
 
 
 # Database
@@ -133,11 +147,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+LOGIN_URL = '/accounts/login/'
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -155,10 +173,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static/'
 
 ]
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -199,3 +223,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #         'title': 'Light Gray'
 #     }
 # ]
+AUTH_USER_MODEL = 'accounts.User'

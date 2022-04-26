@@ -501,21 +501,10 @@
                                 <div>
                                     {% for product_version in new_product_version %}
                                     <div class="media">
-                                    
+            
                                         <a href=""><img src="{{ product_version.main_image.image_url.url }}" alt="product_image"></a>
                                     
-                                        
-                                        
-                                        <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>{{product_version.title}}</h6>
-                                            </a>
-                                            <h4>{{product_version.price}}</h4>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
+
                             </div>
                         </div>
                         <!-- side-bar single product slider end -->

@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from core.views import error_404, about, contact, faq, index
+from core.views import error_404, about, ContactView, faq, index
 from product.views import category,product, search, vendor
 from accounts.views import login, profile,logout
 from user.views import forgetPwd
@@ -45,16 +45,16 @@ urlpatterns = [
     path('register/', register),
     path('error/' , error_404),
     path('about/' , about),
-    path('contact/' , contact, name='contact'),
+    path('contact/' , ContactView.as_view(), name='contact'),
     path('faq/' , faq),
     path('register/' , register),
     path('' , index, name="/"),
     path('forget-password/' , forget_password),
     path('category/' , category),
-    path('product/' , product ,name='product'),                     #in this page you can see the products
-    path('search/' , search),                       #in this page you can filter and search peoducts
-    path('vendor/' , vendor),                       #in this page you can see the vendor profile
-    path('profile/' , profile),                     #in this page, contact and billing details models exist
+    path('product/' , product ,name='product'),              #in this page you can see the products
+    path('search/' , search),                                #in this page you can filter and search peoducts
+    path('vendor/' , vendor),                                #in this page you can see the vendor profile
+    path('profile/' , profile),                              #in this page, contact and billing details models exist
     path('accounts/', include('accounts.urls')),   
     path('product/<int:id>/', product_detail, name='product_detail'),
     path('brands/' , BrandListView.as_view(), name = "brands" ),

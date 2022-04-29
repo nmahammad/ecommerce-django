@@ -113,8 +113,7 @@ class Brand(AbstractModel):
     def __str__(self):
         return self.title
 
-    def __str__(self):
-        return self.name
+
 
 
 
@@ -172,7 +171,7 @@ class Product(AbstractModel):
         })
 
     def __str__(self):
-        return self.brand_id.title + ' ' + str(self.category_id.parent_category) + ' ' + self.category_id.title + ' ' + self.vendor_id.title + ' ' + 'id:' + str(self.id)
+        return self.brand_id.title + ' ' + str(self.category_id.parent_id) + ' ' + self.category_id.title + ' ' + self.vendor_id.title + ' ' + 'id:' + str(self.id)
 
 
 class ProductVersion(AbstractModel):
@@ -190,7 +189,7 @@ class ProductVersion(AbstractModel):
     
 
     def main_image(self):
-        return self.image_set.order_by("is_main").first()
+        return self.image_set.order_by("-is_main").first()
 
     def get_images(self):
         return self.image_set.all()

@@ -15,17 +15,16 @@ from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def category(request):
-    new_product_version = ProductVersion.objects.all().order_by('-created_at')[:2]
-    product_version = ProductVersion.objects.all()
+    new_products = Product.objects.all().order_by('-created_at')[:2]
+    products = Product.objects.all()
 
 
     context = {
-        'product_version': product_version,
-        'new_product_version' : new_product_version,
-
+        'products': products,
+        'new_products' : new_products,
     }
 
-    return render(request,'category-page.html')
+    return render(request,'category-page.html', context)
 
 
 

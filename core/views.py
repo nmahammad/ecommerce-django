@@ -1,9 +1,13 @@
+from dataclasses import fields
 from multiprocessing import context
+from re import template
 from django.shortcuts import render, redirect
+from django.views.generic import CreateView
 from django.contrib import messages
 
 from django.urls import reverse_lazy
 from core.forms import ContactForm
+from core.models import Contact
 
 
 from django.http import HttpResponse
@@ -33,6 +37,23 @@ def contact(request):
 
     }
     return render(request, 'contact.html',context)
+
+
+class ContactView(CreateView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('contact')
+    # model = Contact
+    # fields = '__all__'
+
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.add_message(self.request, messages.SUCCESS, "Your message has been saved")
+        return result
+
+
+        
 
 
 

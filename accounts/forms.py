@@ -1,25 +1,29 @@
 from django import forms
+from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
 USER = get_user_model()
 
+class CustomSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+                                    widget=forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'New Password'
+            }))
+    new_password2 = forms.CharField(
+                                    widget=forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Confirm New Password'
+            }))
 
-class LoginForm(forms.Form):
- username = forms.CharField(widget=forms.TextInput(attrs={
-  'class': 'form-control',
-  'placeholder': 'Username'
- }))
- password = forms.CharField(widget=forms.PasswordInput(attrs={
-  'class': 'form-control',
-  'placeholder': 'Password'
- }))
-import imp
-from tkinter import Widget
-from django import forms
-from django.contrib.auth import get_user_model
 
-USER = get_user_model()
+class ResetPasswordForm(PasswordResetForm):
+    email = forms.EmailField(label=_("Email"), widget=forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email'
+            }), max_length=254)
+
 
 
 class RegisterForm(forms.ModelForm):
@@ -51,10 +55,6 @@ class RegisterForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Email'
             }),
-            'username': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Username'
-            }),
             'password': forms.PasswordInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Password'
@@ -64,5 +64,30 @@ class RegisterForm(forms.ModelForm):
     def clean(self):
         data = self.cleaned_data
         if data['password'] != data['confirm_password']:
-            raise forms.ValidationError("password and confirm password does not match")
+            raise forms.ValidationError("Password and confirm_password does not match")
         return super().clean()
+
+
+class LoginForm(AuthenticationForm):
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Email'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Password'
+    }))
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(label=_("Old password"),
+                                   widget=forms.PasswordInput(attrs={
+                                        'class': 'form-control',
+                                        'placeholder': 'Old Password'
+                                    }))
+    new_password1 = forms.CharField(label=_("New password"),
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control',
+                                'placeholder': 'New Password'}))
+    new_password2 = forms.CharField(label=_("New password confirmation"),
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control',
+                                'placeholder': 'Confirm Password'}))

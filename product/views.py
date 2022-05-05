@@ -2,9 +2,11 @@ from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from django.urls import reverse_lazy
 from django.http import HttpResponse
+from requests import request
 from product.forms import ReviewForm, SearchForm
 from core.models import Contact
 from django.views.generic import View , ListView, DetailView, CreateView
@@ -25,7 +27,7 @@ def category(request):
 
     }
 
-    return render(request,'category-page.html')
+    return render(request,'category-page.html' , context)
 
 
 
@@ -67,33 +69,37 @@ def profile(request):
     return render(request,'profile.html',)
 
 
-def product_detail(request, id):
-    new_products = Product.objects.all().exclude(id = id).order_by('-created_at')[:4]        
 
-    product = get_object_or_404(Product, id=id)
-    all_brands = Brand.objects.all()
-
-    product_version = ProductVersion.objects.get(product_id=id)
-    product_colors = product_version.property_value.filter(property_name_id__name='Color')
-    product_sizes =  product_version.property_value.filter(property_name_id__name='Size')
-    
-    context = {
-        'new_products' : new_products,
-        'product': product,
-        'all_brands' : all_brands,
-        'product_colors' : product_colors,
-        'product_sizes' : product_sizes,
-    }
-
-    return render(request, 'product-page.html', context)
-
-
-
-class BrandListView(ListView):
-    model = Brand
+class ProductDetailView(DetailView):
+    model = Product
     template_name = 'product-page.html'
-    context_object_name = 'brands'
+    context_object_name = 'product'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product_pk = self.kwargs['pk'] 
+        product = self.get_object()
+        context['new_products'] = Product.objects.all().exclude( id = product_pk  ).order_by('-created_at')[:4]  
+        context['related_products'] = Product.objects.filter(category_id = product.category_id ).exclude( id = product_pk  ).order_by('?')[:4]
+
+        product_version = ProductVersion.objects.get( product_id = product_pk )
+        context['product_sizes'] =  product_version.property_value.filter(property_name_id__name='Size')
+        context['product_colors'] = product_version.property_value.filter(property_name_id__name='Color')
+        
+        context['brands'] = Brand.objects.all().order_by('?')[:4]
+
+        return context
+    
     def get_queryset(self):
-        queryset =  Brand.objects.all().order_by('?')[:4]
+        brand_id = self.request.GET.get('brand_id')
+        queryset = super().get_queryset()
+        if brand_id:
+            queryset = queryset.filter(brand__id = brand_id )
         return queryset
+    
+    def related_products(self, request):
+        related_products = Product.objects.filter(category_id = product.category_id ).exclude( id = self.kwargs['pk']   ).order_by('?')[:12]
+        paginator = Paginator(related_products, 4)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request=request, template_name="product-page.html", context={'related_products':page_obj})

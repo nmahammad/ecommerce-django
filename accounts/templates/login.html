@@ -44,11 +44,11 @@
                         <form action="" method="POST" class="theme-form">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="email">Username</label>
+                                <label for="email">Email</label>
                                 <!-- <input type="text" class="form-control" id="email" placeholder="Email" required=""> -->
-                                {{ form.username}}
+                                {{ form.email}}
                                 <ul>
-                                    {% for error in form.username.errors %}
+                                    {% for error in form.email.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                     {% endfor %}
                                 </ul>
@@ -67,7 +67,16 @@
                             </div>
                             <!-- <a href="#" class="btn btn-solid">Login</a> -->
                             <div class="d-flex align-items-center">
-                                <button type="submit" class="btn btn-solid">Login</button>
+                                
+                                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+
+                                    <button type="submit" name="login-button" class="btn btn-solid">Login</button>
+
+
+                                </div>
+                              
+                            
+
                                 <a href="{% url 'social:begin' 'facebook' %}" class="social"><i style="font-size:40px; padding-left:20px;"  class="fa fa-facebook social-login fb-color"></i></a>
 
                                 <a href="{% url 'social:begin' 'google-oauth2' %}">
@@ -80,18 +89,20 @@
                                 </a>
                                 
                             </div>
+
+                            <br> <br> <br>
+
+                            <button type="submit" class="btn btn-solid"> 
+                                    
+
+                                <a href="{% url 'password_reset' %}" class="forgot-password"> <p class="forget" style="color: brown;" > Forgot password? </p> </a>
+                         
+                            </button>
+
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-6 right-login">
-                    <h3>New Customer</h3>
-                    <div class="theme-card authentication-right">
-                        <h6 class="title-font">Create A Account</h6>
-                        <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be
-                            able to order from our shop. To start shopping click register.</p><a href="#"
-                            class="btn btn-solid">Create an Account</a>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </section>

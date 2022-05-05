@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-90@7#^ah8)zrqurg!iny^3(-+$3j1x)s^gxxiiyarb3pn3lnk+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -62,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'multikart.middleware.BlockIPMiddleware' , 
+    'multikart.middleware.LogginMiddleware' , 
 
 ]
 
@@ -90,11 +92,6 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '214846323822-p94mc29oo48el7evf2qvmdvf7gp3tslj.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-
-SOCIAL_AUTH_FACEBOOK_KEY = '2015611941953131'   
-SOCIAL_AUTH_FACEBOOK_SECRET = '27a1e6c0a45dc267be879e6fc9eab89a'
 
 WSGI_APPLICATION = 'multikart.wsgi.application'
 
@@ -224,3 +221,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     }
 # ]
 AUTH_USER_MODEL = 'accounts.User'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mahammad.nabizade2@aiesec.net'
+EMAIL_HOST_PASSWORD = 'IUYGILGA'

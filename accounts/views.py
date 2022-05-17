@@ -1,19 +1,20 @@
 from requests import request
-from accounts.forms import LoginForm
-from accounts.tasks import send_email_confirmation
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.auth import get_user_model, authenticate, logout as django_logout
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from django.views.generic import CreateView, View
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
-from django.contrib.auth import get_user_model, authenticate, login as django_login, logout as django_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from accounts.utils import account_activation_token
+
+from accounts.tasks import send_email_confirmation
+
 
 from accounts.forms import (RegisterForm, ResetPasswordForm,
                             LoginForm, CustomPasswordChangeForm,
@@ -23,33 +24,15 @@ from accounts.forms import (RegisterForm, ResetPasswordForm,
 User = get_user_model()
 
 
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = 'login.html'
-    form_class = CustomSetPasswordForm
-    success_url = reverse_lazy('home')
-
-    def get_success_url(self):
-        messages.add_message(self.request, messages.SUCCESS,
-                             'Sizin yeni sifreniz teyin edildi')
-        return super().get_success_url()
-
-
-class ResetPasswordView(PasswordResetView):
-    template_name = 'login.html'
-    form_class = ResetPasswordForm
-    email_template_name = 'email/reset-password-mail.html'
-    success_url = reverse_lazy('home')
-
-    def get_success_url(self):
-        messages.add_message(self.request, messages.SUCCESS,
-                             'Emailinizi yoxlayin!')
-        return super().get_success_url()
-
-
 class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'register.html'
     success_url = reverse_lazy('login')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -71,66 +54,38 @@ class Activate(View):
             user = User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
-        if user.is_active:
+        if User.is_active:
             messages.add_message(request, messages.SUCCESS,
-                                 'Mail hesabiniz artiq aktiv olunmusdur')
+                                 'Your account is active')
             return redirect(reverse_lazy('login'))
         elif user is not None and account_activation_token.check_token(user, token):
             messages.add_message(request, messages.SUCCESS,
-                                 'Mail hesabiniz tesdiq olundu')
+                                 'Mail address is verified')
             user.is_active = True
             user.save()
             return redirect(reverse_lazy('login'))
         else:
             messages.add_message(request, messages.SUCCESS,
-                                 'Mail hesabiniz tesdiq olunmadi')
+                                 'Mail address is not verified')
             return redirect(reverse_lazy('home'))
 
-        
 
-
-
-### Login 
+# Login
 
 class MultikartLoginView(LoginView):
     form_class = LoginForm
     template_name = 'login.html'
-    success_url = reverse_lazy('/')
 
-    # def get(self, request , *args, **kwargs):
-    #     if request.method == 'POST' and 'login-button' in request.POST:
-    #         pass
+    def dispatch(self, request, *arg, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        return super().dispatch(request, *arg, **kwargs)
 
-    # def post(self, request, *args, **kwargs):
-  
-    #     form = self.get_form()
-    #     if form.is_valid():
-    #         return self.form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-
-    
-    
-
-
-# def login(request):
-#     form = LoginForm()
-
-#     if request.method == 'POST' and 'login-button' in request.POST:
-#         form = LoginForm(data=request.POST)
-#         if form.is_valid():
-#             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-#             if user is not None:
-#                 django_login(request, user)
-#                 messages.add_message(request, messages.SUCCESS, 'Ugurla login oldunuz')
-#                 return redirect('/') 
-#             else:
-#                 messages.add_message(request, messages.ERROR, 'Username ve ya password sehvdir!')
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'login.html', context)
-
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST' and 'login-button' in request.POST:
+            LoginForm(data=request.POST)
+        return super().post(request, *args, **kwargs)
+         
 
 @login_required
 def user_profile(request):
@@ -140,10 +95,35 @@ def user_profile(request):
 @login_required
 def logout(request):
     django_logout(request)
-    return redirect('/')
+    return redirect('login')
 
 
-## Change password
+# Reset password
+
+class ResetPasswordView(PasswordResetView):
+    template_name = 'forget_pwd.html'
+    form_class = ResetPasswordForm
+    email_template_name = 'email/reset-password-mail.html'
+    success_url = reverse_lazy('login')
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS,
+                             'Check your e-mail')
+        return super().get_success_url()
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'login.html'
+    form_class = CustomSetPasswordForm
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS,
+                             'Your new password is ready')
+        return super().get_success_url()
+
+
+# Change Password
 
 class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = CustomPasswordChangeForm
@@ -152,5 +132,5 @@ class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS,
-                             'Ugurla sifreniz deyisdi')
+                             'Password has been changed successfully')
         return super().get_success_url()

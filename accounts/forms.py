@@ -1,36 +1,17 @@
+import imp
+from tkinter import Widget
 from django import forms
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm, UsernameField
 
 USER = get_user_model()
 
-class CustomSetPasswordForm(SetPasswordForm):
-    new_password1 = forms.CharField(
-                                    widget=forms.PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'New Password'
-            }))
-    new_password2 = forms.CharField(
-                                    widget=forms.PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Confirm New Password'
-            }))
-
-
-class ResetPasswordForm(PasswordResetForm):
-    email = forms.EmailField(label=_("Email"), widget=forms.EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Email'
-            }), max_length=254)
-
-
-
 class RegisterForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Confirm Password'
-            }))
+        'class': 'form-control',
+        'placeholder': 'Confirm Password'
+    }))
 
     class Meta:
         model = USER
@@ -41,7 +22,6 @@ class RegisterForm(forms.ModelForm):
             'password',
             'confirm_password'
         )
-
         widgets = {
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -64,14 +44,15 @@ class RegisterForm(forms.ModelForm):
     def clean(self):
         data = self.cleaned_data
         if data['password'] != data['confirm_password']:
-            raise forms.ValidationError("Password and confirm_password does not match")
+            raise forms.ValidationError(
+                "Password and confirm_password does not match")
         return super().clean()
 
 
 class LoginForm(AuthenticationForm):
-    email = forms.CharField(widget=forms.EmailInput(attrs={
+    username = UsernameField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Email'
+        'placeholder': 'email'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
@@ -79,15 +60,38 @@ class LoginForm(AuthenticationForm):
     }))
 
 
+# CHANGE PASSWORD
 class CustomPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(label=_("Old password"),
                                    widget=forms.PasswordInput(attrs={
-                                        'class': 'form-control',
-                                        'placeholder': 'Old Password'
-                                    }))
+                                       'class': 'form-control',
+                                       'placeholder': 'Old Password'
+                                   }))
     new_password1 = forms.CharField(label=_("New password"),
                                     widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                'placeholder': 'New Password'}))
+                                                                      'placeholder': 'New Password'}))
+    
     new_password2 = forms.CharField(label=_("New password confirmation"),
                                     widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                'placeholder': 'Confirm Password'}))
+                                                                      'placeholder': 'Confirm Password'}))
+
+
+# RESET PASSWORD
+class ResetPasswordForm(PasswordResetForm):
+    email = forms.EmailField(label=_("Email"), widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter your email'
+    }), max_length=254)
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'New Password'
+        }))
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Confirm New Password'
+        }))

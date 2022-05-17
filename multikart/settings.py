@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -36,7 +37,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = [
     # 'jet.dashboard',
-    # 'jet', 
+    # 'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'social_django',
-    
+
+    'rest_framework',
+
     'order',
     'product',
     'user',
@@ -62,12 +65,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'multikart.middleware.BlockIPMiddleware' , 
-    'multikart.middleware.LogginMiddleware' , 
+    'multikart.middleware.BlockIPMiddleware',
+    'multikart.middleware.LogginMiddleware',
 
 ]
 
 ROOT_URLCONF = 'multikart.urls'
+
+REST_FRAMEWORK = {
+     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
+ }
 
 TEMPLATES = [
     {
@@ -144,13 +151,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = '/login/'
 
-LOGOUT_REDIRECT_URL = '/login/'
-
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-LOGIN_URL = '/accounts/login/'
-
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # Internationalization
@@ -185,7 +188,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 
 # JET_THEMES = [

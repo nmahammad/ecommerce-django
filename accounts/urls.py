@@ -2,12 +2,12 @@ from django.urls import path, re_path
 from accounts.views import (
     RegisterView, 
     ChangePasswordView, 
-    MultikartLoginView, user_profile, logout,
+    MultikartLoginView, 
+    user_profile, logout,
     Activate,
     ResetPasswordView,
-    CustomPasswordResetConfirmView
+    CustomPasswordResetConfirmView,
 )
-
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),

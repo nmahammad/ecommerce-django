@@ -1,13 +1,13 @@
 from ast import Or
 from pyexpat import model
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
 from order.forms import OrderForm 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from order.models import BillingDetail
+
 
 # Create your views here.
 def cart_products(request):

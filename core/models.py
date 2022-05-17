@@ -66,7 +66,7 @@ class Faq(models.Model):
         return self.question
 
 class Subscriber(AbstractModel):
-    email = models.EmailField('e-mail',max_length=30 , unique=True ,  blank = True)
+    email = models.EmailField('e-mail', max_length=30 , unique=True ,  blank = True)
 
     def __str__(self):  
         return self.email

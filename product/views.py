@@ -1,6 +1,7 @@
 from multiprocessing import context
+from pyexpat import model
+from re import template
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
 from django.contrib import messages
 
 from django.urls import reverse_lazy
@@ -14,17 +15,35 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
-def category(request):
-    new_products = Product.objects.all().order_by('-created_at')[:2]
-    products = Product.objects.all()
+# def category(request):
+#     new_products = Product.objects.all().order_by('-created_at')[:2]
+#     products = Product.objects.all()
 
 
-    context = {
-        'products': products,
-        'new_products' : new_products,
-    }
+#     context = {
+#         'products': products,
+#         'new_products' : new_products,
+#     }
 
-    return render(request,'category-page.html', context)
+#     return render(request,'category-page.html', context)
+
+
+class CategoryListView(ListView):
+    model = Product
+    template_name = 'category-page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        new_products = Product.objects.all().order_by('-created_at')[:2]
+        products = Product.objects.all().order_by('created_at')
+        context['new_products'] = new_products
+        context['products'] = products
+
+        # context['product_sizes'] =  product_version.property_value.filter(property_name_id__name='Size')
+        
+        return context
+
+
 
 
 
@@ -86,13 +105,3 @@ def product_detail(request, id):
 
     return render(request, 'product-page.html', context)
 
-
-
-class BrandListView(ListView):
-    model = Brand
-    template_name = 'product-page.html'
-    context_object_name = 'brands'
-
-    def get_queryset(self):
-        queryset =  Brand.objects.all().order_by('?')[:4]
-        return queryset

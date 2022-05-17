@@ -1,4 +1,6 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
+
 
 from product.models import Product, Category, Brand, ProductImage, ProductVersion, PropertyName, Discount ,Vendor, PropertyValue, Review
 
@@ -12,7 +14,7 @@ class ProductImageInline(admin.TabularInline):
 admin.site.register([Product,Category,Vendor,Discount,Brand,ProductImage, PropertyValue, PropertyName, Review])
 
 
-class ProductVersionAdmin(admin.ModelAdmin):
+class ProductVersionAdmin(TranslationAdmin):
     inlines = [ProductImageInline]
 
 

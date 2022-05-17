@@ -22,21 +22,21 @@ def about(request):
     return render(request, 'about-page.html' )
 
 
-def contact(request):
-    form = ContactForm()
-    if request.method == 'POST':
-        form = ContactForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS, "Your message has been saved")
-            return redirect(reverse_lazy('contact'))
-    contacts_list = Contact.objects.all()
-    context = {
-        'form': form,
-        'contacts' : contacts_list,
+# def contact(request):
+#     form = ContactForm()
+#     if request.method == 'POST':
+#         form = ContactForm(data=request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.add_message(request, messages.SUCCESS, "Your message has been saved")
+#             return redirect(reverse_lazy('contact'))
+#     contacts_list = Contact.objects.all()
+#     context = {
+#         'form': form,
+#         'contacts' : contacts_list,
 
-    }
-    return render(request, 'contact.html',context)
+#     }
+#     return render(request, 'contact.html',context)
 
 
 class ContactView(CreateView):
@@ -53,7 +53,6 @@ class ContactView(CreateView):
         return result
 
 
-        
 
 
 

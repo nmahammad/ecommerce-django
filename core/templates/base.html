@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load i18n %}
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,7 +64,7 @@
                     <div class="col-lg-6">
                         <div class="header-contact">
                             <ul>
-                                <li>Welcome to Our store Multikart</li>
+                                <li>{% trans 'Welcome to Our store Multikart' %}</li>
                                 <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li>
                             </ul>
                         </div>
@@ -72,23 +74,46 @@
                             <li class="mobile-wishlist"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
                             </li>
                             <li class="onhover-dropdown mobile-account">
-                                <i class="fa fa-user" aria-hidden="true"></i> My Account
+                                <i class="fa fa-user" aria-hidden="true"></i> {% trans 'My Account' %}
                                 <ul class="onhover-show-div">
                                     {% if request.user.is_authenticated %}
                                     <li>
                                         <a href="{% url 'logout' %}" data-lng="en">
-                                            Logout
+                                            {% trans 'Logout' %}
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{% url 'password_change' %}" data-lng="en">
+                                            {% trans 'Password Change' %}
+                                        </a>
+                                    </li>
+                        
                                     {% else %}
                                     <li>
                                         <a href="{% url 'login' %}" data-lng="es">
-                                            Sign in
+                                            {% trans 'Sign in' %}
                                         </a>
                                     </li>
                                     {% endif %}
                                 </ul>
                             </li>
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                                    <select onchange="this.form.submit()" name="language">
+                                        {% get_current_language as LANGUAGE_CODE %}
+                                        {% get_available_languages as LANGUAGES %}
+                                        {% get_language_info_list for LANGUAGES as languages %}
+                                        {% for language in languages %}
+                                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                                {{ language.code }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    
+                                </form>
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -269,11 +294,11 @@
                                     <!-- Horizontal menu -->
                                     <ul id="main-menu" class="sm pixelstrap sm-horizontal">
                                         <li>
-                                            <div class="mobile-back text-right">Back<i class="fa fa-angle-right pl-2"
+                                            <div class="mobile-back text-right">{% trans 'Back' %}<i class="fa fa-angle-right pl-2"
                                                     aria-hidden="true"></i></div>
                                         </li>
                                         <li>
-                                            <a href="#">Home</a>
+                                            <a href="#">{% trans 'Home' %}</a>
                                             <ul>
                                                 <li>
                                                     <a href="#">new demos <span class="new-tag">new</span></a>
@@ -336,7 +361,7 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="#">shop</a>
+                                            <a href="#">{% trans 'shop' %}</a>
                                             <ul>
                                                 <li><a href="category-page.html">left sidebar</a></li>
                                                 <li><a href="category-page(right).html">right sidebar</a></li>
@@ -354,7 +379,7 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="#">product</a>
+                                            <a href="#">{% trans 'product' %}</a>
                                             <ul>
                                                 <li>
                                                     <a href="#">sidebar</a>
@@ -397,7 +422,7 @@
                                                 <li><a href="product-page(vertical-tab).html">vertical tab</a></li>
                                             </ul>
                                         </li>
-                                        <li class="mega" id="hover-cls"><a href="#">features
+                                        <li class="mega" id="hover-cls"><a href="#">{% trans 'features' %}
                                                 <div class="lable-nav">new</div>
                                             </a>
                                             <ul class="mega-menu full-mega-menu">
@@ -522,7 +547,7 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">pages</a>
+                                        <li><a href="#">{% trans 'pages' %}</a>
                                             <ul>
                                                 <li>
                                                     <a href="#">vendor <span class="new-tag">new</span></a>
@@ -573,7 +598,7 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="#">blog</a>
+                                            <a href="#">{% trans 'blog' %}</a>
                                             <ul>
                                                 <li><a href="blog-page.html">left sidebar</a></li>
                                                 <li><a href="blog(right-sidebar).html">right sidebar</a></li>
@@ -599,7 +624,7 @@
                                                         <div class="container">
                                                             <div class="row">
                                                                 <div class="col-xl-12">
-                                                                    <form>
+                                                                    <form method="get" action="">
                                                                         <div class="form-group">
                                                                             <input type="text" class="form-control"
                                                                                 id="exampleInputPassword1"
@@ -620,12 +645,12 @@
                                                     class="img-fluid blur-up lazyload" alt="">
                                                 <i class="ti-settings"></i></div>
                                             <div class="show-div setting">
-                                                <h6>language</h6>
+                                                <h6>{% trans 'language' %}</h6>
                                                 <ul>
                                                     <li><a href="#">english</a> </li>
                                                     <li><a href="#">french</a> </li>
                                                 </ul>
-                                                <h6>currency</h6>
+                                                <h6>{% trans 'currency' %}</h6>
                                                 <ul class="list-inline">
                                                     <li><a href="#">euro</a> </li>
                                                     <li><a href="#">rupees</a> </li>

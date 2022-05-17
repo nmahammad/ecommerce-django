@@ -15,51 +15,53 @@ Including another URLconf
 """
 from django.contrib import admin
 from core.views import error_404, about, ContactView, faq, index
-from product.views import category,product, search, vendor
-from accounts.views import login, profile,logout
+from accounts.views import profile
 from user.views import forgetPwd
 from django.conf import settings
 from django.urls import include, path
 from order.views import cart_products, checkout, order_success, wish_list
 # from user.views import profile
-from product.views import category,product,search,vendor, product_detail, BrandListView
-from accounts.views import login, forget_password, register
+from product.views import product,search,vendor, product_detail, CategoryListView
+from accounts.views import CustomLoginView,ChangePasswordView, forget_password, register,MulticartLogoutView
 
+from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
 
 
-urlpatterns = [
+
+urlpatterns = i18n_patterns(
+    path("i18n/", include("django.conf.urls.i18n")),
     # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path('admin/', admin.site.urls),
+    path("api/", include('product.api.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('cart/' , cart_products),
     path('checkout/' , checkout ),
     path('order-success/' , order_success, name='order-success'),
     path('wishlist/' , wish_list),
     path('forgetpwd/', forgetPwd),
-    path('login/' , login, name='login'),
-    path('logout/', logout, name='logout'),
+    path('login/' , CustomLoginView.as_view(), name='login'),
+    path('password-change/' , ChangePasswordView.as_view(), name='password_change'),
+    path('logout/', MulticartLogoutView.as_view(), name='logout'),
     path('profile/', profile, name='profile'),
-    path('register/', register),
     path('error/' , error_404),
     path('about/' , about),
     path('contact/' , ContactView.as_view(), name='contact'),
     path('faq/' , faq),
-    path('register/' , register),
     path('' , index, name="/"),
+    path('register/' , register),
     path('forget-password/' , forget_password),
-    path('category/' , category),
+    path('category/' ,CategoryListView.as_view(),name='category'),
     path('product/' , product ,name='product'),              #in this page you can see the products
     path('search/' , search),                                #in this page you can filter and search peoducts
     path('vendor/' , vendor),                                #in this page you can see the vendor profile
     path('profile/' , profile),                              #in this page, contact and billing details models exist
     path('accounts/', include('accounts.urls')),   
     path('product/<int:id>/', product_detail, name='product_detail'),
-    path('brands/' , BrandListView.as_view(), name = "brands" ),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

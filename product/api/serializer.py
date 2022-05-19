@@ -1,14 +1,16 @@
 from rest_framework import serializers
-# from stories.models import Story, Category, Tag
+from product.models import Product , Category
 
-# class CategorySerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Category
-#         fields = (
-#             'id', 
-#             'title',
-#             'image',
-#         )
+class ProductSerializer(serializers.ModelSerializer):
+
+    category = serializers.CharField(source = 'category.title')
+
+    class Meta:
+        model = Product
+        fields = (
+            'id', 
+            'title',
+        )
 
 
 # class TagSerializer(serializers.ModelSerializer):

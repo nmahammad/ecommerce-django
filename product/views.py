@@ -33,7 +33,7 @@ def category(request):
 
 
 
-def product(request):
+def product_review(request):
  form= ReviewForm()
  if request.method == 'POST':
         form = ReviewForm(data=request.POST)
@@ -98,6 +98,7 @@ class ProductDetailView(DetailView):
         return queryset
     
     def related_products(self, request):
+        product = self.get_object()
         related_products = Product.objects.filter(category_id = product.category_id ).exclude( id = self.kwargs['pk']   ).order_by('?')[:12]
         paginator = Paginator(related_products, 4)
         page_number = request.GET.get('page')

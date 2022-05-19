@@ -19,3 +19,23 @@
 # class Story(AbstractModel):
 #     tags = models.ManyToManyField(Tag, through = 'StoryTag' )              many to many
 #     author = models.ForeignKey(User, on_delete = models.Cascade )          one    to many
+
+ new_product.main_version.product_id.get_absolute_url
+
+ 
+class ImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 0
+
+
+class ProductVersionAdmin(admin.ModelAdmin):
+    inlines = [ImageInline]
+
+class ProductAdmin(admin.ModelAdmin):
+    inlines = [ ImageInline, ProductVersionInline]
+
+admin.site.register(Product, ProductAdmin)
+
+
+# rsgplyanccjavxjk
+

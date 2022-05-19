@@ -1,6 +1,13 @@
-from django.shortcuts import render, HttpResponse, redirect
+from ast import Or
+from pyexpat import model
+from django.shortcuts import render, redirect
 from order.forms import OrderForm 
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
+
 
 # Create your views here.
 def cart_products(request):
@@ -12,16 +19,15 @@ def order_success(request):
 def wish_list(request):
     return render(request, 'wishlist.html')
 
+class CreateOrderView(CreateView, LoginRequiredMixin):
+    form_class = OrderForm
+    template_name = 'checkout.html'
+    success_url = reverse_lazy('order-success')
+    #context_object_name = 'order_form'  ???? 
 
-
-def checkout(request):
-    order_form = OrderForm()
-    if request.method == 'POST':
-        order_form = OrderForm(data=request.POST)
-        if order_form.is_valid():
-            order_form.save()
-            return redirect(reverse_lazy('order-success'))
-    context = {
-        'order_form': order_form
-    }
-    return render(request, 'checkout.html', context)
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def get(self, request, *args, **kwargs):
+        context = {'order_form': OrderForm()}
+        return render(request, 'checkout.html', context)

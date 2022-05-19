@@ -20,5 +20,16 @@ class User(AbstractUser):
     postal_code = models.CharField('Postal Code' , max_length=30)
     flat = models.CharField('Flat' , max_length=50)
 
-    def __str__(self) -> str:
+    email = models.EmailField( ("email address"), blank=True, unique=True)
+
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+
+    def __str__(self):
         return self.first_name + ' ' +  self.last_name
+    
+
+    def save(self, *args, **kwargs):
+        self.username = self.email + ' ' + str(self.id)
+        super(User, self).save(*args, **kwargs)

@@ -327,7 +327,7 @@
                                     <ul class="category-list">
                                         {% for brand in brands %}
 
-                                        <li><a href="#"> {{ brand.title }} </a></li>
+                                        <li><a href="{% url 'products_page' %}?brand_id={{brand.id}}"> {{ brand.title }} </a></li>
 
                                         {% endfor %}
                                     </ul>
@@ -447,19 +447,19 @@
                     <div class="theme-card">
 
                         <h5 class="title-border">new products</h5>
-                        <div class="offer-slider slide-1" >
+                        <div class="offer-slider slide-1">
                             <div>
                                 <div class="media" style="display: flex; flex-direction: column;">
 
                                     {% for new_product in new_products %}
-                                    
+
                                     {% for img in new_product.main_version.image_set.all %}
 
                                     {% if img.is_main %}
 
 
 
-                                    <a href=" {{  new_product.main_version.product_id.get_absolute_url }} "><img
+                                    <a href="{{ new_product.main_version.product_id.get_absolute_url }}"><img
                                             class="img-fluid blur-up lazyload" src="/media/{{ img.image }}"
                                             style="height: 150px; width: 100px;" alt=""></a>
 
@@ -478,8 +478,8 @@
                                         </a>
                                         <h4>{{ new_product.main_version.price }}</h4>
                                         <br>
-                                   </div>
-                                   <br>
+                                    </div>
+                                    <br>
 
                                     {% endfor %}
 
@@ -646,11 +646,7 @@
                                                 class="icofont icofont-man-in-glasses"></i>Details</a>
                                         <div class="material-border"></div>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-toggle="tab"
-                                            href="#top-contact" role="tab" aria-selected="false"><i
-                                                class="icofont icofont-contacts"></i>Video</a>
-                                        <div class="material-border"></div>
-                                    </li>
+
                                     <li class="nav-item"><a class="nav-link" id="review-top-tab" data-toggle="tab"
                                             href="#top-review" role="tab" aria-selected="false"><i
                                                 class="icofont icofont-contacts"></i>Write Review</a>
@@ -818,56 +814,52 @@
 
 <!-- related products -->
 <section class="section-b-space pt-0 ratio_asos">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 product-related">
-                <h2>related products</h2>
-            </div>
-        </div>
 
-        <div class="row search-product">
+    <div class="related-products" style="margin: 60px;">
+        <h3 class="collapse-block-title">Related Products</h3>
+        <br> <br>
+        <div class="related-product-list" style="display: flex; flex-direction: row; justify-content: space-around;">
 
-            <div class="col-xl-2 col-md-4 col-sm-6">
-                <div class="product-box">
-                    <div class="img-wrapper">
-                        <div class="front">
-                            <a href="#"><img src="../static/images/pro3/28.jpg"
-                                    class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                        </div>
-                        <div class="back">
-                            <a href="#"><img src="../static/images/pro3/27.jpg"
-                                    class="img-fluid blur-up lazyload bg-img" alt=""></a>
-                        </div>
-                        <div class="cart-info cart-wrap">
-                            <button data-toggle="modal" data-target="#addtocart" title="Add to cart"><i
-                                    class="ti-shopping-cart"></i></button> <a href="javascript:void(0)"
-                                title="Add to Wishlist"><i class="ti-heart" aria-hidden="true"></i></a> <a href="#"
-                                data-toggle="modal" data-target="#quick-view" title="Quick View"><i class="ti-search"
-                                    aria-hidden="true"></i></a> <a href="compare.html" title="Compare"><i
-                                    class="ti-reload" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                    <div class="product-detail">
-                        {% for related_product in related_products %}
+            {% for related_product in related_products %}
 
-                        <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                        <a href="https://www.google.com/">
-                            <h6> {{ related_product.title }} </h6>
-                        </a>
-                        {% endfor %}
 
-                        <h4> </h4>
-                        <ul class="color-variant">
-                            <li class="bg-light0"></li>
-                            <li class="bg-light1"></li>
-                            <li class="bg-light2"></li>
-                        </ul>
+            {% for img in related_product.main_version.image_set.all %}
+
+            {% if img.is_main %}
+
+            <div class="card-deck">
+                <div class="card">
+                    <a href=" {{ related_product.main_version.product_id.get_absolute_url }} ">
+
+                        <img style="height: 300px; width: 250px;" src="/media/{{ img.image }}" class="card-img-top"
+                            alt="...">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"> </h5>
+                        <p class="card-text">
+                            {{ related_product.main_version.title }}
+                        </p>
+                        <p style="font-weight: bold !important; color: red;" class="card-text">
+                            {{related_product.main_version.price}} </p>
                     </div>
                 </div>
+
+                {% endif %}
+
+                {% endfor %}
+
+
+                {% endfor %}
             </div>
         </div>
+
+
+
+
+
     </div>
+
+
 </section>
 <!-- related products -->
 

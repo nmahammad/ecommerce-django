@@ -78,6 +78,8 @@
 
 
 
+from ast import Break
+# from asyncio.windows_events import NULL
 from pydoc import describe
 from turtle import title
 from django.db import models
@@ -91,7 +93,7 @@ User = get_user_model()
 
 class Vendor(AbstractModel):
     title = models.CharField(max_length = 50)        
-    description = models.CharField(max_length = 50)
+    description = models.TextField()
     vendor_image = models.ImageField(upload_to = 'media/vendors/')
 
     def __str__(self):
@@ -118,9 +120,6 @@ class Brand(AbstractModel):
         return self.title
 
 
-
-
-
 class Category(AbstractModel):
     parent_id = models.ForeignKey(
         'self', related_name='categories', default='', on_delete=models.CASCADE, null=True, blank=True)  # parent_id
@@ -131,7 +130,10 @@ class Category(AbstractModel):
         verbose_name_plural = _('Categories')
 
     def __str__(self):
-        return self.title
+        if self.parent_id is not None:
+            return self.title + '('  + str(self.parent_id) + ')'
+        else:
+            return self.title
 
 
 class PropertyName(AbstractModel):
@@ -141,9 +143,6 @@ class PropertyName(AbstractModel):
 
     def __str__(self):
         return self.name + ' ' + str(self.category_id)
-
-#     def __str__(self):
-#         return str(self.category_id) + " " + str(self.brand_id) + " " + str(self.vendor_id)
 
 class PropertyValue(AbstractModel):
     name = models.CharField(max_length=50)
@@ -171,7 +170,7 @@ class Product(AbstractModel):
 
     def get_absolute_url(self):
         return reverse_lazy('product_detail', kwargs={
-            'id': self.id
+            'pk': self.id
         })
 
     def __str__(self):
@@ -199,8 +198,9 @@ class ProductVersion(AbstractModel):
         return self.image_set.all()
 
     def get_absolute_url(self):
+        product_pk = self.kwargs['pk'] 
         return reverse_lazy('productdetail', kwargs={
-            'id': self.id
+            'pk': product_pk
         })
 
 
@@ -214,10 +214,6 @@ class ProductImage(AbstractModel):
 
     def __str__(self):
         return str(self.image_title) + ' ' + self.product_version_id.title + ' ' + self.product_version_id.price
-
-# product > version > image   comments = Post.objects.get(id=10).comments_rel.filter(
-# product_versions = Product.objects.all().ProductVersion_set()
-# students = teacher.classTeacherOf.all()
 
 
 class Review(AbstractModel):

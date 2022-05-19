@@ -76,6 +76,7 @@
                             <li class="onhover-dropdown mobile-account">
                                 <i class="fa fa-user" aria-hidden="true"></i> {% trans 'My Account' %}
                                 <ul class="onhover-show-div">
+                                    
                                     {% if request.user.is_authenticated %}
                                     <li>
                                         <a href="{% url 'logout' %}" data-lng="en">
@@ -756,7 +757,7 @@
                                     </ul>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-solid" id="mc-submit">subscribe</button>
+                                <button type="submit" name="subscribe-button" class="btn btn-solid" id="mc-submit">subscribe</button>
                             </form>
                         </div>
                     </div>

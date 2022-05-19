@@ -51,29 +51,23 @@
                         name="register">
                         <a class="navbar-brand center" href="#">Stories<span>.</span></a>
                         {% csrf_token %}
-                        <br>
-                        <div id="non-field-error">
-                            <br>
-                            {{ register_form.non_field_errors }}
-                            <br>
-                        </div>
-                        <br>
-                        <br>
-                        {% for field in register_form %}
+                        {{ form.non_field_errors }}
+                        {% for field in form %}
                         <div class="form-group">
-
+                            
                             {{field}}
-
                             <ul>
-                                {% for error in field.errors %}
+                            {% for error in field.errors %}
                                 <li>{{error}}</li>
-                                {% endfor %}
+                            {% endfor %}
                             </ul>
-
                         </div>
                         {% endfor %}
+                      
                         <!-- <div class="text-right"><a href="#" class="btn-solid btn">Place Order</a></div> -->
                         <input type="submit" value="Register" class="btn-solid btn">
+
+                        
                         <div class="register-links">
                             <a href="{% url 'social:begin' 'google-oauth2' %}">
 

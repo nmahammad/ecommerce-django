@@ -1,4 +1,7 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
+
+
 from django_reverse_admin import ReverseModelAdmin
 from product.models import Product, Category, Brand, ProductImage, ProductVersion, PropertyName, Discount ,Vendor, PropertyValue, Review
 
@@ -14,6 +17,8 @@ class ProductVersionAdmin(admin.ModelAdmin):
 admin.site.register(ProductVersion, ProductVersionAdmin)
 
 
+class ProductVersionAdmin(TranslationAdmin):
+    inlines = [ProductImageInline]
 
 
 

@@ -1,6 +1,7 @@
 from multiprocessing import context
+from pyexpat import model
+from re import template
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
 from django.contrib import messages
 from django.core.paginator import Paginator
 
@@ -16,20 +17,33 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
-def category(request):
-    new_product_version = ProductVersion.objects.all().order_by('-created_at')[:2]
-    product_version = ProductVersion.objects.all()
+# def category(request):
+#     new_products = Product.objects.all().order_by('-created_at')[:2]
+#     products = Product.objects.all()
 
 
-    context = {
-        'product_version': product_version,
-        'new_product_version' : new_product_version,
+#     context = {
+#         'products': products,
+#         'new_products' : new_products,
+#     }
 
-    }
-
-    return render(request,'category-page.html' , context)
+#     return render(request,'category-page.html', context)
 
 
+class CategoryListView(ListView):
+    model = Product
+    template_name = 'category-page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        new_products = Product.objects.all().order_by('-created_at')[:2]
+        products = Product.objects.all().order_by('created_at')
+        context['new_products'] = new_products
+        context['products'] = products
+
+        # context['product_sizes'] =  product_version.property_value.filter(property_name_id__name='Size')
+        
+        return context
 
 
 
@@ -48,17 +62,17 @@ def product_review(request):
 
 
 def search(request):
-    search= SearchForm()
-    if request.method == 'GET':
-        search = SearchForm(data=request.GET)
-        print(request.GET.get('search'))
-        # result = ProductVersion.objects.filter(title__icontains=request.GET.get('search'))
-        result = Contact.objects.filter(first_name__icontains=request.GET.get('search'))
-        print(result)
-    context = {
-        'form': search
-    }
-    return render(request,'search.html', context)
+    # search= SearchForm()
+    # if request.method == 'GET':
+    #     search = SearchForm(data=request.GET)
+    #     print(request.GET.get('search'))
+    #     # result = ProductVersion.objects.filter(title__icontains=request.GET.get('search'))
+    #     result = Contact.objects.filter(first_name__icontains=request.GET.get('search'))
+    #     print(result)
+    # context = {
+    #     'form': search
+    # }
+    return render(request,'search.html')
 
 
 def vendor(request):

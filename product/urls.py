@@ -1,12 +1,13 @@
 
 from django.urls import path
-from product.views import category, search, vendor , ProductDetailView
+from product.views import search,product_review,vendor , ProductDetailView, CategoryListView
 
 urlpatterns = [
 
-    path('category/' , category , name = 'products_page'),             
+    path('product/' , product_review ,name='product'),                
     path('search/' , search),                       
     path('vendor/' , vendor),                       
     path('product/<int:pk>/', ProductDetailView.as_view(), name="product_detail"),
+    path('category/' ,CategoryListView.as_view(),name='category'),
 
 ]

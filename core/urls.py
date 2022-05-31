@@ -1,11 +1,11 @@
 from django.urls import path
-from core.views import about,error_404,contact,faq, index
+from core.views import about,error_404,faq, index, ContactView
 
 urlpatterns = [
 
     path('error/' , error_404),
     path('about/' , about),
-    path('contact/' , contact, name='contact'),
     path('faq/' , faq),
+    path('contact/' , ContactView.as_view(), name='contact'),
     path('' , index, name="home"),
 ]

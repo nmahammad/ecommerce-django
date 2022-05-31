@@ -13,7 +13,15 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', MultikartLoginView.as_view(), name='login'),
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
-    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
+
+    path('password-reset/', ResetPasswordView.as_view(
+
+        html_email_template_name='email/reset-password-mail.html'
+
+    ), name='password_reset'),
+
+
+
     path('logout/', logout, name='logout'),
     path('profile/', user_profile, name='user_profile'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,33})/$',

@@ -1,5 +1,7 @@
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -15,9 +17,9 @@
                             <div class="col">
                                 <div class="slider-contain">
                                     <div>
-                                        <h4>welcome to fashion</h4>
-                                        <h1>men fashion</h1>
-                                        <a href="#" class="btn btn-solid">shop now</a>
+                                        <h4>{% trans 'welcome to fashion' %}</h4>
+                                        <h1>{% trans 'men fashion' %}</h1>
+                                        <a href="#" class="btn btn-solid">{% trans 'shop now' %}</a>
                                     </div>
                                 </div>
                             </div>
@@ -33,9 +35,9 @@
                             <div class="col">
                                 <div class="slider-contain">
                                     <div>
-                                        <h4>welcome to fashion</h4>
-                                        <h1>women fashion</h1>
-                                        <a href="#" class="btn btn-solid">shop now</a>
+                                        <h4>{% trans 'welcome to fashion' %}</h4>
+                                        <h1>{% trans 'women fashion' %}</h1>
+                                        <a href="#" class="btn btn-solid">{% trans 'shop now' %}</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +64,7 @@
                             <div class="contain-banner">
                                 <div>
                                     <h4>save 30%</h4>
-                                    <h2>men</h2>
+                                    <h2>{% trans 'men' %}</h2>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +80,7 @@
                             <div class="contain-banner">
                                 <div>
                                     <h4>save 60%</h4>
-                                    <h2>women</h2>
+                                    <h2>{% trans 'women' %}</h2>
                                 </div>
                             </div>
                         </div>
@@ -92,8 +94,8 @@
 
     <!-- Paragraph-->
     <div class="title1 section-t-space">
-        <h4>special offer</h4>
-        <h2 class="title-inner1">top collection</h2>
+        <h4>{% trans 'special offer' %}</h4>
+        <h2 class="title-inner1">{% trans 'top collection' %}</h2>
     </div>
     <div class="container">
         <div class="row">
@@ -310,8 +312,8 @@
                     <div class="col">
                         <div class="banner-contain">
                             <h2>2018</h2>
-                            <h3>fashion trends</h3>
-                            <h4>special offer</h4>
+                            <h3>{% trans 'fashion trends' %}</h3>
+                            <h4>{% trans 'special offer' %}</h4>
                         </div>
                     </div>
                 </div>
@@ -323,8 +325,8 @@
 
     <!-- Tab product -->
     <div class="title1 section-t-space">
-        <h4>exclusive products</h4>
-        <h2 class="title-inner1">special products</h2>
+        <h4>{% trans 'exclusive products' %}</h4>
+        <h2 class="title-inner1">{% trans 'special products' %}</h2>
     </div>
     <section class="section-b-space p-t-0 ratio_asos">
         <div class="container">
@@ -332,9 +334,9 @@
                 <div class="col">
                     <div class="theme-tab">
                         <ul class="tabs tab-title">
-                            <li class="current"><a href="tab-4">New Products</a></li>
-                            <li class=""><a href="tab-5">Featured Products</a></li>
-                            <li class=""><a href="tab-6">Best Sellers</a></li>
+                            <li class="current"><a href="tab-4">{% trans 'New Products' %}</a></li>
+                            <li class=""><a href="tab-5">{% trans 'Featured Products' %}</a></li>
+                            <li class=""><a href="tab-6">{% trans 'Best Sellers' %}</a></li>
                         </ul>
                         <div class="tab-content-cls">
                             <div id="tab-4" class="tab-content active default">

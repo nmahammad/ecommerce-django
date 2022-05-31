@@ -45,6 +45,7 @@ class RegisterView(CreateView):
         return response
 
 
+
 class Activate(View):
     def get(self, request, *args, **kwargs):
         uidb64 = kwargs.get('uidb64')
@@ -54,9 +55,10 @@ class Activate(View):
             user = User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
-        if User.is_active:
+        if user.is_active:
             messages.add_message(request, messages.SUCCESS,
                                  'Your account is active')
+                            
             return redirect(reverse_lazy('login'))
         elif user is not None and account_activation_token.check_token(user, token):
             messages.add_message(request, messages.SUCCESS,
@@ -113,7 +115,7 @@ class ResetPasswordView(PasswordResetView):
 
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = 'login.html'
+    template_name = 'password-reset.html'
     form_class = CustomSetPasswordForm
     success_url = reverse_lazy('home')
 
@@ -127,7 +129,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = CustomPasswordChangeForm
-    template_name = 'login.html'
+    template_name = 'password-change.html'
     success_url = reverse_lazy('login')
 
     def get_success_url(self):

@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.utils.translation import gettext_lazy as _
+from datetime import timedelta
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,9 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'social_django',
-
     'rest_framework',
-
+    'rest_framework_simplejwt',
+    
     'order',
     'product',
     'user',
@@ -57,7 +60,19 @@ INSTALLED_APPS = [
 
 ]
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    "TOKEN_OBTAIN_SERIALIZER": "accounts.api.serializers.CustomTokenObtainPairSerializer",
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+
+    'JTI_CLAIM': 'jti',
+}
+
+
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,9 +87,17 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'multikart.urls'
 
+# REST_FRAMEWORK = {
+#      'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
+#  }
+
+
 REST_FRAMEWORK = {
-     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
- }
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 
 TEMPLATES = [
     {
@@ -100,19 +123,19 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '214846323822-p94mc29oo48el7evf2qvmdvf7gp3tslj.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '2015611941953131'   
+SOCIAL_AUTH_FACEBOOK_SECRET = '27a1e6c0a45dc267be879e6fc9eab89a'
+
 WSGI_APPLICATION = 'multikart.wsgi.application'
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
+
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '214846323822-p94mc29oo48el7evf2qvmdvf7gp3tslj.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
-SOCIAL_AUTH_FACEBOOK_KEY = '1413290132464607'
-SOCIAL_AUTH_FACEBOOK_SECRET = '23e3675cd1b578322450fcd51a0d79a2'
 
 
 # Database
@@ -149,9 +172,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = '/login/'
 
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
@@ -159,7 +182,22 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+
+
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = [
+    ('az', _('Azerbaijan')),
+    ('en', _('English')),
+]
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
+
+
 
 TIME_ZONE = 'UTC'
 

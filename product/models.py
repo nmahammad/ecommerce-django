@@ -79,13 +79,13 @@
 
 
 from ast import Break
-from asyncio.windows_events import NULL
+# from asyncio.windows_events import NULL
 from pydoc import describe
 from turtle import title
 from django.db import models
 from core.models import AbstractModel
 from django.urls import reverse_lazy
-
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -112,9 +112,12 @@ class Discount(models.Model):
 class Brand(AbstractModel):
     title = models.CharField(max_length=30)
 
+    class Meta:
+            verbose_name = _('Brand')
+            verbose_name_plural = _('Brands')
+
     def __str__(self):
         return self.title
-
 
 
 class Category(AbstractModel):
@@ -123,8 +126,8 @@ class Category(AbstractModel):
     title = models.CharField('title', max_length=70)
 
     class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
 
     def __str__(self):
         if self.parent_id is not None:
@@ -189,7 +192,7 @@ class ProductVersion(AbstractModel):
     
 
     def main_image(self):
-        return self.image_set.order_by("is_main").first()
+        return self.image_set.order_by("-is_main").first()
 
     def get_images(self):
         return self.image_set.all()

@@ -1,0 +1,209 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-17 22:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: accounts/admin.py:10
+msgid "Personal info"
+msgstr "Şexsi melumatlar"
+
+#: accounts/admin.py:11
+msgid "Permissions"
+msgstr "İcazeler"
+
+#: accounts/admin.py:14
+msgid "Important dates"
+msgstr "Əhəmiyyətli tarixlər"
+
+#: accounts/forms.py:70
+msgid "Old password"
+msgstr "Şifreniz"
+
+#: accounts/forms.py:75
+msgid "New password"
+msgstr "Yeni Şifreniz"
+
+#: accounts/forms.py:78
+msgid "New password confirmation"
+msgstr "Yeni Şifrenizi Tekrar Yazın"
+
+#: accounts/forms.py:95
+msgid "Email"
+msgstr ""
+
+#: accounts/templates/email/reset-password-mail.html:3
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: accounts/templates/email/reset-password-mail.html:5
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: accounts/templates/email/reset-password-mail.html:9
+msgid "Your username, in case you’ve forgotten:"
+msgstr ""
+
+#: accounts/templates/email/reset-password-mail.html:11
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: accounts/templates/email/reset-password-mail.html:13
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: core/templates/base.html:67
+msgid "Welcome to Our store Multikart"
+msgstr "Multikart mağazamıza xoş gəlmisiniz"
+
+#: core/templates/base.html:77
+msgid "My Account"
+msgstr "Hesabım"
+
+#: core/templates/base.html:83
+msgid "Logout"
+msgstr "Çıxış"
+
+#: core/templates/base.html:88
+msgid "Password Change"
+msgstr "Parolu dəyiş"
+
+#: core/templates/base.html:95
+msgid "Sign in"
+msgstr "Daxil olun"
+
+#: core/templates/base.html:298
+msgid "Back"
+msgstr ""
+
+#: core/templates/base.html:302
+msgid "Home"
+msgstr "Ana"
+
+#: core/templates/base.html:365
+msgid "shop"
+msgstr "mağaza"
+
+#: core/templates/base.html:383
+msgid "product"
+msgstr "məhsul"
+
+#: core/templates/base.html:426
+msgid "features"
+msgstr "xüsusi"
+
+#: core/templates/base.html:551
+msgid "pages"
+msgstr "səhifə"
+
+#: core/templates/base.html:602
+msgid "blog"
+msgstr "blog"
+
+#: core/templates/base.html:649
+msgid "language"
+msgstr "dil"
+
+#: core/templates/base.html:654
+msgid "currency"
+msgstr "valyuta"
+
+#: core/templates/index.html:20 core/templates/index.html:38
+msgid "welcome to fashion"
+msgstr "modaya xoş gəldiniz"
+
+#: core/templates/index.html:21
+#, fuzzy
+#| msgid "women fashion"
+msgid "men fashion"
+msgstr "qadın modası"
+
+#: core/templates/index.html:22 core/templates/index.html:40
+msgid "shop now"
+msgstr "indi alış-veriş edin"
+
+#: core/templates/index.html:39
+msgid "women fashion"
+msgstr "qadın modası"
+
+#: core/templates/index.html:67
+msgid "men"
+msgstr "kişi"
+
+#: core/templates/index.html:83
+msgid "women"
+msgstr "qadın"
+
+#: core/templates/index.html:97 core/templates/index.html:316
+msgid "special offer"
+msgstr "xüsusi təklif"
+
+#: core/templates/index.html:98
+msgid "top collection"
+msgstr "top kolleksiya"
+
+#: core/templates/index.html:315
+msgid "fashion trends"
+msgstr "moda trendleri"
+
+#: core/templates/index.html:328
+msgid "exclusive products"
+msgstr "eksklüziv məhsullar"
+
+#: core/templates/index.html:329
+msgid "special products"
+msgstr "xüsusi məhsullar"
+
+#: core/templates/index.html:337
+msgid "New Products"
+msgstr "yeni məhsullar"
+
+#: core/templates/index.html:338
+msgid "Featured Products"
+msgstr "Seçilmiş Məhsullar"
+
+#: core/templates/index.html:339
+msgid "Best Sellers"
+msgstr "ən yaxşı satıcılar"
+
+#: multikart/settings.py:162
+msgid "Azerbaijan"
+msgstr ""
+
+#: multikart/settings.py:163
+msgid "English"
+msgstr ""
+
+#: product/models.py:116
+msgid "Brand"
+msgstr "Brend"
+
+#: product/models.py:117
+msgid "Brands"
+msgstr "Brendler"
+
+#: product/models.py:129
+msgid "Category"
+msgstr "Kateqoriya"
+
+#: product/models.py:130
+msgid "Categories"
+msgstr "Kateqoriyalar"

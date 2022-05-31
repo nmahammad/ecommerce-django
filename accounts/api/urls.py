@@ -7,5 +7,3 @@ from accounts.api.views import(
 urlpatterns = [
  path("register", registration_view, name='register'),
 ]
-
-#test

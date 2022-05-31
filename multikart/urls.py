@@ -32,6 +32,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("api/", include('product.api.urls')),
+    path("api/", include('multikart.api.urls')),
+    path("api/", include('accounts.api.urls')),
     path('admin/', admin.site.urls),
     
     path('', include('social_django.urls', namespace='social')),

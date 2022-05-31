@@ -11,14 +11,12 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 5
 
-class ProductVersionAdmin(admin.ModelAdmin):
+class ProductVersionAdmin(TranslationAdmin):
     inlines = [ProductImageInline]
 
 admin.site.register(ProductVersion, ProductVersionAdmin)
 
 
-class ProductVersionAdmin(TranslationAdmin):
-    inlines = [ProductImageInline]
 
 
 
@@ -26,7 +24,7 @@ class ProductVersionInline(admin.TabularInline):
     model = ProductVersion
     extra = 2
 
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TranslationAdmin):
     inlines = [ProductVersionInline]
 
 admin.site.register(Product, ProductAdmin)
@@ -39,8 +37,13 @@ class ReverseProductVersion(ReverseModelAdmin):
 
 
 
+class CategoryAdmin(TranslationAdmin):
+    model = Category
+
+admin.site.register(Category, CategoryAdmin)
 
 
-admin.site.register([Category,Vendor,Discount,Brand,ProductImage, PropertyValue, PropertyName, Review])
+
+admin.site.register([Vendor,Discount,Brand,ProductImage, PropertyValue, PropertyName, Review])
 
 

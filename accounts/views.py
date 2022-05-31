@@ -1,21 +1,14 @@
-from audioop import reverse
-from django.http import HttpResponseRedirect
 from requests import request
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.contrib.auth import get_user_model, authenticate, logout as django_logout
 
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from django.views.generic import CreateView, View
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, PasswordChangeView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LogoutView
-from django.views.generic import View
-from accounts.forms import LoginForm, CustomPasswordChangeForm
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from accounts.utils import account_activation_token
@@ -52,6 +45,7 @@ class RegisterView(CreateView):
         return response
 
 
+
 class Activate(View):
     def get(self, request, *args, **kwargs):
         uidb64 = kwargs.get('uidb64')
@@ -64,6 +58,7 @@ class Activate(View):
         if user.is_active:
             messages.add_message(request, messages.SUCCESS,
                                  'Your account is active')
+                            
             return redirect(reverse_lazy('login'))
         elif user is not None and account_activation_token.check_token(user, token):
             messages.add_message(request, messages.SUCCESS,
@@ -99,39 +94,6 @@ def user_profile(request):
     return render(request, 'profile.html')
 
 
-# @login_required
-# def logout(request):
-#     django_logout(request)
-#     return redirect('/')
-
-
-class MulticartLogoutView(LogoutView):
-    def get(self, request):
-        django_logout(request)
-        return reverse_lazy('/en/login')
-
-
-from accounts.forms import RegisterForm
-
-
-
-# # Create your views here.
-# def register(request):
-#     register_form = RegisterForm()
-#     if request.method == 'POST' and "register" in request.POST:
-#         register_form = RegisterForm(data=request.POST)
-#         if register_form.is_valid():
-#             user = register_form.save(request)
-#             user.username = 'user_' + str(user.id)
-#             user.set_password(register_form.cleaned_data['password'])
-#             user.save()
-#             return redirect('/')
-    
-#     context = {
-#         'register_form' : register_form
-#     }
-#     return render(request , 'register.html' , context)
-
 @login_required
 def logout(request):
     django_logout(request)
@@ -153,7 +115,7 @@ class ResetPasswordView(PasswordResetView):
 
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = 'login.html'
+    template_name = 'password-reset.html'
     form_class = CustomSetPasswordForm
     success_url = reverse_lazy('home')
 
@@ -165,8 +127,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 # Change Password
 
-
-class ChangePasswordView(LoginRequiredMixin,PasswordChangeView):
+class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = CustomPasswordChangeForm
     template_name = 'password-change.html'
     success_url = reverse_lazy('login')

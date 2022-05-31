@@ -1,8 +1,15 @@
+from itertools import product
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from product.api.serializer import ProductSerializer
+from product.models import Product, Review
+
+
+        
 from functools import partial
 from multiprocessing import context
 from unicodedata import category
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.status import (
  HTTP_200_OK,
  HTTP_201_CREATED,
@@ -10,9 +17,31 @@ from rest_framework.status import (
  )
 from django.http import Http404
 
-
 from product.api.serializers import CategoryReadSerializer, CategoryCreateSerializer
 from product.models import Category
+
+
+
+class ReviewAPI(APIView):
+
+    
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        serializer = ProductSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(data=serializer.data, status=201) 
+
+
+class ProductAPI(APIView):
+
+    def get(self, request, *args, **kwargs):
+        products = Product.objects.all()
+        serializer = ProductSerializer(
+            products, many=True, context={'request': request})
+        return Response(data=serializer.data)
+
+
 
 
 

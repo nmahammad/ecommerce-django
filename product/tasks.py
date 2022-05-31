@@ -3,7 +3,7 @@ from celery import shared_task
 from django.template.loader import render_to_string
 
 from accounts.models import User
-from product import
+# from product import
 # from product.models import 
 
 @shared_task

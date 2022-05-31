@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from requests import request
 from product.forms import ReviewForm, SearchForm
+from product.tasks import process_func
 from core.models import Contact
 from django.views.generic import View , ListView, DetailView, CreateView
 from product.models import Product , Brand, ProductVersion, Review
@@ -118,3 +119,9 @@ class ProductDetailView(DetailView):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         return render(request=request, template_name="product-page.html", context={'related_products':page_obj})
+
+
+
+def export (request):
+    process_func.delay()
+    return redirect ('/')

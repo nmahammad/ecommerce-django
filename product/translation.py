@@ -3,7 +3,7 @@ from modeltranslation.translator import translator, TranslationOptions
 from product.models import Product,Category,ProductVersion
 
 class ProductTranslationOptions(TranslationOptions):
- fields = ('description','title')
+ fields = ('title','description',)
 
 
 
@@ -16,6 +16,6 @@ class ProductVersionTranslationOptions(TranslationOptions):
  fields = ('title',)
 
 
-translator.register(Product, CategoryTranslationOptions)
+translator.register(Product, ProductTranslationOptions)
 translator.register(Category, CategoryTranslationOptions)
 translator.register(ProductVersion, ProductVersionTranslationOptions)

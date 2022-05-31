@@ -61,7 +61,7 @@ class Activate(View):
             user = User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
-        if User.is_active:
+        if user.is_active:
             messages.add_message(request, messages.SUCCESS,
                                  'Your account is active')
             return redirect(reverse_lazy('login'))

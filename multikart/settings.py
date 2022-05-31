@@ -39,6 +39,7 @@ AUTH_USER_MODEL = 'accounts.User'
 INSTALLED_APPS = [
     # 'jet.dashboard',
     # 'jet',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 
     'social_django',
     'rest_framework',
+    'django_celery_beat',
     
     'order',
     'product',
@@ -130,6 +132,15 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
+
+
+# CELERY STUFF
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Baku' 
 
 
 # Password validation

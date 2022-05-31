@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 from django.utils.translation import gettext_lazy as _
+from datetime import timedelta
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
 
     'social_django',
     'rest_framework',
+    'rest_framework_simplejwt',
     'django_celery_beat',
     
     'order',
@@ -58,6 +61,17 @@ INSTALLED_APPS = [
     'accounts',
 
 ]
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    "TOKEN_OBTAIN_SERIALIZER": "accounts.api.serializers.CustomTokenObtainPairSerializer",
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+
+    'JTI_CLAIM': 'jti',
+}
+
 
 MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
@@ -75,9 +89,17 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'multikart.urls'
 
+# REST_FRAMEWORK = {
+#      'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
+#  }
+
+
 REST_FRAMEWORK = {
-     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
- }
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 
 TEMPLATES = [
     {

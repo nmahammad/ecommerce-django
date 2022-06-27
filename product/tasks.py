@@ -11,6 +11,7 @@ def process_func():
  return 'Proces done'
 
 
+#test
 
 # @shared_task
 # def send_mail_to_subscribers():

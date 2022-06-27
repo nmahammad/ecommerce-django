@@ -11,7 +11,6 @@ def get_brands():
  return Brand.objects.all()
 
 
-
 @register.simple_tag
 def get_propertyValueSize():
  return PropertyValue.objects.filter(property_name_id__name='Size')

@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    phone_number = models.BigIntegerField('mobile number' , null=True)
+    phone_number = models.CharField('mobile number' , null=True, max_length=200)
 
     country_choices = (
         ('1' , 'India'),

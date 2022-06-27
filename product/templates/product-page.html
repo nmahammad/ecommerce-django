@@ -327,7 +327,8 @@
                                     <ul class="category-list">
                                         {% for brand in brands %}
 
-                                        <li><a href="{% url 'products_page' %}?brand_id={{brand.id}}"> {{ brand.title }} </a></li>
+                                        <li><a href="{% url 'category' %}?brand_id={{brand.id}}"> {{ brand.title }} </a>
+                                        </li>
 
                                         {% endfor %}
                                     </ul>
@@ -536,15 +537,26 @@
                             <div class="col-lg-6 rtl-text">
                                 <div class="product-right">
                                     <h2> </h2>
-                                    <h3> {{ product.title }} </h3>
+                                    <h3> {{ product.main_version.title }} </h3>
 
-                                    <h4><del>$459.00</del><span>55% off</span></h4>
+                                    {% if product.main_version.discount_id %}
 
-                                    <h3> {{ product.main_version.price }} </h3>
+                                    <h4><del>${{ old_price }}</del><span> {{percentage}} % off</span></h4>
+
+                                    <h3> ${{ product.main_version.price }} </h3>
+                                      
+                                    {% else %}
+                                    
+                                    <h3> ${{ product.main_version.price }} </h3>
+
+                                    {% endif %}
+
                                     <ul class="color-variant">
-                                        <li class="bg-light0"></li>
-                                        <li class="bg-light1"></li>
-                                        <li class="bg-light2"></li>
+                                        {% for product_color in product_colors %}
+                                            
+                                            <li class="color-1" style="background-color: {{product_color}};"></li>
+                                        
+                                            {% endfor %}
                                     </ul>
                                     <div class="product-description border-product">
                                         <h6 class="product-title size-text">select size <span><a href=""
@@ -584,16 +596,35 @@
                                             <div class="input-group"><span class="input-group-prepend"><button
                                                         type="button" class="btn quantity-left-minus" data-type="minus"
                                                         data-field=""><i class="ti-angle-left"></i></button> </span>
-                                                <input type="text" name="quantity" class="form-control input-number"
+                                                <input type="text" id="productQty"  name="quantity" class="form-control input-number"
                                                     value="1"> <span class="input-group-prepend"><button type="button"
                                                         class="btn quantity-right-plus" data-type="plus"
                                                         data-field=""><i class="ti-angle-right"></i></button></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="product-buttons"><a href="#" data-toggle="modal"
-                                            data-target="#addtocart" class="btn btn-solid">add to cart</a> <a href="#"
-                                            class="btn btn-solid">buy now</a></div>
+
+                                    <div class="product-buttons">
+                                        <!-- <button class="update-cart" style="border:0ch ; background-color: white;"
+                                        data-product-version = {{product.main_version.id}} data-action="add"> 
+                                            <a href="#" data-toggle="modal" data-target="#addtocart" class="btn btn-solid">add to cart</a> 
+                                        </button>   -->
+
+
+                                        <input type="hidden" class="product-image-{{data.id}}" value="{{data.productattribute_set.first.image}}" />
+                                        <input type="hidden" class="product-id-{{data.id}}" value="{{data.id}}" />
+                                        <input type="hidden" class="product-title-{{data.id}}" value="{{data.title}}" />
+                                        
+                                        <button id="addToCartBtn" class="btn btn-outline-secondary add-btn add-to-cart">Add to Cart</button>
+
+                                        
+                                        <button class="update-cart" style="border:0ch; background-color: white;" >
+                                            <a href="#" class="btn btn-solid">buy now</a>
+                                        </button>
+                                       
+                                    </div>
+
+
                                     <div class="border-product">
                                         <h6 class="product-title">product details</h6>
                                         <p>
@@ -736,7 +767,7 @@
                                                         {{ form.name }}
                                                         <ul>
                                                             {% for error in form.name.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
+                                                            <li class="alert-danger">{{error}}</li>
                                                             {% endfor %}
                                                         </ul>
                                                     </div>
@@ -745,7 +776,7 @@
                                                         {{ form.email }}
                                                         <ul>
                                                             {% for error in form.email.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
+                                                            <li class="alert-danger">{{error}}</li>
                                                             {% endfor %}
                                                         </ul>
                                                     </div>
@@ -754,7 +785,7 @@
                                                         {{ form.title}}
                                                         <ul>
                                                             {% for error in form.title.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
+                                                            <li class="alert-danger">{{error}}</li>
                                                             {% endfor %}
                                                         </ul>
                                                     </div>
@@ -763,7 +794,7 @@
                                                         {{ form.body}}
                                                         <ul>
                                                             {% for error in form.body.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
+                                                            <li class="alert-danger">{{error}}</li>
                                                             {% endfor %}
                                                         </ul>
                                                     </div>
@@ -797,7 +828,7 @@
                                                     <button class="btn btn-solid" type="submit">Submit YOur
                                                         Review</button>
                                                 </div>
-                                            </div>
+                                        </div>
                                         </form>
                                     </div>
                                 </div>

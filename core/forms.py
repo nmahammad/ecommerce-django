@@ -52,11 +52,11 @@ class ContactForm(forms.ModelForm):
   }
 from django import forms
 
-from core.models import Subscriber
+from core.models import NewSubscriber
 
 class SubscriberForm(forms.ModelForm):
      class Meta:
-        model = Subscriber
+        model = NewSubscriber
         fields = (
             'email',
         )

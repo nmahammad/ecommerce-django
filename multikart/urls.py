@@ -20,21 +20,20 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
 
-
 from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-
-
     
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
+
     path("api/", include('product.api.urls')),
-    path("api/", include('multikart.api.urls')),
-    path("api/", include('accounts.api.urls')),
+
+    path("api/", include('core.api.urls')),
+    
     path('admin/', admin.site.urls),
+
     
     path('', include('social_django.urls', namespace='social')),
 
@@ -42,6 +41,8 @@ urlpatterns = [
 
 
 urlpatterns += i18n_patterns(
+    
+    
     
     path('', include('order.urls')),
 
@@ -52,5 +53,6 @@ urlpatterns += i18n_patterns(
     path('', include('product.urls')),
 
     path("api/accounts/", include('accounts.api.urls')),
+
 )
 

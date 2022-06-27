@@ -1,9 +1,15 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
 from accounts.api.serializers import RegistrationSerializers
 
+from django.contrib.auth import get_user_model
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import RetrieveAPIView
+from accounts.api.serializers import UserSerializer
+
+
+User = get_user_model()
 
 @api_view(['POST',])
 def registration_view(request):
@@ -21,3 +27,12 @@ def registration_view(request):
   else:
    data = serializer.errors
   return Response(data)
+
+
+class UserProfileAPIView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user

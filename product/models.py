@@ -79,6 +79,7 @@
 
 
 from ast import Break
+import email
 # from asyncio.windows_events import NULL
 from pydoc import describe
 from turtle import title
@@ -138,7 +139,7 @@ class Category(AbstractModel):
 
 class PropertyName(AbstractModel):
     category_id = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name='category_property_name')
+        Category, on_delete=models.CASCADE, related_name='category_property_name', null=True)
     name = models.CharField(max_length=30)
 
     def __str__(self):
@@ -161,7 +162,7 @@ class Product(AbstractModel):
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     vendor_id = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE)
-    title = models.CharField(max_length=50, null=True)
+    title = models.CharField(max_length=500, null=True)
     description = models.TextField(null=True)
 
     @property
@@ -182,13 +183,14 @@ class ProductVersion(AbstractModel):
         Product, on_delete=models.CASCADE, related_name='product_set')
     property_value = models.ManyToManyField(PropertyValue)
     discount_id = models.ForeignKey(
-        Discount, on_delete=models.CASCADE, blank=True, null=True)
+        Discount, on_delete=models.CASCADE, related_name='discount_set' , blank=True, null=True)
     title = models.CharField(max_length=50)
-    price = models.CharField('Price', max_length=50)
+    price = models.IntegerField('Price')
+    old_price = models.IntegerField('old-Price' , null=True)
     stock = models.BooleanField('Stock')
 
     def __str__(self):
-        return self.title + ' ' + str(self.price)
+        return self.title + ' ' + str(self.price) + ' ' + str(self.id)
     
 
     def main_image(self):
@@ -213,7 +215,7 @@ class ProductImage(AbstractModel):
     image_title = models.CharField('Image title', max_length=100, null=True)
 
     def __str__(self):
-        return str(self.image_title) + ' ' + self.product_version_id.title + ' ' + self.product_version_id.price
+        return str(self.image_title) + ' ' + str(self.product_version_id.price)
 
 
 class Review(AbstractModel):
@@ -221,5 +223,6 @@ class Review(AbstractModel):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     name = models.CharField('First Name', max_length=50)
     email = models.EmailField('Email', max_length=30)
-    title = models.CharField('Last Name', max_length=100)
+    title = models.CharField('Last Name', max_length=100, null=True)
     body = models.TextField()
+

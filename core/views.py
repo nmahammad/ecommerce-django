@@ -11,15 +11,16 @@ from core.models import Contact
 
 
 from django.http import HttpResponse
-from core.models import Contact 
+from core.models import Contact
 # Create your views here.
 
+
 def error_404(request):
-    return render(request, '404.html' )
+    return render(request, '404.html')
 
 
 def about(request):
-    return render(request, 'about-page.html' )
+    return render(request, 'about-page.html')
 
 
 # def contact(request):
@@ -43,22 +44,17 @@ class ContactView(CreateView):
     template_name = 'contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('contact')
-    # model = Contact
-    # fields = '__all__'
-
 
     def form_valid(self, form):
         result = super().form_valid(form)
-        messages.add_message(self.request, messages.SUCCESS, "Your message has been saved")
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Your message has been saved")
         return result
 
 
-
-
-
 def faq(request):
-    return render(request, 'faq.html' )
+    return render(request, 'faq.html')
 
 
 def index(request):
-    return render(request, 'index.html' )
+    return render(request, 'index.html')

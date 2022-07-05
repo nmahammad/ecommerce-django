@@ -19,7 +19,7 @@ from django.contrib import admin
 # from accounts.views import user_profile,logout
 from django.conf import settings
 from django.urls import include, path
-
+from order.views import addtoshopcart
 from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
@@ -34,7 +34,8 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
 
-    
+    path('addtoshopcart/<int:id>', addtoshopcart, name='addtoshopcart'),
+
     path('', include('social_django.urls', namespace='social')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

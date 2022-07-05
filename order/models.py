@@ -2,6 +2,7 @@ from asyncio.windows_events import NULL
 from itertools import product
 from django.db import models
 import django
+from django.forms import ModelForm
 # Create your models here.
 from core.models import AbstractModel
 from product.models import User, Product, ProductVersion
@@ -83,3 +84,19 @@ class ShopCart(models.Model):
     
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name + ' ' + str(self.user.id)
+
+    @property
+    def price(self):
+        return (self.product.price)
+
+    @property
+    def amount(self):
+        return (self.quantity * self.product.price)
+
+    
+class ShopCartForm(ModelForm):
+    class Meta:
+        model = ShopCart
+        fields = ['quantity']
+
+

@@ -63,6 +63,9 @@ def product_review(request):
 
 
 def search(request):
+    query=request.GET['k']
+    products = ProductVersion.objects.filter(title__icontains=query).order_by('id')
+
     # search= SearchForm()
     # if request.method == 'GET':
     #     search = SearchForm(data=request.GET)
@@ -73,7 +76,7 @@ def search(request):
     # context = {
     #     'form': search
     # }
-    return render(request,'search.html')
+    return render(request,'search.html',{'products':products})
 
 
 def vendor(request):

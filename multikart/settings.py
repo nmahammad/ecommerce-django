@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import redis
 from django.utils.translation import gettext_lazy as _
 from datetime import timedelta
 
@@ -19,6 +20,14 @@ from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+CELERY_TIMEZONE = 'Asia/Baku'
+
+
+REDIS_BROKER_URL = 'redis://localhost:6379'
+
+REDIS_CLIENT = redis.Redis.from_url(REDIS_BROKER_URL)
 
 
 # Quick-start development settings - unsuitable for production
@@ -53,6 +62,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_celery_beat',
+    'drf_yasg',
     
     'order',
     'product',

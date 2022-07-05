@@ -632,12 +632,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- burdan -->
                     <section class="tab-product m-0">
                         <div class="row">
                             <div class="col-sm-12 col-lg-12">
                                 <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
-                                    <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-toggle="tab"
-                                            href="#top-home" role="tab" aria-selected="true"><i
+                                    <li class="nav-item"><a class="nav-link active" id="top-home-tab"
+                                            data-toggle="tab" href="#top-home" role="tab" aria-selected="true"><i
                                                 class="icofont icofont-ui-home"></i>Description</a>
                                         <div class="material-border"></div>
                                     </li>
@@ -646,7 +647,11 @@
                                                 class="icofont icofont-man-in-glasses"></i>Details</a>
                                         <div class="material-border"></div>
                                     </li>
-
+                                    <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-toggle="tab"
+                                            href="#top-contact" role="tab" aria-selected="false"><i
+                                                class="icofont icofont-contacts"></i>Video</a>
+                                        <div class="material-border"></div>
+                                    </li>
                                     <li class="nav-item"><a class="nav-link" id="review-top-tab" data-toggle="tab"
                                             href="#top-review" role="tab" aria-selected="false"><i
                                                 class="icofont icofont-contacts"></i>Write Review</a>
@@ -657,16 +662,12 @@
                                     <div class="tab-pane fade show active" id="top-home" role="tabpanel"
                                         aria-labelledby="top-home-tab">
                                         <p>
-
                                             {{ product.description }}
-
                                         </p>
-
-
                                     </div>
                                     <div class="tab-pane fade" id="top-profile" role="tabpanel"
                                         aria-labelledby="profile-top-tab">
-
+                                        <p>.</p>
                                         <div class="single-product-tables">
                                             <table>
                                                 <tbody>
@@ -685,25 +686,25 @@
                                                 </tbody>
                                             </table>
                                             <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Length</td>
-                                                        <td>50 Inches</td>
-                                                    </tr>
-                                                    <tr
-                                                        style="display: flex; flex-direction: row; justify-content: space-evenly; padding-top: 40px;">
-                                                        <br> <br>
-                                                        <td>Size</td>
-                                                        <td style="display:flex; align-self: start;">
+                            <tbody>
+                                <tr>
+                                    <td>Length</td>
+                                    <td>50 Inches</td>
+                                </tr>
+                                <tr
+                                    style="display: flex; flex-direction: row; justify-content: space-evenly; padding-top: 40px;">
+                                    <br> <br>
+                                    <td>Size</td>
+                                    <td style="display:flex; align-self: start;">
 
-                                                            {% for size in product_sizes %}
-                                                            {{size.name}}
-                                                            {% endfor %}
+                                        {% for size in product_sizes %}
+                                        {{size.name}}
+                                        {% endfor %}
 
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="top-contact" role="tabpanel"
@@ -713,90 +714,66 @@
                                                 src="https://www.youtube.com/embed/BUWzX78Ye_8"
                                                 allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                         </div>
-                                        <div class="tab-pane fade" id="top-review" role="tabpanel"
-                                            aria-labelledby="review-top-tab">
-                                            <form action="" method="POST" class="theme-form">
-                                                {% csrf_token %}
-                                                <div class="form-row">
-                                                    <div class="col-md-12">
-                                                        <div class="media">
-                                                            <label>Rating</label>
-                                                            <div class="media-body ml-3">
-                                                                <div class="rating three-star"><i
-                                                                        class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i></div>
-                                                            </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="top-review" role="tabpanel"
+                                        aria-labelledby="review-top-tab">
+                                        <form action="" method="POST" class="theme-form">
+                                            {% csrf_token %}
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <div class="media">
+                                                        <label>Rating</label>
+                                                        <div class="media-body ml-3">
+                                                            <div class="rating three-star"><i
+                                                                    class="fa fa-star"></i> <i
+                                                                    class="fa fa-star"></i> <i
+                                                                    class="fa fa-star"></i> <i
+                                                                    class="fa fa-star"></i> <i
+                                                                    class="fa fa-star"></i></div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="name">Name</label>
-                                                        {{ form.name }}
-                                                        <ul>
-                                                            {% for error in form.name.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="email">Email</label>
-                                                        {{ form.email }}
-                                                        <ul>
-                                                            {% for error in form.email.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <label for="review">Review Title</label>
-                                                        {{ form.title}}
-                                                        <ul>
-                                                            {% for error in form.title.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <label for="review">Review</label>
-                                                        {{ form.body}}
-                                                        <ul>
-                                                            {% for error in form.body.errors %}
-                                                                <li class="alert-danger">{{error}}</li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <button class="btn btn-solid" type="submit">Submit YOur
-                                                            Review</button>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="name">Name</label>
-                                                    <input type="text" class="form-control" id="name"
-                                                        placeholder="Enter Your name" required>
+                                                    {{ form.name }}
+                                                    <ul>
+                                                        {% for error in form.name.errors %}
+                                                            <li class="alert-danger">{{error}}</li>
+                                                        {% endfor %}
+                                                    </ul>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="email">Email</label>
-                                                    <input type="text" class="form-control" id="email"
-                                                        placeholder="Email" required>
+                                                    {{ form.email }}
+                                                    <ul>
+                                                        {% for error in form.email.errors %}
+                                                            <li class="alert-danger">{{error}}</li>
+                                                        {% endfor %}
+                                                    </ul>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label for="review">Review Title</label>
-                                                    <input type="text" class="form-control" id="review"
-                                                        placeholder="Enter your Review Subjects" required>
+                                                    {{ form.title}}
+                                                    <ul>
+                                                        {% for error in form.title.errors %}
+                                                            <li class="alert-danger">{{error}}</li>
+                                                        {% endfor %}
+                                                    </ul>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label for="review">Review Title</label>
-                                                    <textarea class="form-control"
-                                                        placeholder="Wrire Your Testimonial Here"
-                                                        id="exampleFormControlTextarea1" rows="6"></textarea>
+                                                    <label for="review">Review</label>
+                                                    {{ form.body}}
+                                                    <ul>
+                                                        {% for error in form.body.errors %}
+                                                            <li class="alert-danger">{{error}}</li>
+                                                        {% endfor %}
+                                                    </ul>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <button class="btn btn-solid" type="submit">Submit YOur
                                                         Review</button>
                                                 </div>
+                                            </div>
                                             </div>
                                         </form>
                                     </div>
@@ -804,6 +781,7 @@
                             </div>
                         </div>
                     </section>
+                    <!-- bura -->
                 </div>
             </div>
         </div>

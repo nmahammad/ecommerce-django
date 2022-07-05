@@ -13,7 +13,7 @@ class ReviewForm(forms.ModelForm):
     # }))
     body = forms.CharField(
         validators=[validate_gmail_account],
-        widget=forms.Textarea(
+        widget=forms.Textarea( 
             attrs={
                 "cols": 95,
                 "rows": 5,

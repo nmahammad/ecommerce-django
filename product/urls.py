@@ -1,6 +1,6 @@
 from django.urls import path
-from product.views import search,vendor , ProductDetailView, CategoryListView , export
-
+from product.views import search,vendor , ProductDetailView, CategoryListView,export
+from product.tasks import send_mail_to_subscribers
 
 urlpatterns = [
 
@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('products/' ,CategoryListView.as_view(), name='products'),
     path('export/' ,export,name='export'),
+    path('subscribers/' ,send_mail_to_subscribers,name='subscribers'),
 
 
 ]

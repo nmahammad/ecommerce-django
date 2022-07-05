@@ -52,7 +52,20 @@ class CategoryListView(ListView):
 
 
 def search(request):
-    return render(request, 'search.html')
+    query=request.GET['k']
+    products = ProductVersion.objects.filter(title__icontains=query).order_by('id')
+
+    # search= SearchForm()
+    # if request.method == 'GET':
+    #     search = SearchForm(data=request.GET)
+    #     print(request.GET.get('search'))
+    #     # result = ProductVersion.objects.filter(title__icontains=request.GET.get('search'))
+    #     result = Contact.objects.filter(first_name__icontains=request.GET.get('search'))
+    #     print(result)
+    # context = {
+    #     'form': search
+    # }
+    return render(request,'search.html',{'products':products})
 
 
 def vendor(request):

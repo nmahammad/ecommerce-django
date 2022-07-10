@@ -1,4 +1,5 @@
 from dataclasses import fields
+from itertools import product
 from multiprocessing import context
 from re import template
 from django.shortcuts import render, redirect
@@ -8,7 +9,8 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from core.forms import ContactForm
 from core.models import Contact
-
+from django.views.generic import ListView
+from product.models import Product
 
 from django.http import HttpResponse
 from core.models import Contact
@@ -58,3 +60,26 @@ def faq(request):
 
 def index(request):
     return render(request, 'index.html')
+
+
+
+class MainPageView(ListView):
+    model = Product
+    template_name = 'index.html'
+    context_object_name = 'products'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # new_products = Product.objects.all().order_by('-created_at')[:2]
+        # context['new_products'] = new_products
+        # context['categories'] = Product.objects.distinct().values(
+        #     'category_id__title', 'category_id__id')
+        # # context['categories'] = Category.objects.filter(stories__isnull=False).distinct()
+        # context['brands'] = Product.objects.distinct().values(
+        #     'brand_id__title', 'brand_id__id')
+        # context['product_colors'] = PropertyValue.objects.filter(
+        #     property_name_id__name='Color')
+
+        products = Product.objects.all()
+  
+        return context

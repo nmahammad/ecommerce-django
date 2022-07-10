@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 from django_reverse_admin import ReverseModelAdmin
-from product.models import Product, Category, Brand, ProductImage, ProductVersion, PropertyName, Discount ,Vendor, PropertyValue, Review
+from product.models import Product, Category, Brand, ProductImage, ProductVersion, Discount ,Vendor, Review, Color, Size
 
 ### ADDING PRODUCT IMAGES FOR VERSIONS
 class ProductImageInline(admin.TabularInline):
@@ -32,9 +32,14 @@ class CategoryAdmin(TranslationAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 
+
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ['name','code','color_tag']
+
+admin.site.register(Color,ColorAdmin)
+
+
 # class ProductVersionAdmin(TranslationAdmin):
 #     model = ProductVersion
 
-admin.site.register([Vendor,Discount,Brand,ProductImage, PropertyValue, PropertyName,  Review ])
-
-
+admin.site.register([Vendor,Discount,Brand,ProductImage, Review, Size ])

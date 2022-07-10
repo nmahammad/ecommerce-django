@@ -5,7 +5,7 @@ from order.views import (
     order_success,
     wish_list,   
     cart,
-    ajaxcolor
+    addtocart
 )
 
 
@@ -14,6 +14,6 @@ urlpatterns = [
     path('order-success/' , order_success, name='order-success'),
     path('wishlist/' , wish_list),
     path('cart/' , cart, name='cart'),
-    path('ajaxcolor/' ,ajaxcolor, name='ajaxcolor'),
+    path('order/addtocart/<int:id>', addtocart, name='addtocart' )
     
 ]

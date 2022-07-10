@@ -423,14 +423,14 @@
                                     <div class="custom-control custom-checkbox collection-filter-checkbox">
 
                                         <li>
-                                            <a href="{% url 'products' %}?brand_id={{ brand.brand_id__id }}">
+                                            <a href="{% url 'products' %}?brand_id={{ brand.id }}">
 
 
                                                 <input type="filter-checkbox" data-filter="brand"
                                                     value="{{brand.brand_id__id}}" class="custom-control-input"
                                                     id="{{brand.title}}">
                                                 <label class="custom-control-label" for="{{brand.title }}">
-                                                    {{brand.brand_id__title }}
+                                                    {{brand.title }}
 
 
                                                 </label>
@@ -459,11 +459,16 @@
                                 <div class="collection-brand-filter">
 
                                     {% for category in categories %}
-                                    <div class="custom-control custom-checkbox collection-filter-checkbox">
-                                        <input type="filter-checkbox" data-filter="'category"
-                                            value="{{ category.category_id__id }}" class="custom-control-input">
-                                        <label class="custom-control-label">{{category.category_id__title }}</label>
-                                    </div>
+                                    <a href="{% url 'products' %}?category_id={{category.id}}">
+
+                                        <div class="custom-control custom-checkbox collection-filter-checkbox">
+                                            <input type="filter-checkbox" data-filter="'category"
+                                                value="{{ category.category_id__id }}" class="custom-control-input">
+                                            <label class="custom-control-label">{{category.title }}</label>
+                                        </div>
+
+                                    </a>
+                               
                                     {% endfor %}
 
 
@@ -480,7 +485,7 @@
                                     <ul>
                                         {% for product_color in product_colors %}
 
-                                        <li class="color-1" style="background-color: {{product_color.name}};"></li>
+                                        <li class="color-1" style="background-color: {{product_color.code}};"></li>
 
                                         {% endfor %}
 
@@ -493,6 +498,7 @@
                             <h3 class="collapse-block-title">size</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="collection-brand-filter">
+                                    {% comment %}
 
                                     {% get_propertyValueSize as values %}
                                     {% for value in values %}
@@ -501,6 +507,7 @@
                                         <label class="custom-control-label" for="{{value.name}}">{{value.name}}</label>
                                     </div>
                                     {% endfor %}
+                                    {% endcomment %}
 
 
                                 </div>

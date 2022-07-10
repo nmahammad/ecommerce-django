@@ -327,131 +327,57 @@ let user = "{{request.user}}"
                                                     class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
                                         </li>
                                         <li>
-                                            <a href="#">{% trans 'Home' %}</a>
+                                            <a href="{% url 'user_profile' %}">{% trans 'User Profile' %}</a>
+                                            <ul>
+                                          
+                                         
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">{% trans 'about us' %}</a>
+                                            <ul>
+                                                <li><a href="{% url 'about' %}">About us</a></li>
+                                                <li><a href="{% url 'faq' %}">FAQ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">{% trans 'categories' %}</a>
                                             <ul>
                                                 <li>
-                                                    <a href="#">new demos <span class="new-tag">new</span></a>
+                                                    <a href="#">clothes</a>
                                                     <ul>
-                                                        <li><a target="_blank" href="tools.html">tools</a></li>
-                                                        <li><a target="_blank"
-                                                                href="marketplace-demo.html">marketplace</a></li>
-                                                        <li><a target="_blank" href="game.html">game</a></li>
-                                                        <li><a target="_blank" href="gym-product.html">gym</a></li>
-                                                        <li><a target="_blank" href="marijuana.html">marijuana</a></li>
-                                                        <li><a target="_blank" href="left_sidebar-demo.html">left
-                                                                sidebar</a></li>
-                                                        <li><a target="_blank" href="jewellery.html">jewellery</a></li>
-                                                        <li><a target="_blank" href="pets.html">pets</a></li>
-                                                        <li><a target="_blank" href="metro.html">metro</a></li>
-                                                        <li><a target="_blank" href="video-slider.html">video slider</a>
+                                                        <li><a href="product-page.html"> Men</a></li>
+                                                        <li><a href="product-page(right-sidebar).html">Women</a>
                                                         </li>
+                                                        <li><a href="product-page(no-sidebar).html">Kids</a></li>
                                                     </ul>
                                                 </li>
-                                                <li>
-                                                    <a href="#">clothing</a>
-                                                    <ul>
-                                                        <li><a target="_blank" href="index.html">fashion 1</a></li>
-                                                        <li><a target="_blank" href="fashion-2.html">fashion 2</a></li>
-                                                        <li><a target="_blank" href="fashion-3.html">fashion 3</a></li>
-                                                        <li><a target="_blank" href="kids.html">kids</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a target="_blank" href="watch.html">watch</a></li>
-                                                <li><a target="_blank" href="shoes.html">shoes</a></li>
                                                 <li>
                                                     <a href="#">electronics</a>
                                                     <ul>
-                                                        <li><a target="_blank" href="electronic-1.html">electronic 1</a>
+                                                        <li><a href="product-page(left-image).html">phones</a></li>
+                                                        <li><a href="product-page(right-image).html">computers</a>
                                                         </li>
-                                                        <li><a target="_blank" href="electronic-2.html">electronic 2</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li><a target="_blank" href="bags.html">bags</a></li>
-                                                <li><a target="_blank" href="nursery.html">nursery</a></li>
-                                                <li><a target="_blank" href="flower.html">flower</a></li>
-                                                <li><a target="_blank" href="vegetables.html">vegetable</a></li>
-                                                <li><a target="_blank" href="beauty.html">beauty</a></li>
-                                                <li><a target="_blank" href="light.html">light</a></li>
-                                                <li><a target="_blank" href="furniture.html">furniture</a></li>
-                                                <li><a target="_blank" href="goggles.html">googles</a></li>
-                                                <li>
-                                                    <a href="#">basics</a>
-                                                    <ul>
-                                                        <li><a target="_blank" href="lookbook-demo.html">lookbook</a>
-                                                        </li>
-                                                        <li><a target="_blank" href="instagram-shop.html">instagram</a>
-                                                        </li>
-                                                        <li><a target="_blank" href="video.html">video</a></li>
-                                                        <li><a target="_blank" href="parallax.html">parallax</a></li>
-                                                        <li><a target="_blank" href="full-page.html">full page</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">{% trans 'shop' %}</a>
-                                            <ul>
-                                                <li><a href="category-page.html">left sidebar</a></li>
-                                                <li><a href="category-page(right).html">right sidebar</a></li>
-                                                <li><a href="category-page(no-sidebar).html">no sidebar</a></li>
-                                                <li><a href="category-page(sidebar-popup).html">sidebar popup</a></li>
-                                                <li><a href="category-page(metro).html">metro <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="category-page(full-width).html">full width <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="category-page(infinite-scroll).html">infinite scroll</a>
-                                                </li>
-                                                <li><a href=category-page(3-grid).html>three grid</a></li>
-                                                <li><a href="category-page(6-grid).html">six grid</a></li>
-                                                <li><a href="category-page(list-view).html">list view</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">{% trans 'product' %}</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#">sidebar</a>
-                                                    <ul>
-                                                        <li><a href="product-page.html">left sidebar</a></li>
-                                                        <li><a href="product-page(right-sidebar).html">right sidebar</a>
-                                                        </li>
-                                                        <li><a href="product-page(no-sidebar).html">no sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="#">thumbnail image</a>
-                                                    <ul>
-                                                        <li><a href="product-page(left-image).html">left image</a></li>
-                                                        <li><a href="product-page(right-image).html">right image</a>
-                                                        </li>
-                                                        <li><a href="product-page(image-outside).html">image outside
+                                                        <li><a href="product-page(image-outside).html">Household
                                                                 <span class="new-tag">new</span></a></li>
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <a href="#">three column</a>
+                                                    <a href="#">books</a>
                                                     <ul>
-                                                        <li><a href="product-page(3-col-left).html">thumbnail left</a>
+                                                        <li><a href="product-page(3-col-left).html"> Science-Fiction</a>
                                                         </li>
-                                                        <li><a href="product-page(3-col-right).html">thumbnail right</a>
+                                                        <li><a href="product-page(3-col-right).html">  Romance </a>
                                                         </li>
-                                                        <li><a href="product-page(3-column).html">thubnail bottom</a>
+                                                        <li><a href="product-page(3-column).html"> Novel </a>
                                                         </li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="product-page(4-image).html">four image <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="product-page(sticky).html">sticky</a></li>
-                                                <li><a href="product-page(accordian).html">accordian</a></li>
-                                                <li><a href="product-page(bundle).html">bundle<span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="product-page(image-swatch).html">image swatch <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="product-page(vertical-tab).html">vertical tab</a></li>
+                                                <li><a href="{% url 'products' %}"> All Products <span
+                                                            class="new-tag"></span></a></li>
                                             </ul>
                                         </li>
-                                        <li class="mega" id="hover-cls"><a href="#">{% trans 'features' %}
+                                        <li class="mega" id="hover-cls"><a href="#">{% trans 'women' %}
                                                 <div class="lable-nav">new</div>
                                             </a>
                                             <ul class="mega-menu full-mega-menu">
@@ -576,7 +502,7 @@ let user = "{{request.user}}"
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">{% trans 'pages' %}</a>
+                                        <li><a href="#">{% trans 'men' %}</a>
                                             <ul>
                                                 <li>
                                                     <a href="#">vendor <span class="new-tag">new</span></a>
@@ -594,7 +520,7 @@ let user = "{{request.user}}"
                                                         <li><a href="dashboard.html">Dashboard</a></li>
                                                         <li><a href="login.html">login</a></li>
                                                         <li><a href="register.html">register</a></li>
-                                                        <li><a href="contact.html">contact</a></li>
+                                                        <li><a href="contact.html">contact </a></li>
                                                         <li><a href="forget_pwd.html">forget password</a></li>
                                                         <li><a href="profile.html">profile <span
                                                                     class="new-tag">new</span></a></li>
@@ -627,12 +553,8 @@ let user = "{{request.user}}"
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="#">{% trans 'blog' %}</a>
+                                            <a href="{% url 'contact' %}">{% trans 'contact' %}</a>
                                             <ul>
-                                                <li><a href="blog-page.html">left sidebar</a></li>
-                                                <li><a href="blog(right-sidebar).html">right sidebar</a></li>
-                                                <li><a href="blog(no-sidebar).html">no sidebar</a></li>
-                                                <li><a href="blog-details.html">blog details</a></li>
                                             </ul>
                                         </li>
                                     </ul>

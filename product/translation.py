@@ -1,5 +1,7 @@
 from modeltranslation.translator import translator, TranslationOptions
-from product.models import Product,Category,ProductVersion, PropertyValue
+from product.models import Product,Category, ProductVersion
+# from product.models import ProductVersion, PropertyValue
+
 
 class ProductTranslationOptions(TranslationOptions):
  fields = ('title','description',)

@@ -69,7 +69,8 @@ INSTALLED_APPS = [
     'user',
     'core',
     'accounts',
-    'django_filters'
+    'django_filters',
+    'django_extensions',
 
 ]
 

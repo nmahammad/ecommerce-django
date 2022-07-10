@@ -20,6 +20,7 @@ Deprecated==1.2.13
 Django==3.2.13
 django-4-jet==1.0.8
 django-celery-beat==2.2.1
+django-extensions==3.2.0
 django-filter==21.1
 django-modeltranslation==0.17.7
 django-reverse-admin==2.9.6
@@ -54,6 +55,7 @@ python-dateutil==2.8.2
 python-dotenv==0.20.0
 python3-openid==3.2.0
 pytz==2022.1
+PyYAML==6.0
 redis==4.3.1
 redis-tools==0.0.2
 requests==2.27.1
@@ -64,6 +66,7 @@ six==1.16.0
 social-auth-app-django==5.0.0
 social-auth-core==4.2.0
 sqlparse==0.4.2
+swagger-ui-py==21.12.8
 tomli==2.0.1
 typing_extensions==4.1.1
 uritemplate==4.1.1

@@ -3,6 +3,7 @@ import json
 from multiprocessing import context
 from pyexpat import model
 from re import X, template
+from unicodedata import category
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.contrib import messages
@@ -14,7 +15,7 @@ from product.forms import ReviewForm, SearchForm
 from product.tasks import process_func
 from core.models import Contact
 from django.views.generic import View, ListView, DetailView, CreateView, FormView
-from product.models import Product, Brand, ProductVersion, Review, PropertyValue, PropertyName
+from product.models import Product, Brand, ProductVersion, Review,  Color, Size, Category
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -33,22 +34,22 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         new_products = Product.objects.all().order_by('-created_at')[:2]
         context['new_products'] = new_products
-        context['categories'] = Product.objects.distinct().values(
-            'category_id__title', 'category_id__id')
-        # context['categories'] = Category.objects.filter(stories__isnull=False).distinct()
-        context['brands'] = Product.objects.distinct().values(
-            'brand_id__title', 'brand_id__id')
-        context['product_colors'] = PropertyValue.objects.filter(
-            property_name_id__name='Color')
+        context['categories'] = Category.objects.filter(parent_id = None)
+        context['brands'] = Brand.objects.distinct()
+        context['product_colors'] = Color.objects.all()
 
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
         brand_id = self.request.GET.get('brand_id')  # 1
+        category_id = self.request.GET.get('category_id')
         if brand_id:
             queryset = queryset.filter(brand_id__id=brand_id)
+        if category_id:
+            queryset = queryset.filter(category_id__parent_id=category_id)
         return queryset
+
 
 
 def search(request):
@@ -77,40 +78,67 @@ def profile(request):
 
 
 class ProductDetailView(CreateView, DetailView):
-    model = Product
+    model = ProductVersion
     template_name = 'product-page.html'
-    context_object_name = 'product'
+    context_object_name = 'product_version'
     form_class = ReviewForm
 
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
         context = super().get_context_data(**kwargs)
         context['form'] = self.get_form()
-        product_pk = self.kwargs['pk']
-        product = self.get_object()
-        context['new_products'] = Product.objects.all().exclude(
-            id=product_pk).order_by('-created_at')[:4]
+        product_version = self.get_object()
+        product_pk = product_version.product_id.id
+        product_version_pk = product_version.id
+
+        context['new_products'] = Product.objects.all().exclude(id=product_pk).order_by('-created_at')[:4]
 
         context['related_products'] = Product.objects.filter(
-            category_id=product.category_id).exclude(id=product_pk).order_by('?')[:4]
+            category_id=product_version.product_id.category_id).exclude(id=product_pk).order_by('?')[:4]
 
         context['reviews'] = Review.objects.filter(product_id=product_pk)
-        context['review_count'] = Review.objects.filter(
-            product_id=product_pk).count()
+        context['review_count'] = Review.objects.filter(product_id=product_pk).count()
+
+        context['brands'] = Brand.objects.all().order_by('?')[:4]
 
         product_versions = ProductVersion.objects.filter(product_id=product_pk)
         context['product_versions'] = product_versions
 
-        context['product_sizes'] = product.main_version.property_value.filter(
-            property_name_id__name='Size')
+        context['distinct_product_versions'] = ProductVersion.objects.filter(product_id=product_pk).distinct('color')
 
-        context['brands'] = Brand.objects.all().order_by('?')[:4]
+        # product_colors = []
+        # for pv in product_versions:
+        #     product_colors.append(pv.color)
 
-        if(product.main_version.discount_id):
-            old_price = (int(product.main_version.price) // (100 -
-                         int(product.main_version.discount_id.percentage)))*100
-            percentage = int(product.main_version.discount_id.percentage)
-            context['old_price'] = old_price
+        # def unique_colors(l):
+        #     output = []
+        #     for x in l:
+        #         if x not in output:
+        #             output.append(x)
+        #     return output
+        
+        # context['product_colors'] = unique_colors(product_colors)
+
+        related_versions = []
+        for pv in product_versions:
+            if pv.color:
+                if pv.color.id == product_version.color.id:
+                    related_versions.append(pv)  
+            
+        # product_sizes = []
+        # if pv.size:
+        #     for pv in related_versions:
+        #         product_sizes.append(pv.size)
+        # context['product_sizes'] = product_sizes
+
+        context['related_versions'] = related_versions
+
+
+        if(product_version.discount_id):
+            percentage = product_version.discount_id.percentage
+            new_price = (product_version.price * percentage) // 100
+
+            context['new_price'] = new_price
             context['percentage'] = percentage
         
         return context

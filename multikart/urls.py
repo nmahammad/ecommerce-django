@@ -18,7 +18,6 @@ from django import views
 from django.contrib import admin
 # from accounts.views import user_profile,logout
 from django.conf import settings
-from order.views import addtoshopcart
 from django.urls import include, path, re_path
 
 
@@ -48,6 +47,7 @@ schema_view = get_schema_view(
 
     
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
 
     path("api/", include('product.api.urls')),
@@ -57,10 +57,6 @@ urlpatterns = [
     re_path('^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     
-    path('admin/', admin.site.urls),
-
-    path('addtoshopcart/<int:id>', addtoshopcart, name='addtoshopcart'),
-
     path('', include('social_django.urls', namespace='social')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

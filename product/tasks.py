@@ -17,21 +17,19 @@ def process_func():
  return 'Proces done'
 
 
+#test
 
 @shared_task
 def send_mail_to_subscribers():
     email_list = []
-    email = User.objects.filter(is_active=True).values_list('last_login','username', 'email')
-    for i in email:
-        now = datetime.now(timezone.utc)
-        print(i)
-        if (now-i[0] > timedelta(days=2)):
-            email_list.append(i[2])
+    now = datetime.now(timezone.utc) - timedelta(days=0)
+    email_list = User.objects.filter(is_active=True, last_login__lte=now).values_list('email', flat=True)
     new_products = Product.objects.all().order_by('-created_at')[:2]
     # email_list = User.objects.filter(is_active=True).values_list('email',flat=True)
     mail_text = render_to_string('email-subscribers.html', {
         'new_products': new_products, 
     })
+    print(email_list)
     # mail_text = "salam"
     Publish(data={"body": mail_text, "subject": "new_products", "recipients": list(email_list), "subtype": "html"  }, event_type="send_mail")
 

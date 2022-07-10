@@ -39,7 +39,33 @@
 
     <link rel="stylesheet" href="http:////netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet"> -->
+
+
+    <script type="text/javascript">
+
+let user = "{{request.user}}"
+     
+
+     function getCookie(name) {
+       let cookieValue = null;
+       if (document.cookie && document.cookie !== '') {
+           const cookies = document.cookie.split(';');
+           for (let i = 0; i < cookies.length; i++) {
+               const cookie = cookies[i].trim();
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                   cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                   break;
+               }
+           }
+       }
+       return cookieValue;
+   }
+   const csrftoken = getCookie('csrftoken');
+
+
+    </script>
 
     {% block link %}
 
@@ -50,6 +76,7 @@
 {% block register_link %}
 
 {% endblock %}
+
 <body>
 
 
@@ -76,7 +103,7 @@
                             <li class="onhover-dropdown mobile-account">
                                 <i class="fa fa-user" aria-hidden="true"></i> {% trans 'My Account' %}
                                 <ul class="onhover-show-div">
-                                    
+
                                     {% if request.user.is_authenticated %}
                                     <li>
                                         <a href="{% url 'logout' %}" data-lng="en">
@@ -88,7 +115,7 @@
                                             {% trans 'Password Change' %}
                                         </a>
                                     </li>
-                        
+
                                     {% else %}
                                     <li>
                                         <a href="{% url 'login' %}" data-lng="es">
@@ -106,30 +133,31 @@
                                         {% get_available_languages as LANGUAGES %}
                                         {% get_language_info_list for LANGUAGES as languages %}
                                         {% for language in languages %}
-                                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                                                {{ language.code }}
-                                            </option>
+                                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                            {{ language.code }}
+                                        </option>
                                         {% endfor %}
+
                                     </select>
-                                    
+
                                 </form>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-    <!-- ############################# -->
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <!-- ################################### -->
+        <!-- ############################# -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- ################################### -->
 
 
         <div class="container">
@@ -295,8 +323,8 @@
                                     <!-- Horizontal menu -->
                                     <ul id="main-menu" class="sm pixelstrap sm-horizontal">
                                         <li>
-                                            <div class="mobile-back text-right">{% trans 'Back' %}<i class="fa fa-angle-right pl-2"
-                                                    aria-hidden="true"></i></div>
+                                            <div class="mobile-back text-right">{% trans 'Back' %}<i
+                                                    class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
                                         </li>
                                         <li>
                                             <a href="#">{% trans 'Home' %}</a>
@@ -616,7 +644,8 @@
                                         <li class="onhover-div mobile-search">
                                             <div><img src="{% static 'images/icon/search.png' %}" onclick="openSearch()"
                                                     class="img-fluid blur-up lazyload" alt="">
-                                                <i class="ti-search" onclick="openSearch()"></i></div>
+                                                <i class="ti-search" onclick="openSearch()"></i>
+                                            </div>
                                             <div id="search-overlay" class="search-overlay">
                                                 <div>
                                                     <span class="closebtn" onclick="closeSearch()"
@@ -646,7 +675,8 @@
                                         <li class="onhover-div mobile-setting">
                                             <div><img src="{% static 'images/icon/setting.png' %}"
                                                     class="img-fluid blur-up lazyload" alt="">
-                                                <i class="ti-settings"></i></div>
+                                                <i class="ti-settings"></i>
+                                            </div>
                                             <div class="show-div setting">
                                                 <h6>{% trans 'language' %}</h6>
                                                 <ul>
@@ -663,55 +693,53 @@
                                             </div>
                                         </li>
                                         <li class="onhover-div mobile-cart">
-                                            <div><img src="{% static 'images/icon/cart.png' %}"
+                                            <a href="{% url 'cart' %}">
+                                            
+                                            <div>
+                                                
+                                    
+                                                <img src="{% static 'images/icon/cart.png' %}"
                                                     class="img-fluid blur-up lazyload" alt="">
-                                                <i class="ti-shopping-cart"></i></div>
+                                                    
+                                               
+                                                
+                                                <div class="wrapper" style="position: relative;" >
+                                                    <i class="fa" style="font-size:24px">&#xf07a;</i>
+                                                    <span style="font-weight: bold; position: absolute;
+                                                    top: -20px;
+                                                    right: -25px; "> ( {{cart.cartquantity}} )   </span>
+                                                </div>
+
+                                            </div>
+                                            
+                                        </a>
                                             <ul class="show-div shopping-cart">
+                                                {% for item in cartitems %}
                                                 <li>
+                                                    {% for img in item.product_version_id.image_set.all %}
+
+                                                    {% if img.is_main %}
                                                     <div class="media">
                                                         <a href="#"><img class="mr-3"
-                                                                src="{% static 'images/fashion/product/1.jpg' %}"
+                                                                src="/media/{{ img.image }}"
                                                                 alt="Generic placeholder image"></a>
+                                                    {% endif %}
+                                                    {%endfor%}
                                                         <div class="media-body">
                                                             <a href="#">
-                                                                <h4>item name</h4>
+                                                                <h4>{{item.product_version_id.title}}</h4>
                                                             </a>
-                                                            <h4><span>1 x $ 299.00</span></h4>
+                                                            <h4><span>{{item.quantity}} x $ {{ item.product_version_id.price }}</span></h4>
                                                         </div>
                                                     </div>
-                                                    <div class="close-circle">
-                                                        <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="media">
-                                                        <a href="#"><img class="mr-3"
-                                                                src="{% static 'images/fashion/product/2.jpg' %}"
-                                                                alt="Generic placeholder image"></a>
-                                                        <div class="media-body">
-                                                            <a href="#">
-                                                                <h4>item name</h4>
-                                                            </a>
-                                                            <h4><span>1 x $ 299.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="close-circle">
-                                                        <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="total">
-                                                        <h5>subtotal : <span>$299.00</span></h5>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="buttons">
-                                                        <a href="cart.html" class="view-cart">view cart</a>
-                                                        <a href="#" class="checkout">checkout</a>
-                                                    </div>
-                                                </li>
+                                                  
+                                            </li>
+                                              
+                                            {% endfor %}
+                                                
                                             </ul>
                                         </li>
+                                       
                                     </ul>
                                 </div>
                             </div>
@@ -729,7 +757,7 @@
 
     {% endblock %}
 
-    
+
     <!-- footer start -->
     <footer class="footer-light">
         <div class="light-layout">
@@ -744,22 +772,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6"> 
-                            <form action=""
-                            class="form-inline subscribe-form auth-form needs-validation" method="POST"
-                            id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="">
-                            {% csrf_token %}
-                                
+                        <div class="col-lg-6">
+                            <form
+                                action="#"
+                                class="form-inline subscribe-form auth-form needs-validation" method="post"
+                                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
                                 <div class="form-group mx-sm-3">
-                                    {{subscriber_form.email}}
-                                    <ul>
-                                        {% for error in subscriber_form.email.errors %}
-                                            <li class="alert-danger">{{error}}</li>
-                                        {% endfor %}
-                                    </ul>
+                                    <input type="text" class="form-control" name="email" id="mce-EMAIL"
+                                        placeholder="Enter your email" required="required">
                                 </div>
-                                
-                                <button type="submit" name="subscribe-button" class="btn btn-solid" id="mc-submit">subscribe</button>
+                                <button type="submit" class="btn btn-solid" id="mc-submit">subscribe</button>
                             </form>
                         </div>
                     </div>
@@ -774,7 +796,7 @@
                             <h4>about</h4>
                         </div>
                         <div class="footer-contant">
-                            <div class="footer-logo"><img src="{% static 'images/icon/logo.png' %}" alt=""></div>
+                            <div class="footer-logo"><img src="../assets/images/icon/logo.png" alt=""></div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                                 ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
                             <div class="footer-social">
@@ -830,7 +852,7 @@
                                     <li><i class="fa fa-map-marker"></i>Multikart Demo Store, Demo store India 345-659
                                     </li>
                                     <li><i class="fa fa-phone"></i>Call Us: 123-456-7898</li>
-                                    <li><i class="fa fa-envelope-o"></i>Email Us: Support@Fiot.com</li>
+                                    <li><i class="fa fa-envelope-o"></i>Email Us: <a href="#">Support@Fiot.com</a></li>
                                     <li><i class="fa fa-fax"></i>Fax: 123456</li>
                                 </ul>
                             </div>
@@ -852,19 +874,19 @@
                         <div class="payment-card-bottom">
                             <ul>
                                 <li>
-                                    <a href="#"><img src="{% static 'images/icon/visa.png' %}" alt=""></a>
+                                    <a href="#"><img src="../assets/images/icon/visa.png" alt=""></a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="{% static 'images/icon/mastercard.png' %}" alt=""></a>
+                                    <a href="#"><img src="../assets/images/icon/mastercard.png" alt=""></a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="{% static 'images/icon/paypal.png' %}" alt=""></a>
+                                    <a href="#"><img src="../assets/images/icon/paypal.png" alt=""></a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="{% static 'images/icon/american-express.png' %}" alt=""></a>
+                                    <a href="#"><img src="../assets/images/icon/american-express.png" alt=""></a>
                                 </li>
                                 <li>
-                                    <a href="#"><img src="{% static 'images/icon/discover.png' %}" alt=""></a>
+                                    <a href="#"><img src="../assets/images/icon/discover.png" alt=""></a>
                                 </li>
                             </ul>
                         </div>
@@ -1573,14 +1595,14 @@
                         target="_blank" class="btn btn-block purchase_btn"><i class="fa fa-shopping-cart"
                             aria-hidden="true"></i> purchase Multikart now!</a>
                     <a href="https://themeforest.net/item/multikart-responsive-angular-ecommerce-template/22905358?s_rank=3"
-                        target="_blank" class="btn btn-block purchase_btn"><img src="{% static 'images/icon/angular.png' %}"
-                            alt="" class="img-fluid"> Multikart Angular</a>
+                        target="_blank" class="btn btn-block purchase_btn"><img
+                            src="{% static 'images/icon/angular.png' %}" alt="" class="img-fluid"> Multikart Angular</a>
                     <a href="https://themeforest.net/item/multikart-responsive-react-ecommerce-template/23067773?s_rank=2"
-                        target="_blank" class="btn btn-block purchase_btn"><img src="{% static 'images/icon/react.png' %}"
-                            alt="" class="img-fluid"> Multikart React</a>
+                        target="_blank" class="btn btn-block purchase_btn"><img
+                            src="{% static 'images/icon/react.png' %}" alt="" class="img-fluid"> Multikart React</a>
                     <a href="https://themeforest.net/item/multikart-multipurpose-shopify-sections-theme/23093831?s_rank=1"
-                        target="_blank" class="btn btn-block purchase_btn"><img src="{% static 'images/icon/shopify.png' %}"
-                            alt="" class="img-fluid"> Multikart Shopify</a>
+                        target="_blank" class="btn btn-block purchase_btn"><img
+                            src="{% static 'images/icon/shopify.png' %}" alt="" class="img-fluid"> Multikart Shopify</a>
                 </div>
             </div>
         </div>
@@ -1616,6 +1638,13 @@
 
     <!-- Theme js-->
     <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- Add to cart js-->
+    <script src="{% static 'js/cart.js' %}"></script>
+
+    <!-- Add to subscribers-->
+    <script src="{% static 'js/scripts.js' %}"></script>
+
 
     <script>
         function openSearch() {

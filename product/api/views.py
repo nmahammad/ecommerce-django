@@ -1,9 +1,10 @@
 from itertools import product
+import django_filters
+from rest_framework import serializers, filters, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
-from product.api.serializer import ProductSerializer
 from product.models import Product, Review
+from django.http.response import Http404, JsonResponse
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -18,34 +19,32 @@ from rest_framework.status import (
   )
 from django.http import Http404
 
+from django.http import Http404
 from product.api.serializers import CategoryReadSerializer, CategoryCreateSerializer
+from product.api.serializers import ProductCreateSerializer, ProductReadSerializer
 from product.models import Category
 
 
 
-class ReviewAPI(APIView):
+#Mahammad's part
 
-    
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        serializer = ProductSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(data=serializer.data, status=201) 
+class ProductList(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    filter_backends = (filters.SearchFilter, django_filters.rest_framework.DjangoFilterBackend,  filters.OrderingFilter)
+    filter_fields = ('category_id', 'brand_id' , 'vendor_id')
+    serializer_class = ProductReadSerializer
 
 
-class ProductAPI(APIView):
-
-    def get(self, request, *args, **kwargs):
-        products = Product.objects.all()
-        serializer = ProductSerializer(
-            products, many=True, context={'request': request})
-        return Response(data=serializer.data)
+class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductReadSerializer
 
 
 
 
 
+
+# KAMRAN'S PART CATEGORIES
 
 class CategoryAPI(APIView):
 

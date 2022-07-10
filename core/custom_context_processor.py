@@ -1,4 +1,4 @@
-from core.models import Subscriber
+from core.models import NewSubscriber
 from core.forms import SubscriberForm
 from django.shortcuts import render
 

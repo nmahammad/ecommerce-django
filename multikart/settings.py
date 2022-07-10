@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'user',
     'core',
     'accounts',
+    'django_filters'
 
 ]
 
@@ -107,6 +108,8 @@ ROOT_URLCONF = 'multikart.urls'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     )
 }
 

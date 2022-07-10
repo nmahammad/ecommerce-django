@@ -535,7 +535,7 @@
 
                                 <div class="media">
 
-                                    <a href="{{ new_product.main_version.product_id.get_absolute_url }}"> <img
+                                    <a href="{{ new_product.main_version.get_absolute_url }}"> <img
                                             src="{{ new_product.main_version.main_image.image.url }}"
                                             alt="product_image"></a>
 
@@ -569,7 +569,7 @@
                                             {% endif %}
 
                                         </div>
-                                        <a href="{{ new_product.main_version.product_id.get_absolute_url }}">
+                                        <a href="{{ new_product.main_version.get_absolute_url }}">
                                             <h6>{{ new_product.main_version.title}}</h6>
                                         </a>
                                         <h4>{{ new_product.main_version.price}}$</h4>
@@ -676,7 +676,7 @@
 
 
                                                             <a
-                                                                href=" {{ product.main_version.product_id.get_absolute_url }} ">
+                                                                href=" {{ product.main_version.get_absolute_url }} ">
                                                                 <img src="{{ product.main_version.main_image.image.url }}"
                                                                     class="img-fluid blur-up lazyload bg-img" alt="">
                                                             </a>

@@ -58,67 +58,120 @@
 
 <!-- loader start -->
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <script>
     console.log("inside script")
 
-    document.addEventListener("DOMContentLoaded", function () {
-    let button = document.getElementsByClassName('cartButton');
-    for (let i = 0; i < button.length; i++) {
-        button[i].addEventListener('click', async (event) => {
-            event.preventDefault();
-            var countItem,
-                element = document.getElementById('quantity');
-            if (element != null) {
-                countItem = element.value;
-            } else {
-                countItem = 1;
-            }
-            let price = document.getElementsByClassName('priceItem')
-            let priceItem = price[i].getAttribute('data-value')
-            let findItem = document.getElementsByClassName('Idpro')
-            let valueId = findItem[i].value
+    
+// >>>>> deletes <<<<<
+    
+jQuery(document).ready(function($){
+   
+   var check=$("#one").attr('data-product-like');
+   console.log(check)
+   console.log(check)
+   if (check=="True"){
+       var vm=$(".add-wishlist");
+       $(".add-wishlist").css("color","red");
+       vm.addClass('remove').removeClass('add-wishlist');
+       // $(".remove").css("color","red");
+       console.log("HHHHHHH")  
+       
+   }
+   else if(check=="False"){
+       console.log("ELSE")
+       var v=$(".remove");
+       $(".remove").css("color",""); 
+       v.addClass('add-wishlist').removeClass('remove');
+       
+       console.log("ISledi")
 
-            // console.log('value-id: ', valueId);
-            // console.log('count', countItem)
-            // console.log('price', price)
-            // console.log('priceitem', priceItem)
-            // console.log('finditem', findItem)
-            async function getProducts() {
-                let postData = {
-
-                    "productVersion": parseInt(valueId),
-                    "price": parseFloat(priceItem),
-                    "sub_total": parseFloat(priceItem),
-                    "count": parseInt(countItem),
-
-                }
-                let response = await fetch('/api/cartitems/', {
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        "X-Requested-With": "XMLHttpRequest",
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                        // 'X-CSRF-TOKEN': "FETCH"
-                    },
-
-                    method: "POST",
-
-                    body: JSON.stringify(postData)
-                });
-                console.log(JSON.stringify(postData))
-                // window.location.reload()    
-            }
-            console.log('i of button:', i);
-            getProducts();
-
-
-
-        });
-
-    }
+   }
+  
 });
 
+
+    
+// >>>>> adds to wishlist <<<<<
+
+$(document).on('click',".add-wishlist",function(){
+   var pid=$(this).attr('data-product');
+
+   // console.log(pid)
+ 
+   var vm=$(this);
+   // console.log(vm)
+   // console.log(!pid)
+   if(!pid){
+       window.location = `/login/?next=${window.location.pathname}`
+   }
+   
+   $.ajax({
+       url:"/add-wishlist",
+       // type:"POST",
+       data:{
+           productversion:pid
+       },
+       dataType:'json',
+       success:function(res){
+           // console.log("AAAAAAAa")
+           // console.log(res)
+           if (res.bool==false){
+               console.log(vm)
+               vm.addClass('remove').removeClass('add-wishlist');
+               $(".remove").css("color","red");
+               // a=vm.addClass("text-danger");
+               res.bool=true
+               console.log("AAAAb")
+               console.log(res.bool)
+           }
+           // else if (res.bool==true){
+           //     // vm.addClass('add-wishlist').removeClass('remove bg-danger');
+           //     res.bool=false
+           //     console.log("AAAAb")
+           // }
+
+       }
+   })
+});
+
+
+
+$(document).on('click',".remove",function(){
+  var v=$(this);
+  var pid=$(this).attr('data-product');
+
+  v.addClass('add-wishlist').removeClass('remove');
+  $(".add-wishlist").css("color","");
+  console.log("AAAAAAe");
+  $.ajax({
+   url:"/delete",
+   // type:"GET",
+   data:{
+       productversion:pid
+   },
+   dataType:'json',
+   // success:function(res){
+   //     // console.log("AAAAAAAa")
+   //     // console.log(res)
+   //     if (res.bool==true){
+   //         // a=vm.addClass("text-danger");
+   //         res.bool=false
+   //         console.log("AAAAb")
+   //         console.log(res.bool)
+   //     }
+   //     // else if (res.bool==true){
+   //     //     // vm.addClass('add-wishlist').removeClass('remove bg-danger');
+   //     //     res.bool=false
+   //     //     console.log("AAAAb")
+   //     // }
+
+   // }
+})
+});
+
+ 
 </script>
 
 
@@ -702,13 +755,15 @@
                             <div class="col-lg-6 rtl-text">
                                 <div class="product-right">
                                     <h2> </h2>
+                                    <input type="hidden" value="{{ product_version.id }}" id="Idpro">
+
                                     <h3> {{ product_version.title }} </h3>
 
                                     {% if product_version.discount_id %}
 
                                     <h4><del>${{ product_version.price }}</del><span> {{percentage}} % off</span></h4>
 
-                                    <h3> ${{ new_price }} </h3>
+                                    <h3 id="priceItem" data-value="{{new_price}}"> ${{ new_price }} </h3>
 
                                     {% else %}
 
@@ -816,11 +871,11 @@
                                                 <div class="qty-box">                                                
                                                         <div class="input-group"><span class="input-group-prepend">
                                                             <input type="number" value="1" min="1"
-                                                                max="{{ product_version.quantity }}" id="productQty" name="quantity"
+                                                                max="{{ product_version.quantity }}" id="quantity" name="quantity"
                                                                 class="form-control input-number" value="1"> 
                                                         </div>
 
-                                                        <button class="wishlist-btn"><i class="fa fa-shopping-cart"></i><span
+                                                        <button class="add-to-cart"><i class="fa fa-shopping-cart"></i><span
                                                                 class="title-font">Add To Cart</span></button>
                                                 </div>
 
@@ -971,8 +1026,12 @@
                                                     <li><a href="#"><i class="fa fa-rss"></i></a></li>
                                                 </ul>
                                                 <form class="d-inline-block">
-                                                    <button class="wishlist-btn"><i class="fa fa-heart"></i><span
+                                                    <a href="#" class ='add-wishlist'   data-product="{{product_version.id}}">
+                                                    <button class="wishlist-btn"><i id="one"  data-product-like={{wishlist}} class="fa fa-heart"></i><span
                                                             class="title-font">Add To WishList</span></button>
+                                                            
+                       
+                                                    </a>
                                                 </form>
                                             </div>
                                         </div>

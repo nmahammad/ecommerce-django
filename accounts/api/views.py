@@ -10,13 +10,14 @@ from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import RetrieveAPIView
 from accounts.api.serializers import UserSerializer
+from drf_yasg.utils import swagger_auto_schema
 
 
 User = get_user_model()
 
 
 class Register(APIView):
-  # @swagger_auto_schema(query_serializer=RegistrationSerializers, request_body=RegistrationSerializers)
+  @swagger_auto_schema(query_serializer=RegistrationSerializers, request_body=RegistrationSerializers)
   def post(self, request, *args, **kwargs):
     """
       This endpoint for creat new user
@@ -48,3 +49,4 @@ class Register(APIView):
 #   else:
 #    data = serializer.errors
 #   return Response(data)
+

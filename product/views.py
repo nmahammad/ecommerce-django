@@ -50,6 +50,7 @@ class CategoryListView(ListView):
             queryset = queryset.filter(category_id__parent_id=category_id)
         return queryset
 
+   
 
 
 def search(request):
@@ -136,7 +137,7 @@ class ProductDetailView(CreateView, DetailView):
 
         if(product_version.discount_id):
             percentage = product_version.discount_id.percentage
-            new_price = (product_version.price * percentage) // 100
+            new_price = product_version.price - (product_version.price * percentage) // 100
 
             context['new_price'] = new_price
             context['percentage'] = percentage
@@ -164,7 +165,7 @@ class ProductDetailView(CreateView, DetailView):
         return reverse_lazy('product_detail', kwargs={'pk': product_id})
 
     def form_valid(self, form):
-        form.instance.product_id = self.get_object()
+        form.instance.product_id = self.get_object().product_id
         form.instance.user_id = self.request.user
         
         return super().form_valid(form)
@@ -177,6 +178,3 @@ class ProductDetailView(CreateView, DetailView):
 def export(request):
     process_func.delay()
     return redirect('/')
-
-
-

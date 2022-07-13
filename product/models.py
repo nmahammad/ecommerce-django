@@ -139,6 +139,7 @@ class Product(AbstractModel):
 
     @property
     def main_version(self):
+        result = None
         product_versions = self.product_set.all()
         for pv in product_versions:
             if pv.image_set.all():

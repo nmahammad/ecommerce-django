@@ -36,6 +36,9 @@ class ProductList(generics.ListCreateAPIView):
 
 
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    This endpoint for detail product
+    """
     queryset = Product.objects.all()
     serializer_class = ProductReadSerializer
 

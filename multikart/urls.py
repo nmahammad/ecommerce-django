@@ -74,7 +74,7 @@ urlpatterns += i18n_patterns(
 
     path('', include('product.urls')),
 
-    path("api/accounts/", include('accounts.api.urls')),
+    # path("api/accounts/", include('accounts.api.urls')),
 
 )
 

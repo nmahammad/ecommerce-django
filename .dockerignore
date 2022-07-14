@@ -1,0 +1,4 @@
+.env/
+pgdb/
+.venv/
+./pgdb

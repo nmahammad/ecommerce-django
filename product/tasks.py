@@ -39,7 +39,7 @@ def send_mail_to_subscribers():
 
 
 
-
+# celery -A multikart worker --beat --scheduler django --loglevel=info
 
 
 # @shared_task

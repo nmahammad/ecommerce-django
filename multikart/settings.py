@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CELERY_TIMEZONE = 'Asia/Baku'
 
 
-REDIS_BROKER_URL = 'redis://localhost:6379'
+REDIS_BROKER_URL =  f"redis://{os.environ.get('REDIS_HOST', 'localhost')}:{os.environ.get('REDIS_PORT', '6379')}"
 
 REDIS_CLIENT = redis.Redis.from_url(REDIS_BROKER_URL)
 
@@ -161,18 +161,18 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'multikart',
-        'USER': 'user',
-        'PASSWORD': '12345',
-        'PORT': 5432,
-        'HOST': 'localhost',
+        'NAME': os.environ.get('POSTGRES_DB','multikart'),
+        'USER': os.environ.get('POSTGRES_USER','user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD','12345'),
+        'PORT': os.environ.get('POSTGRES_PORT',5432),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
     }
 }
 
 
 # CELERY STUFF
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_BROKER_URL =  f"redis://{os.environ.get('REDIS_HOST', 'localhost')}:{os.environ.get('REDIS_PORT', '6379')}"
+CELERY_RESULT_BACKEND =  f"redis://{os.environ.get('REDIS_HOST', 'localhost')}:{os.environ.get('REDIS_PORT', '6379')}"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

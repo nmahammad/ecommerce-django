@@ -1,7 +1,10 @@
 from multiprocessing import context
-from django.shortcuts import render
+from django import views
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
-
+from user.models import WishList, WishListItem
+from product.models import ProductVersion
+from django.views.generic import ListView
 # Create your views here.
 
 
@@ -16,4 +19,10 @@ def register(request):
  
 def profile(request):
  return render(request,'profile.html',)
+
+
+
+
+
+    
 

@@ -37,6 +37,8 @@ class CategoryListView(ListView):
         context['categories'] = Category.objects.filter(parent_id = None)
         context['brands'] = Brand.objects.distinct()
         context['product_colors'] = Color.objects.all()
+        context['product_sizes'] = Size.objects.all()
+
 
         return context
 
@@ -91,7 +93,9 @@ class ProductDetailView(CreateView, DetailView):
         product_version = self.get_object()
         product_pk = product_version.product_id.id
         product_version_pk = product_version.id
-
+        context['u'] = self.request.user.id
+        product = self.get_object().product_id
+        context['product'] = product
         context['new_products'] = Product.objects.all().exclude(id=product_pk).order_by('-created_at')[:4]
 
         context['related_products'] = Product.objects.filter(
@@ -134,6 +138,11 @@ class ProductDetailView(CreateView, DetailView):
 
         context['related_versions'] = related_versions
 
+        # if (product_version.in_wishlist == self.request.user.id):
+        #     a =1
+        # else:
+        #     a = 0
+        # context['a'] = a
 
         if(product_version.discount_id):
             percentage = product_version.discount_id.percentage

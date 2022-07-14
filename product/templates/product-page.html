@@ -61,117 +61,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <script>
-    console.log("inside script")
-
     
-// >>>>> deletes <<<<<
-    
-jQuery(document).ready(function($){
-   
-   var check=$("#one").attr('data-product-like');
-   console.log(check)
-   console.log(check)
-   if (check=="True"){
-       var vm=$(".add-wishlist");
-       $(".add-wishlist").css("color","red");
-       vm.addClass('remove').removeClass('add-wishlist');
-       // $(".remove").css("color","red");
-       console.log("HHHHHHH")  
-       
-   }
-   else if(check=="False"){
-       console.log("ELSE")
-       var v=$(".remove");
-       $(".remove").css("color",""); 
-       v.addClass('add-wishlist').removeClass('remove');
-       
-       console.log("ISledi")
-
-   }
-  
-});
-
-
-    
-// >>>>> adds to wishlist <<<<<
-
-$(document).on('click',".add-wishlist",function(){
-   var pid=$(this).attr('data-product');
-
-   // console.log(pid)
- 
-   var vm=$(this);
-   // console.log(vm)
-   // console.log(!pid)
-   if(!pid){
-       window.location = `/login/?next=${window.location.pathname}`
-   }
-   
-   $.ajax({
-       url:"/add-wishlist",
-       // type:"POST",
-       data:{
-           productversion:pid
-       },
-       dataType:'json',
-       success:function(res){
-           // console.log("AAAAAAAa")
-           // console.log(res)
-           if (res.bool==false){
-               console.log(vm)
-               vm.addClass('remove').removeClass('add-wishlist');
-               $(".remove").css("color","red");
-               // a=vm.addClass("text-danger");
-               res.bool=true
-               console.log("AAAAb")
-               console.log(res.bool)
-           }
-           // else if (res.bool==true){
-           //     // vm.addClass('add-wishlist').removeClass('remove bg-danger');
-           //     res.bool=false
-           //     console.log("AAAAb")
-           // }
-
-       }
-   })
-});
-
-
-
-$(document).on('click',".remove",function(){
-  var v=$(this);
-  var pid=$(this).attr('data-product');
-
-  v.addClass('add-wishlist').removeClass('remove');
-  $(".add-wishlist").css("color","");
-  console.log("AAAAAAe");
-  $.ajax({
-   url:"/delete",
-   // type:"GET",
-   data:{
-       productversion:pid
-   },
-   dataType:'json',
-   // success:function(res){
-   //     // console.log("AAAAAAAa")
-   //     // console.log(res)
-   //     if (res.bool==true){
-   //         // a=vm.addClass("text-danger");
-   //         res.bool=false
-   //         console.log("AAAAb")
-   //         console.log(res.bool)
-   //     }
-   //     // else if (res.bool==true){
-   //     //     // vm.addClass('add-wishlist').removeClass('remove bg-danger');
-   //     //     res.bool=false
-   //     //     console.log("AAAAb")
-   //     // }
-
-   // }
-})
-});
-
- 
 </script>
 
 
@@ -638,7 +528,7 @@ $(document).on('click',".remove",function(){
 
 
 
-                                    <a href="{{ new_product.main_version.product_id.get_absolute_url }}"><img
+                                    <a href="{{ new_product.main_version.get_absolute_url }}"><img
                                             class="img-fluid blur-up lazyload" src="/media/{{ img.image }}"
                                             style="height: 150px; width: 100px;" alt=""></a>
 
@@ -777,8 +667,11 @@ $(document).on('click',".remove",function(){
                                         {% for pv in distinct_product_versions %}
 
                                         <a href="{% url 'product_detail' pv.id %}">
-
-                                            <li class="color-1" style="background-color: {{pv.color}};"></li>
+                                            {% if pv.color.name ==  product_version.color.name %}
+                                            <li class="color-1" style="background-color: {{pv.color}};"> <i style="padding-left: 16px; ; " class="fa fa-check fa-lg" aria-hidden="true"></i> </li> 
+                                            {% else %}
+                                            <li class="color-1" style="background-color: {{pv.color}};">  </li> 
+                                            {% endif %}
 
                                         </a>
 
@@ -824,7 +717,11 @@ $(document).on('click',".remove",function(){
                                                 <!-- <li class="active"><a href="#"></a></li> -->
                                                 <br>
                                                 {% for pv in related_versions %}
+                                                {% if product_version.size == pv.size %}
+                                                <li style="background-color: #00AA00;"><a href="{% url 'product_detail' pv.id %}">{{ pv.size }}</a></li>
+                                                {% else %}
                                                 <li><a href="{% url 'product_detail' pv.id %}">{{ pv.size }}</a></li>
+                                                {% endif %}
                                                 {% endfor %}
 
                                             </ul>
@@ -865,14 +762,17 @@ $(document).on('click',".remove",function(){
 
 
                                             <h6 class="product-title">quantity</h6>
-                                            <form class="d-inline-block" method="POST" action="/product/{{ product_version.id }}"> 
+
+                                            <form class="d-inline-block" method="POST" action="{% url 'add-to-cart' %}"> 
                                             {% csrf_token %}
 
                                                 <div class="qty-box">                                                
                                                         <div class="input-group"><span class="input-group-prepend">
                                                             <input type="number" value="1" min="1"
                                                                 max="{{ product_version.quantity }}" id="quantity" name="quantity"
-                                                                class="form-control input-number" value="1"> 
+                                                                class="form-control input-number"> 
+                                                                <input type="hidden" name="product_version_id" value="{{ product_version.id }}" class="prod_id">
+  
                                                         </div>
 
                                                         <button class="add-to-cart"><i class="fa fa-shopping-cart"></i><span
@@ -881,133 +781,6 @@ $(document).on('click',".remove",function(){
 
                                             </form>
                                         </div>
-
-                                        <!-- <script>
-                                        $(document).on('change', '#post-form', function (e) {
-                                            e.preventDefault();
-                                            $.ajax({
-                                                type: 'POST',
-                                                 data: {
-                                                    productid: $('#productid').val(),
-                                                    size: $('#size').val(),
-                                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                                                    action: 'post'
-                                                },
-                                                data_type: 'html',
-                                                success: function (data) {
-                                                    console.log("success");
-                                                    $('#appendHere').html(data.rendered_table);
-                                                },
-                                                error: function (data) {
-                                                    alert("Got an error dude " + data);
-                                                }
-                                            });
-                                        });
-                                    </script> -->
-
-                                        <!-- <div class="product-btns">
-                                        <form action="/order/addtoshopcart/{{ product.id }}" method="post"
-                                            id="post-form">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="productid" id="productid"
-                                                value="{{ product.id }}">
-                                            <div class="row">
-                                                {% if product.variant == 'None' %}
-                                                <div class="qty-input">
-                                                    <span class="text-uppercase">QTY: </span>
-                                                    <input class="input" name="quantity" type="number" value="1" min="1"
-                                                        max="{{ product.amount }}">
-                                                    <button type="submit" class="primary-btn add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i> Add to Cart</button>
-                                                </div>
-
-                                                {% elif product.variant == 'Size-Color' %}
-
-                                                <div class="product-options">
-                                                    <div class="size-option">
-                                                        <span class="text-uppercase">Size :</span>
-                                                        <select name="size" id="size">
-                                                            {% for rs in size %}
-                                                            <option value="{{ rs.size_id }}">{{ rs.size.name }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-
-
-                                                    <ul class="color-option">
-                                                        <li><span class="text-uppercase">Color:</span></li>
-                                                        {% for rs in color %}
-                                                        <input type="radio" name="color" value="{{ rs.id }}">
-                                                        <li>
-                                                            <a href="#"
-                                                                style="background-color:{{ rs.color.code }}; color: #ffffff; text-shadow: 2px 2px #000000; width: 70px">
-                                                                {{ rs.color }} ${{ rs.price }}
-                                                            </a>
-                                                            <img src="{{ rs.image }}" style="height: 70px">
-
-                                                        </li>
-                                                        {% endfor %}
-                                                    </ul>
-
-                                                    <p><strong>Availability:</strong> In Stock</p>
-                                                    <div class="qty-input">
-                                                        <span class="text-uppercase">QTY: </span>
-                                                        <input class="input" name="quantity" type="number" value="1"
-                                                            min="1" max="{{ product.amount }}">
-                                                        <button type="submit" class="primary-btn add-to-cart"><i
-                                                                class="fa fa-shopping-cart"></i> Add to Cart</button>
-                                                    </div>
-                                                </div>
-
-                                                {% elif product.variant == 'Size' %}
-
-                                                <div class="product-options">
-                                                    <ul class="size-option">
-                                                        <li><span class="text-uppercase">Size:</span></li>
-                                                        <li class="active"><a href="#">S</a></li>
-                                                        <li><a href="#">XL</a></li>
-                                                        <li><a href="#">SL</a></li>
-                                                    </ul>
-                                                </div>
-                                                <p><strong>Availability:</strong> In Stock</p>
-                                                <div class="qty-input">
-                                                    <span class="text-uppercase">QTY: </span>
-                                                    <input class="input" name="quantity" type="number" value="1" min="1"
-                                                        max="{{ product.amount }}">
-                                                    <button type="submit" class="primary-btn add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i> Add to Cart</button>
-                                                </div>
-                                                {% elif product.variant == 'Color' %}
-                                                <div class="product-options">
-                                                    <ul class="color-option">
-                                                        <li><span class="text-uppercase">Color:</span></li>
-                                                        <li class="active"><a href="#"
-                                                                style="background-color:#475984;"></a></li>
-                                                        <li><a href="#" style="background-color:#8A2454;"></a></li>
-                                                        <li><a href="#" style="background-color:#BF6989;"></a></li>
-                                                        <li><a href="#" style="background-color:#9A54D8;"></a></li>
-                                                    </ul>
-                                                </div>
-                                                <br><br><br>
-                                                <p><strong>Availability:</strong> In Stock</p>
-                                                <div class="qty-input">
-                                                    <span class="text-uppercase">QTY: </span>
-                                                    <input class="input" name="quantity" type="number" value="1" min="1"
-                                                        max="{{ product.amount }}">
-                                                    <button type="submit" class="primary-btn add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i> Add to Cart</button>
-                                                </div>
-                                                {% endif %}
-                                            </div>
-                                            <br>
-
-
-
-
-
-                                        </form> -->
-
-
 
                                         <div class="border-product">
                                             <h6 class="product-title">product details</h6>
@@ -1025,10 +798,26 @@ $(document).on('click',".remove",function(){
                                                     <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                                                     <li><a href="#"><i class="fa fa-rss"></i></a></li>
                                                 </ul>
-                                                <form class="d-inline-block">
+                                                <form method="POST" action="{% url 'add-to-wishlist' %}" class="d-inline-block">
+                                                    {% csrf_token %}
                                                     <a href="#" class ='add-wishlist'   data-product="{{product_version.id}}">
-                                                    <button class="wishlist-btn"><i id="one"  data-product-like={{wishlist}} class="fa fa-heart"></i><span
-                                                            class="title-font">Add To WishList</span></button>
+                                                    <input type="hidden" name="product_version_id" value="{{ product_version.id }}" class="prod_id">
+                                                    
+                                                    
+                                                    <button type="submit" class="wishlist-btn addToWishlist">
+                                                        
+                                                        {% comment %}
+
+                                                        {% if {{a}} == 1 %}
+                                                        <i class="fa fa-heart"></i>
+                                                        {% else %}
+                                                        <i class="fa fa-heart"></i>
+                                                        {% endif %}
+
+                                                        {% endcomment %}
+                                                        <i class="fa fa-heart"></i>
+                                                        
+                                                        <span class="title-font">Add To WishList</span></button>
                                                             
                        
                                                     </a>

@@ -5,7 +5,7 @@ import django
 from django.forms import ModelForm
 # Create your models here.
 from core.models import AbstractModel
-from product.models import User, Product, ProductVersion
+from product.models import User, Product, ProductVersion, Color
 from user.models import Basket, User
 
 
@@ -38,6 +38,24 @@ class BillingDetail(AbstractModel):
 class Order(AbstractModel):
     basket_id = models.ForeignKey(Basket, on_delete=models.CASCADE)
     total_payment = models.FloatField('total payment for order', max_length=50)
+
+
+
+
+class WishList(AbstractModel):
+    user_id = models.ForeignKey(User, on_delete = models.CASCADE, related_name='wishlist_user' ) 
+
+    def __str__(self):
+        return self.user_id.first_name + ' ' + self.user_id.last_name + ' ' + str(self.user_id.id)
+
+ 
+class WishListItem(models.Model):
+    wishlist_id = models.ForeignKey(WishList, on_delete=models.CASCADE, related_name='wishlist_items')
+    product_version_id = models.ForeignKey(ProductVersion, on_delete=models.CASCADE, related_name='in_wishlist')
+
+    def __str__(self):
+        return self.product_version_id.title 
+
 
 
 

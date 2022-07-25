@@ -1,6 +1,6 @@
 from ast import Or
 from genericpath import exists
-from msilib.schema import ListView
+# from msilib.schema import ListView
 from django.shortcuts import render
 from numpy import c_
 from .models import Product, ProductVersion, Cart, CartItem, Order, ShopCart, ShopCartForm, WishList ,WishListItem

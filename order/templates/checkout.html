@@ -42,43 +42,43 @@
                             <div class="row check-out">
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                     <div class="field-label">First Name</div>
-                                    {{order_form.first_name}}
+                                    {{form.first_name}}
                                     <ul>
-                                        {% for error in order_form.first_name.errors %}
+                                        {% for error in form.first_name.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                     <div class="field-label">Last Name</div>
-                                    {{order_form.last_name}}
+                                    {{form.last_name}}
                                     <ul>
-                                        {% for error in order_form.last_name.errors %}
+                                        {% for error in form.last_name.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                     <div class="field-label">Phone</div>
-                                    {{order_form.phone_number}}
+                                    {{form.phone_number}}
                                     <ul>
-                                        {% for error in order_form.phone_number.errors %}
+                                        {% for error in form.phone_number.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                     <div class="field-label">Email Address</div>
-                                    {{order_form.email}}
+                                    {{form.email}}
                                     <ul>
-                                        {% for error in order_form.email.errors %}
+                                        {% for error in form.email.errors %}
                                         <li style="border: 2px solid purple;" class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="field-label">Country</div>
-                                    {{order_form.country}}
+                                    {{form.country}}
                                     <ul>
                                         {% for error in order_form.country.errors %}
                                         <li class="alert-danger"> {{error}}</li>
@@ -87,36 +87,36 @@
                                 </div>
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="field-label">Address</div>
-                                    {{order_form.address}}
+                                    {{form.address}}
                                     <ul>
-                                        {% for error in order_form.address.errors %}
+                                        {% for error in form.address.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="field-label">Town/City</div>
-                                    {{order_form.city_town}}
+                                    {{form.city_town}}
                                     <ul>
-                                        {% for error in order_form.city_town.errors %}
+                                        {% for error in form.city_town.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="form-group col-md-12 col-sm-6 col-xs-12">
                                     <div class="field-label">State / County</div>
-                                    {{order_form.state}}
+                                    {{form.state}}
                                     <ul>
-                                        {% for error in order_form.state.errors %}
+                                        {% for error in form.state.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="form-group col-md-12 col-sm-6 col-xs-12">
                                     <div class="field-label">Postal Code</div>
-                                    {{order_form.postal_code}}
+                                    {{form.postal_code}}
                                     <ul>
-                                        {% for error in order_form.postal_code.errors %}
+                                        {% for error in form.postal_code.errors %}
                                         <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-lg-6 col-sm-12 col-xs-12">
                             <div class="checkout-details">
-                                {% for item in items %}
+                                {% for item in cartitems %}
                                 <div class="order-box">
                                     <div class="title-box">
                                         <div>Product <span>Price per Item</span></div>
@@ -156,7 +156,7 @@
                                     </ul>
                                 {% endfor %}
                                     <ul class="total">
-                                        <li>Total <span class="count">${{ booking.get_cart_total }}</span></li>
+                                        <li>Total <span class="count">${{ cart.grandtotal }}</span></li>
                                     </ul>
                                 </div>
                                 <div class="payment-box">

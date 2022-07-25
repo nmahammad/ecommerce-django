@@ -423,7 +423,7 @@
                                     <div class="custom-control custom-checkbox collection-filter-checkbox">
 
                                         <li>
-                                            <a href="{% url 'products' %}?brand_id={{ brand.id }}">
+                                            <a href="{% url 'products' %}?{{request.GET.urlencode}}&brand_id={{ brand.id }}">
 
 
                                                 <input type="filter-checkbox" data-filter="brand"

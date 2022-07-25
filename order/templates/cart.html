@@ -50,11 +50,13 @@
                       
                         </tbody>
                         <tbody>
-                            {% for item in cartitems %}
                             <tr>
-                            
-                                <td>
+                                {% for item in cartitems %}
 
+                                <td>
+                                    {% if item.product_version_id.get_images %}
+
+                                    
                                     {% for img in item.product_version_id.image_set.all %}
 
                                     {% if img.is_main %}
@@ -64,11 +66,23 @@
 
                                     {% endif %}
 
-
                                     {% endfor %}
 
+
+                                    {% else %}
+                                    
+                                    {% for img in item.product_version_id.related_pic %}
+
+                                    <a href="#">
+                                        <img src="/media/{{ img.image }}" alt=""></a>
+                                    
+                                    {% endfor %}
+
+                                    {% endif %}
+                                
+
                                 </td>
-                                <td><a href="#"> <h3 style="color: black"> {{ item.product_version_id.title }} </h3></a>
+                                <td><a href="#"> <h3 style="color: black"> {{ item.product_version_id.title }} {% if item.product_version_id.size %} size: {{item.product_version_id.size}} {% endif %}</h3></a>
                                     <div class="mobile-cart-content row">
                                         <div class="col-xs-3">
                                             <div class="qty-box">
@@ -98,7 +112,14 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><a href="#" class="icon"><i class="ti-close"></i></a></td>
+
+                                <form method="POST" action="{% url 'delete-from-cart' %}">
+                                    {% csrf_token %}
+                                    <td><a href="#" class="icon">
+                                    
+                                    <button type="submit">    <i class="ti-close"></i> </button>  </a></td>
+                                    <input type="hidden" name="item-id" value="{{ item.id }}" >
+                                </form>
                                 <td>
                                     <h2 class="td-color">${{item.subtotal}}</h2>
                                 </td>

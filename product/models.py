@@ -118,6 +118,11 @@ class Product(AbstractModel):
     slug = models.SlugField(null=False, unique=True)
 
     @property
+    def distinct_versions(self):
+        distinct_versions = ProductVersion.objects.filter(product_id=self.id).distinct('color')
+        return distinct_versions
+
+    @property
     def avaregereview(self):
         reviews = Review.objects.filter(product_id__id=self.id).aggregate(avarage=Avg('rating'))
         avg=0

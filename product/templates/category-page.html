@@ -498,14 +498,19 @@
                             <h3 class="collapse-block-title">size</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="collection-brand-filter">
+                                    {% for size in product_sizes %}
+
+                                    <div class="custom-control custom-checkbox collection-filter-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="{{size.name}}">
+                                        <label class="custom-control-label" for="{{size.name}}"> {{ size.name }} </label>
+                                    </div>
+                                    
+                                    {% endfor %}
                                     {% comment %}
 
                                     {% get_propertyValueSize as values %}
                                     {% for value in values %}
-                                    <div class="custom-control custom-checkbox collection-filter-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="{{value.name}}">
-                                        <label class="custom-control-label" for="{{value.name}}">{{value.name}}</label>
-                                    </div>
+                                   
                                     {% endfor %}
                                     {% endcomment %}
 
@@ -687,7 +692,8 @@
                                                             </div> -->
                                                         <div class="cart-info cart-wrap">
 
-                                                            <a class="btn btn-primary addtocart" data-action='add'
+
+                                                            <!-- <a class="btn btn-primary addtocart" data-action='add'
                                                                 data-product-version="{{product.main_version.id}}">Add
                                                                 to Cart</a>
 
@@ -695,7 +701,7 @@
 
                                                                 <i class="ti-heart" aria-hidden="true"></i></a>
 
-                                                            </button>
+                                                            </button> -->
 
 
                                                         </div>

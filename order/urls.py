@@ -13,7 +13,8 @@ from order.views import (
 
 
 urlpatterns = [
-    path('checkout/' , CreateOrderView.as_view() ), 
+    path('checkout/' , CreateOrderView.as_view() , name='checkout'), 
+
     path('order-success/' , order_success, name='order-success'),
     path('cart/' , cart, name='cart'),
     path('add-to-cart/', addtocart, name='add-to-cart' ),

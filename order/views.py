@@ -1,5 +1,6 @@
 from ast import Or
 from genericpath import exists
+from msilib.schema import ListView
 from django.shortcuts import render
 from numpy import c_
 from .models import Product, ProductVersion, Cart, CartItem, Order, ShopCart, ShopCartForm, WishList ,WishListItem
@@ -14,7 +15,7 @@ from django.shortcuts import render, redirect
 from requests import request
 from order.forms import OrderForm 
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -32,10 +33,37 @@ class CreateOrderView(CreateView, LoginRequiredMixin):
     form_class = OrderForm
     template_name = 'checkout.html'
     success_url = reverse_lazy('order-success')
-    #context_object_name = 'order_form'  ???? 
 
     def form_valid(self, form):
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+        cart, created = Cart.objects.get_or_create(owner = user,  completed=False)
+        cartitems = cart.cart_items.all()
+        context['form'] = self.get_form()
+        context['cart'] = cart
+        context['cartitems'] = cartitems
+        
+        return context
+
+
+def checkout(request):
+    
+    if request.user.is_authenticated:
+        user = request.user
+        cart, created = Cart.objects.get_or_create(owner = user,  completed=False)
+        cartitems = cart.cart_items.all()
+        
+    context = {
+        "cartitems" : cartitems ,
+        'cart' : cart,
+       
+    }
+    return render(request, 'checkout.html', context)
+
 
 
 def cart(request):

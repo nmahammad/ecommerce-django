@@ -44,63 +44,56 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <a href="#"><img src="../static/images/pro3/1.jpg" alt=""></a>
-                                </td>
-                                <td><a href="#">cotton shirt</a>
-                                    <div class="mobile-cart-content row">
-                                        <div class="col-xs-3">
-                                            <div class="qty-box">
-                                                <div class="input-group">
-                                                    <input type="text" name="quantity" class="form-control input-number"
-                                                        value="1">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color">$63.00</h2>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color"><a href="#" class="icon"><i class="ti-close"></i></a>
-                                            </h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h2>$63.00</h2>
-                                </td>
-                                <td>
-                                    <div class="qty-box">
-                                        <div class="input-group">
-                                            <input type="number" name="quantity" class="form-control input-number"
-                                                value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><a href="#" class="icon"><i class="ti-close"></i></a></td>
-                                <td>
-                                    <h2 class="td-color">$4539.00</h2>
-                                </td>
-                            </tr>
+                         
+                        </tbody>
+                        <tbody>
+                      
                         </tbody>
                         <tbody>
                             <tr>
+                                {% for item in cartitems %}
+
                                 <td>
-                                    <a href="#"><img src="../static/images/pro3/1.jpg" alt=""></a>
+                                    {% if item.product_version_id.get_images %}
+
+                                    
+                                    {% for img in item.product_version_id.image_set.all %}
+
+                                    {% if img.is_main %}
+
+                                    <a href="#">
+                                        <img src="/media/{{ img.image }}" alt=""></a>
+
+                                    {% endif %}
+
+                                    {% endfor %}
+
+
+                                    {% else %}
+                                    
+                                    {% for img in item.product_version_id.related_pic %}
+
+                                    <a href="#">
+                                        <img src="/media/{{ img.image }}" alt=""></a>
+                                    
+                                    {% endfor %}
+
+                                    {% endif %}
+                                
+
                                 </td>
-                                <td><a href="#">cotton shirt</a>
+                                <td><a href="#"> <h3 style="color: black"> {{ item.product_version_id.title }} {% if item.product_version_id.size %} size: {{item.product_version_id.size}} {% endif %}</h3></a>
                                     <div class="mobile-cart-content row">
                                         <div class="col-xs-3">
                                             <div class="qty-box">
                                                 <div class="input-group">
                                                     <input type="number" name="quantity"
-                                                        class="form-control input-number" value="1">
+                                                        class="form-control input-number" value={{item.quantity}} >
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-3">
-                                            <h2 class="td-color">$63.00</h2>
+                                            <h2 class="td-color">$6355.00</h2>
                                         </div>
                                         <div class="col-xs-3">
                                             <h2 class="td-color"><a href="#" class="icon"><i class="ti-close"></i></a>
@@ -109,62 +102,29 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h2>$63.00</h2>
+                                    <h2> ${{ item.product_version_id.price }} </h2>
                                 </td>
                                 <td>
                                     <div class="qty-box">
                                         <div class="input-group">
                                             <input type="number" name="quantity" class="form-control input-number"
-                                                value="1">
+                                                value={{item.quantity}}>
                                         </div>
                                     </div>
                                 </td>
-                                <td><a href="#" class="icon"><i class="ti-close"></i></a></td>
+
+                                <form method="POST" action="{% url 'delete-from-cart' %}">
+                                    {% csrf_token %}
+                                    <td><a href="#" class="icon">
+                                    
+                                    <button type="submit">    <i class="ti-close"></i> </button>  </a></td>
+                                    <input type="hidden" name="item-id" value="{{ item.id }}" >
+                                </form>
                                 <td>
-                                    <h2 class="td-color">$4539.00</h2>
+                                    <h2 class="td-color">${{item.subtotal}}</h2>
                                 </td>
                             </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a href="#"><img src="../static/images/pro3/1.jpg" alt=""></a>
-                                </td>
-                                <td><a href="#">cotton shirt</a>
-                                    <div class="mobile-cart-content row">
-                                        <div class="col-xs-3">
-                                            <div class="qty-box">
-                                                <div class="input-group">
-                                                    <input type="number" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color">$63.00</h2>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color"><a href="#" class="icon"><i class="ti-close"></i></a>
-                                            </h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h2>$63.00</h2>
-                                </td>
-                                <td>
-                                    <div class="qty-box">
-                                        <div class="input-group">
-                                            <input type="number" name="quantity" class="form-control input-number"
-                                                value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><a href="#" class="icon"><i class="ti-close"></i></a></td>
-                                <td>
-                                    <h2 class="td-color">$4539.00</h2>
-                                </td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                     <table class="table cart-table table-responsive-md">
@@ -172,7 +132,7 @@
                             <tr>
                                 <td>total price :</td>
                                 <td>
-                                    <h2>$6935.00</h2>
+                                    <h2>${{ cart.grandtotal }}</h2>
                                 </td>
                             </tr>
                         </tfoot>
@@ -181,7 +141,7 @@
             </div>
             <div class="row cart-buttons">
                 <div class="col-6"><a href="#" class="btn btn-solid">continue shopping</a></div>
-                <div class="col-6"><a href="#" class="btn btn-solid">check out</a></div>
+                <div class="col-6"><a href="{% url 'checkout' %}" class="btn btn-solid">check out</a></div>
             </div>
         </div>
     </section>

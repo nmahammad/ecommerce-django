@@ -44,16 +44,36 @@
                         </thead>
                         <tbody>
                             <tr>
+                                {% for item in items %}
+                                {% if item.product_version_id.get_images %}
+
+                                {% for img in item.product_version_id.get_images %}
+
                                 <td>
-                                    <a href="#"><img src="../static/images/pro3/1.jpg" alt=""></a>
+                                    <a href="{{ item.product_version_id.get_absolute_url }}"><img src="/media/{{ img.image }}" alt=""></a>
                                 </td>
-                                <td><a href="#">cotton shirt</a>
+
+                                {% endfor %}
+
+                                {% else %}
+
+                                {% for img in item.product_version_id.related_pic %}
+
+                                <td>
+                                    <a href="#"><img src="/media/{{ img.image }}" alt=""></a>
+                                </td>
+
+                                {% endfor %}
+
+                                {% endif %}
+
+                                <td><a href="{{ item.product_version_id.get_absolute_url }}"> {{item.product_version_id.title}} </a>
                                     <div class="mobile-cart-content row">
                                         <div class="col-xs-3">
                                             <p>in stock</p>
                                         </div>
                                         <div class="col-xs-3">
-                                            <h2 class="td-color">$63.00</h2>
+                                            <h2 class="td-color">${{item.product_version_id.price}}</h2>
                                         </div>
                                         <div class="col-xs-3">
                                             <h2 class="td-color"><a href="#" class="icon mr-1"><i class="ti-close"></i>
@@ -62,73 +82,37 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h2>$63.00</h2>
+                                    <h2>${{item.product_version_id.price}}</h2>
                                 </td>
+                                {% if item.product_version_id.stock %}
                                 <td>
                                     <p>in stock</p>
                                 </td>
-                                <td><a href="#" class="icon mr-3"><i class="ti-close"></i> </a><a href="#"
-                                        class="cart"><i class="ti-shopping-cart"></i></a></td>
+                                {% else %}
+                                <td>
+                                    <p> expired.. </p>
+                                </td>  
+                                {% endif %} 
+                                <td>
+                                    <form method="POST" action="{% url 'delete-from-wishlist' %}"> 
+                                    {% csrf_token %}    
+                                        <a href="#" class="icon mr-3">  
+                                            <input type="hidden" name="item-id" value="{{ item.id }}" >
+                                            
+                                            <button type="submit"> <i class="ti-close"></i> </button>
+                                        </a>
+                                    </form>
+
+                                    <br>
+                                    
+                                    <form action="" action="#"> 
+                                        <a href="#" class="cart"><i class="ti-shopping-cart"></i>   </a>
+                                    </form>
+                                </td>
                             </tr>
+                            {% endfor %}
                         </tbody>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a href="#"><img src="../static/images/pro3/1.jpg" alt=""></a>
-                                </td>
-                                <td><a href="#">cotton shirt</a>
-                                    <div class="mobile-cart-content row">
-                                        <div class="col-xs-3">
-                                            <p>in stock</p>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color">$63.00</h2>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color"><a href="#" class="icon mr-1"><i class="ti-close"></i>
-                                                </a><a href="#" class="cart"><i class="ti-shopping-cart"></i></a></h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h2>$63.00</h2>
-                                </td>
-                                <td>
-                                    <p>in stock</p>
-                                </td>
-                                <td><a href="#" class="icon mr-3"><i class="ti-close"></i> </a><a href="#"
-                                        class="cart"><i class="ti-shopping-cart"></i></a></td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a href="#"><img src="../static/images/pro3/1.jpg" alt=""></a>
-                                </td>
-                                <td><a href="#">cotton shirt</a>
-                                    <div class="mobile-cart-content row">
-                                        <div class="col-xs-3">
-                                            <p>in stock</p>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color">$63.00</h2>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <h2 class="td-color"><a href="#" class="icon mr-1"><i class="ti-close"></i>
-                                                </a><a href="#" class="cart"><i class="ti-shopping-cart"></i></a></h2>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h2>$63.00</h2>
-                                </td>
-                                <td>
-                                    <p>in stock</p>
-                                </td>
-                                <td><a href="#" class="icon mr-3"><i class="ti-close"></i> </a><a href="#"
-                                        class="cart"><i class="ti-shopping-cart"></i></a></td>
-                            </tr>
-                        </tbody>
+                       
                     </table>
                 </div>
             </div>

@@ -49,36 +49,6 @@ class RegisterForm(forms.ModelForm):
         return super().clean()
 
 
-# class CustomPasswordChangeForm(PasswordChangeForm):
-#     old_password = forms.CharField(label=_("Old password"),
-#                                     widget=forms.PasswordInput(attrs={
-#                                     'class': 'form-control',
-#                                     'placeholder': 'Password'
-#             }))
-#     new_password1 = forms.CharField(label=_("New password"),
-#                                     widget=forms.PasswordInput(attrs={
-#                                     'class': 'form-control',
-#                                     'placeholder': 'New Password'
-#             }))
-#     new_password2 = forms.CharField(label=_("New password confirmation"),
-#                                     widget=forms.PasswordInput(attrs={
-#                                     'class': 'form-control',
-#                                     'placeholder': 'Confim Password'
-#             }))
-
-class CustomPasswordChangeForm(PasswordChangeForm):
-    old_password = forms.CharField(label=_("Old password"),
-                                widget=forms.PasswordInput(attrs={
-                                        'class': 'form-control',
-                                        'placeholder': 'Old Password'
-                                    }))
-    new_password1 = forms.CharField(label=_("New password"),
-                                    widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                'placeholder': 'New Password'}))
-    new_password2 = forms.CharField(label=_("New password confirmation"),
-                                    widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                'placeholder': 'Confirm Password'}))
-
 class LoginForm(AuthenticationForm):
     username = UsernameField(widget=forms.TextInput(attrs={
         'class': 'form-control',
@@ -88,6 +58,22 @@ class LoginForm(AuthenticationForm):
         'class': 'form-control',
         'placeholder': 'Password'
     }))
+
+
+# CHANGE PASSWORD
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(label=_("Old password"),
+                                   widget=forms.PasswordInput(attrs={
+                                       'class': 'form-control',
+                                       'placeholder': 'Old Password'
+                                   }))
+    new_password1 = forms.CharField(label=_("New password"),
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control',
+                                                                      'placeholder': 'New Password'}))
+    
+    new_password2 = forms.CharField(label=_("New password confirmation"),
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control',
+                                                                      'placeholder': 'Confirm Password'}))
 
 
 # RESET PASSWORD

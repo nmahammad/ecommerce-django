@@ -39,7 +39,33 @@
 
     <link rel="stylesheet" href="http:////netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet"> -->
+
+
+    <script type="text/javascript">
+
+let user = "{{request.user}}"
+     
+
+     function getCookie(name) {
+       let cookieValue = null;
+       if (document.cookie && document.cookie !== '') {
+           const cookies = document.cookie.split(';');
+           for (let i = 0; i < cookies.length; i++) {
+               const cookie = cookies[i].trim();
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                   cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                   break;
+               }
+           }
+       }
+       return cookieValue;
+   }
+   const csrftoken = getCookie('csrftoken');
+
+
+    </script>
 
     {% block link %}
 
@@ -50,6 +76,7 @@
 {% block register_link %}
 
 {% endblock %}
+
 <body>
 
 
@@ -76,7 +103,7 @@
                             <li class="onhover-dropdown mobile-account">
                                 <i class="fa fa-user" aria-hidden="true"></i> {% trans 'My Account' %}
                                 <ul class="onhover-show-div">
-                                    
+
                                     {% if request.user.is_authenticated %}
                                     <li>
                                         <a href="{% url 'logout' %}" data-lng="en">
@@ -88,7 +115,7 @@
                                             {% trans 'Password Change' %}
                                         </a>
                                     </li>
-                        
+
                                     {% else %}
                                     <li>
                                         <a href="{% url 'login' %}" data-lng="es">
@@ -106,30 +133,31 @@
                                         {% get_available_languages as LANGUAGES %}
                                         {% get_language_info_list for LANGUAGES as languages %}
                                         {% for language in languages %}
-                                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                                                {{ language.code }}
-                                            </option>
+                                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                            {{ language.code }}
+                                        </option>
                                         {% endfor %}
+
                                     </select>
-                                    
+
                                 </form>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-    <!-- ############################# -->
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <!-- ################################### -->
+        <!-- ############################# -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- ################################### -->
 
 
         <div class="container">
@@ -295,135 +323,61 @@
                                     <!-- Horizontal menu -->
                                     <ul id="main-menu" class="sm pixelstrap sm-horizontal">
                                         <li>
-                                            <div class="mobile-back text-right">{% trans 'Back' %}<i class="fa fa-angle-right pl-2"
-                                                    aria-hidden="true"></i></div>
+                                            <div class="mobile-back text-right">{% trans 'Back' %}<i
+                                                    class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
                                         </li>
                                         <li>
-                                            <a href="#">{% trans 'Home' %}</a>
+                                            <a href="{% url 'user_profile' %}">{% trans 'User Profile' %}</a>
+                                            <ul>
+                                          
+                                         
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">{% trans 'about us' %}</a>
+                                            <ul>
+                                                <li><a href="{% url 'about' %}">About us</a></li>
+                                                <li><a href="{% url 'faq' %}">FAQ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">{% trans 'categories' %}</a>
                                             <ul>
                                                 <li>
-                                                    <a href="#">new demos <span class="new-tag">new</span></a>
+                                                    <a href="#">clothes</a>
                                                     <ul>
-                                                        <li><a target="_blank" href="tools.html">tools</a></li>
-                                                        <li><a target="_blank"
-                                                                href="marketplace-demo.html">marketplace</a></li>
-                                                        <li><a target="_blank" href="game.html">game</a></li>
-                                                        <li><a target="_blank" href="gym-product.html">gym</a></li>
-                                                        <li><a target="_blank" href="marijuana.html">marijuana</a></li>
-                                                        <li><a target="_blank" href="left_sidebar-demo.html">left
-                                                                sidebar</a></li>
-                                                        <li><a target="_blank" href="jewellery.html">jewellery</a></li>
-                                                        <li><a target="_blank" href="pets.html">pets</a></li>
-                                                        <li><a target="_blank" href="metro.html">metro</a></li>
-                                                        <li><a target="_blank" href="video-slider.html">video slider</a>
+                                                        <li><a href="product-page.html"> Men</a></li>
+                                                        <li><a href="product-page(right-sidebar).html">Women</a>
                                                         </li>
+                                                        <li><a href="product-page(no-sidebar).html">Kids</a></li>
                                                     </ul>
                                                 </li>
-                                                <li>
-                                                    <a href="#">clothing</a>
-                                                    <ul>
-                                                        <li><a target="_blank" href="index.html">fashion 1</a></li>
-                                                        <li><a target="_blank" href="fashion-2.html">fashion 2</a></li>
-                                                        <li><a target="_blank" href="fashion-3.html">fashion 3</a></li>
-                                                        <li><a target="_blank" href="kids.html">kids</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a target="_blank" href="watch.html">watch</a></li>
-                                                <li><a target="_blank" href="shoes.html">shoes</a></li>
                                                 <li>
                                                     <a href="#">electronics</a>
                                                     <ul>
-                                                        <li><a target="_blank" href="electronic-1.html">electronic 1</a>
+                                                        <li><a href="product-page(left-image).html">phones</a></li>
+                                                        <li><a href="product-page(right-image).html">computers</a>
                                                         </li>
-                                                        <li><a target="_blank" href="electronic-2.html">electronic 2</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li><a target="_blank" href="bags.html">bags</a></li>
-                                                <li><a target="_blank" href="nursery.html">nursery</a></li>
-                                                <li><a target="_blank" href="flower.html">flower</a></li>
-                                                <li><a target="_blank" href="vegetables.html">vegetable</a></li>
-                                                <li><a target="_blank" href="beauty.html">beauty</a></li>
-                                                <li><a target="_blank" href="light.html">light</a></li>
-                                                <li><a target="_blank" href="furniture.html">furniture</a></li>
-                                                <li><a target="_blank" href="goggles.html">googles</a></li>
-                                                <li>
-                                                    <a href="#">basics</a>
-                                                    <ul>
-                                                        <li><a target="_blank" href="lookbook-demo.html">lookbook</a>
-                                                        </li>
-                                                        <li><a target="_blank" href="instagram-shop.html">instagram</a>
-                                                        </li>
-                                                        <li><a target="_blank" href="video.html">video</a></li>
-                                                        <li><a target="_blank" href="parallax.html">parallax</a></li>
-                                                        <li><a target="_blank" href="full-page.html">full page</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">{% trans 'shop' %}</a>
-                                            <ul>
-                                                <li><a href="category-page.html">left sidebar</a></li>
-                                                <li><a href="category-page(right).html">right sidebar</a></li>
-                                                <li><a href="category-page(no-sidebar).html">no sidebar</a></li>
-                                                <li><a href="category-page(sidebar-popup).html">sidebar popup</a></li>
-                                                <li><a href="category-page(metro).html">metro <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="category-page(full-width).html">full width <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="category-page(infinite-scroll).html">infinite scroll</a>
-                                                </li>
-                                                <li><a href=category-page(3-grid).html>three grid</a></li>
-                                                <li><a href="category-page(6-grid).html">six grid</a></li>
-                                                <li><a href="category-page(list-view).html">list view</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">{% trans 'product' %}</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#">sidebar</a>
-                                                    <ul>
-                                                        <li><a href="product-page.html">left sidebar</a></li>
-                                                        <li><a href="product-page(right-sidebar).html">right sidebar</a>
-                                                        </li>
-                                                        <li><a href="product-page(no-sidebar).html">no sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="#">thumbnail image</a>
-                                                    <ul>
-                                                        <li><a href="product-page(left-image).html">left image</a></li>
-                                                        <li><a href="product-page(right-image).html">right image</a>
-                                                        </li>
-                                                        <li><a href="product-page(image-outside).html">image outside
+                                                        <li><a href="product-page(image-outside).html">Household
                                                                 <span class="new-tag">new</span></a></li>
                                                     </ul>
                                                 </li>
                                                 <li>
-                                                    <a href="#">three column</a>
+                                                    <a href="#">books</a>
                                                     <ul>
-                                                        <li><a href="product-page(3-col-left).html">thumbnail left</a>
+                                                        <li><a href="product-page(3-col-left).html"> Science-Fiction</a>
                                                         </li>
-                                                        <li><a href="product-page(3-col-right).html">thumbnail right</a>
+                                                        <li><a href="product-page(3-col-right).html">  Romance </a>
                                                         </li>
-                                                        <li><a href="product-page(3-column).html">thubnail bottom</a>
+                                                        <li><a href="product-page(3-column).html"> Novel </a>
                                                         </li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="product-page(4-image).html">four image <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="product-page(sticky).html">sticky</a></li>
-                                                <li><a href="product-page(accordian).html">accordian</a></li>
-                                                <li><a href="product-page(bundle).html">bundle<span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="product-page(image-swatch).html">image swatch <span
-                                                            class="new-tag">new</span></a></li>
-                                                <li><a href="product-page(vertical-tab).html">vertical tab</a></li>
+                                                <li><a href="{% url 'products' %}"> All Products <span
+                                                            class="new-tag"></span></a></li>
                                             </ul>
                                         </li>
-                                        <li class="mega" id="hover-cls"><a href="#">{% trans 'features' %}
+                                        <li class="mega" id="hover-cls"><a href="#">{% trans 'women' %}
                                                 <div class="lable-nav">new</div>
                                             </a>
                                             <ul class="mega-menu full-mega-menu">
@@ -548,7 +502,7 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">{% trans 'pages' %}</a>
+                                        <li><a href="#">{% trans 'men' %}</a>
                                             <ul>
                                                 <li>
                                                     <a href="#">vendor <span class="new-tag">new</span></a>
@@ -566,7 +520,7 @@
                                                         <li><a href="dashboard.html">Dashboard</a></li>
                                                         <li><a href="login.html">login</a></li>
                                                         <li><a href="register.html">register</a></li>
-                                                        <li><a href="contact.html">contact</a></li>
+                                                        <li><a href="contact.html">contact </a></li>
                                                         <li><a href="forget_pwd.html">forget password</a></li>
                                                         <li><a href="profile.html">profile <span
                                                                     class="new-tag">new</span></a></li>
@@ -599,12 +553,8 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="#">{% trans 'blog' %}</a>
+                                            <a href="{% url 'contact' %}">{% trans 'contact' %}</a>
                                             <ul>
-                                                <li><a href="blog-page.html">left sidebar</a></li>
-                                                <li><a href="blog(right-sidebar).html">right sidebar</a></li>
-                                                <li><a href="blog(no-sidebar).html">no sidebar</a></li>
-                                                <li><a href="blog-details.html">blog details</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -616,7 +566,8 @@
                                         <li class="onhover-div mobile-search">
                                             <div><img src="{% static 'images/icon/search.png' %}" onclick="openSearch()"
                                                     class="img-fluid blur-up lazyload" alt="">
-                                                <i class="ti-search" onclick="openSearch()"></i></div>
+                                                <i class="ti-search" onclick="openSearch()"></i>
+                                            </div>
                                             <div id="search-overlay" class="search-overlay">
                                                 <div>
                                                     <span class="closebtn" onclick="closeSearch()"
@@ -625,14 +576,16 @@
                                                         <div class="container">
                                                             <div class="row">
                                                                 <div class="col-xl-12">
-                                                                    <form method="get" action="">
+                                                                    ###
+                                                                    <form method="get" action="/search">
                                                                         <div class="form-group">
-                                                                            <input type="text" class="form-control"
+                                                                            <input name="k" type="text" class="form-control"
                                                                                 id="exampleInputPassword1"
                                                                                 placeholder="Search a Product">
                                                                         </div>
                                                                         <button type="submit" class="btn btn-primary"><i
                                                                                 class="fa fa-search"></i></button>
+                                                                    ###
                                                                     </form>
                                                                 </div>
                                                             </div>
@@ -644,7 +597,8 @@
                                         <li class="onhover-div mobile-setting">
                                             <div><img src="{% static 'images/icon/setting.png' %}"
                                                     class="img-fluid blur-up lazyload" alt="">
-                                                <i class="ti-settings"></i></div>
+                                                <i class="ti-settings"></i>
+                                            </div>
                                             <div class="show-div setting">
                                                 <h6>{% trans 'language' %}</h6>
                                                 <ul>
@@ -661,55 +615,53 @@
                                             </div>
                                         </li>
                                         <li class="onhover-div mobile-cart">
-                                            <div><img src="{% static 'images/icon/cart.png' %}"
+                                            <a href="{% url 'cart' %}">
+                                            
+                                            <div>
+                                                
+                                    
+                                                <img src="{% static 'images/icon/cart.png' %}"
                                                     class="img-fluid blur-up lazyload" alt="">
-                                                <i class="ti-shopping-cart"></i></div>
+                                                    
+                                               
+                                                
+                                                <div class="wrapper" style="position: relative;" >
+                                                    <i class="fa" style="font-size:24px">&#xf07a;</i>
+                                                    <span style="font-weight: bold; position: absolute;
+                                                    top: -20px;
+                                                    right: -25px; ">    </span>
+                                                </div>
+
+                                            </div>
+                                            
+                                        </a>
                                             <ul class="show-div shopping-cart">
+                                                {% for item in cartitems %}
                                                 <li>
+                                                    {% for img in item.product_version_id.image_set.all %}
+
+                                                    {% if img.is_main %}
                                                     <div class="media">
                                                         <a href="#"><img class="mr-3"
-                                                                src="{% static 'images/fashion/product/1.jpg' %}"
+                                                                src="/media/{{ img.image }}"
                                                                 alt="Generic placeholder image"></a>
+                                                    {% endif %}
+                                                    {%endfor%}
                                                         <div class="media-body">
                                                             <a href="#">
-                                                                <h4>item name</h4>
+                                                                <h4>{{item.product_version_id.title}}</h4>
                                                             </a>
-                                                            <h4><span>1 x $ 299.00</span></h4>
+                                                            <h4><span>{{item.quantity}} x $ {{ item.product_version_id.price }}</span></h4>
                                                         </div>
                                                     </div>
-                                                    <div class="close-circle">
-                                                        <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="media">
-                                                        <a href="#"><img class="mr-3"
-                                                                src="{% static 'images/fashion/product/2.jpg' %}"
-                                                                alt="Generic placeholder image"></a>
-                                                        <div class="media-body">
-                                                            <a href="#">
-                                                                <h4>item name</h4>
-                                                            </a>
-                                                            <h4><span>1 x $ 299.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="close-circle">
-                                                        <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="total">
-                                                        <h5>subtotal : <span>$299.00</span></h5>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="buttons">
-                                                        <a href="cart.html" class="view-cart">view cart</a>
-                                                        <a href="#" class="checkout">checkout</a>
-                                                    </div>
-                                                </li>
+                                                  
+                                            </li>
+                                              
+                                            {% endfor %}
+                                                
                                             </ul>
                                         </li>
+                                       
                                     </ul>
                                 </div>
                             </div>
@@ -727,7 +679,7 @@
 
     {% endblock %}
 
-    
+
     <!-- footer start -->
     <footer class="footer-light">
         <div class="light-layout">
@@ -742,22 +694,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6"> 
-                            <form action=""
-                            class="form-inline subscribe-form auth-form needs-validation" method="POST"
-                            id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="">
-                            {% csrf_token %}
-                                
+                        <div class="col-lg-6">
+                            <form action="" class="form-inline subscribe-form auth-form needs-validation" method="POST"
+                                id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="">
+                                {% csrf_token %}
+
                                 <div class="form-group mx-sm-3">
                                     {{subscriber_form.email}}
                                     <ul>
                                         {% for error in subscriber_form.email.errors %}
-                                            <li class="alert-danger">{{error}}</li>
+                                        <li class="alert-danger">{{error}}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
-                                
-                                <button type="submit" name="subscribe-button" class="btn btn-solid" id="mc-submit">subscribe</button>
+
+                                <button type="submit" name="subscribe-button" class="btn btn-solid"
+                                    id="mc-submit">subscribe</button>
                             </form>
                         </div>
                     </div>
@@ -1571,14 +1523,14 @@
                         target="_blank" class="btn btn-block purchase_btn"><i class="fa fa-shopping-cart"
                             aria-hidden="true"></i> purchase Multikart now!</a>
                     <a href="https://themeforest.net/item/multikart-responsive-angular-ecommerce-template/22905358?s_rank=3"
-                        target="_blank" class="btn btn-block purchase_btn"><img src="{% static 'images/icon/angular.png' %}"
-                            alt="" class="img-fluid"> Multikart Angular</a>
+                        target="_blank" class="btn btn-block purchase_btn"><img
+                            src="{% static 'images/icon/angular.png' %}" alt="" class="img-fluid"> Multikart Angular</a>
                     <a href="https://themeforest.net/item/multikart-responsive-react-ecommerce-template/23067773?s_rank=2"
-                        target="_blank" class="btn btn-block purchase_btn"><img src="{% static 'images/icon/react.png' %}"
-                            alt="" class="img-fluid"> Multikart React</a>
+                        target="_blank" class="btn btn-block purchase_btn"><img
+                            src="{% static 'images/icon/react.png' %}" alt="" class="img-fluid"> Multikart React</a>
                     <a href="https://themeforest.net/item/multikart-multipurpose-shopify-sections-theme/23093831?s_rank=1"
-                        target="_blank" class="btn btn-block purchase_btn"><img src="{% static 'images/icon/shopify.png' %}"
-                            alt="" class="img-fluid"> Multikart Shopify</a>
+                        target="_blank" class="btn btn-block purchase_btn"><img
+                            src="{% static 'images/icon/shopify.png' %}" alt="" class="img-fluid"> Multikart Shopify</a>
                 </div>
             </div>
         </div>
@@ -1614,6 +1566,10 @@
 
     <!-- Theme js-->
     <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- Add to cart js-->
+    <script src="{% static 'js/cart.js' %}"></script>
+
 
     <script>
         function openSearch() {

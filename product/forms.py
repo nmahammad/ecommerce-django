@@ -1,5 +1,6 @@
 from dataclasses import fields
 from email import message
+from pyexpat import model
 from tkinter import Widget
 from django import forms
 from product.models import Review
@@ -7,41 +8,15 @@ from core.validators import validate_gmail_account
 
 
 class ReviewForm(forms.ModelForm):
-    # first_name = forms.CharField(max_lenght=40, widget=forms.TextInput(attrs={
-    #  'class': 'form-control',
-    #  'placeholder': 'Enter Your name'
-    # }))
-    body = forms.CharField(
-        validators=[validate_gmail_account],
-        widget=forms.Textarea(
-            attrs={
-                "cols": 95,
-                "rows": 5,
-                # 'class': 'form-control',
-                "placeholder": "Write Your Message",
-            }
-        ),
-    )
+    body = forms.CharField(widget=forms.Textarea(attrs={
+        'cols': 167,
+        'rows': 5, 
+        'placeholder': 'Write Your comment' }))
 
     class Meta:
         model = Review
-        fields = (
-            "name",
-            "email",
-            "title",
-            "body",
-        )
-        widgets = {
-            "name": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter Your name"}
-            ),
-            "email": forms.EmailInput(
-                attrs={"class": "form-control", "placeholder": "Email"}
-            ),
-            "title": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter your number"}
-            ),
-        }
+        fields = ['email','name','subject', 'rating', 'body']
+
 
 
 class SearchForm(forms.Form):

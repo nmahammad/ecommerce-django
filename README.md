@@ -26,9 +26,9 @@ This project is licensed under the MIT License.
 
 Happy learning and coding! 🚀
 
-
+<!-- 
 # E-commerce-Multikart
-![multikart image](multikart.png)
+![multikart image](multikart.png) -->
 
 
 

@@ -2,25 +2,11 @@ Description:
 
 Welcome to the Django eCommerce Learning Project! This project is a hands-on exploration of building an eCommerce website using the Django web framework. It serves as an educational resource for those looking to gain practical experience in web development and Django specifically.
 
-Features:
-
-Product catalog with detailed product listings.
-User authentication and registration.
-Shopping cart functionality.
-Checkout and payment processing (dummy payment gateway).
-Order history and status tracking.
-Admin panel for managing products, orders, and users.
-Frontend Template Attribution:
-
 The frontend template used in this project has been sourced from the internet and is used for educational purposes only. We extend our thanks to the original creators for their work. Please note that this template is not intended for commercial use and may be subject to licensing restrictions.
 
 Project Origin:
 
 This project was developed as a part of the completion project for a software engineering bootcamp. It represents the culmination of the knowledge and skills acquired during the bootcamp's curriculum.
-
-Project Goals:
-
-The primary goal of this project is to provide a practical learning experience for Django developers of all levels. By working with this project, you will gain insights into how to structure and build an eCommerce website, including the integration of frontend templates, user authentication, and order processing.
 
 Disclaimer:
 

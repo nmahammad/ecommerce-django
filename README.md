@@ -28,7 +28,19 @@ Happy learning and coding! 🚀
 
 <!-- 
 # E-commerce-Multikart
-![multikart image](multikart.png) -->
+![multikart image](multikart.png) 
+
+POSTGRES_PASSWORD=12345
+POSTGRES_USER=user
+POSTGRES_DB=multikart
+POSTGRES_PORT=5432
+POSTGRES_HOST=db
+
+
+REDIS_HOST=redisdb
+REDIS_PORT=6379
+
+-->
 
 
 

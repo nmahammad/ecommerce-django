@@ -1,41 +1,48 @@
+Description:
+
+Welcome to the Django eCommerce Learning Project! This project is a hands-on exploration of building an eCommerce website using the Django web framework. It serves as an educational resource for those looking to gain practical experience in web development and Django specifically.
+
+Features:
+
+Product catalog with detailed product listings.
+User authentication and registration.
+Shopping cart functionality.
+Checkout and payment processing (dummy payment gateway).
+Order history and status tracking.
+Admin panel for managing products, orders, and users.
+Frontend Template Attribution:
+
+The frontend template used in this project has been sourced from the internet and is used for educational purposes only. We extend our thanks to the original creators for their work. Please note that this template is not intended for commercial use and may be subject to licensing restrictions.
+
+Project Origin:
+
+This project was developed as a part of the completion project for a software engineering bootcamp. It represents the culmination of the knowledge and skills acquired during the bootcamp's curriculum.
+
+Project Goals:
+
+The primary goal of this project is to provide a practical learning experience for Django developers of all levels. By working with this project, you will gain insights into how to structure and build an eCommerce website, including the integration of frontend templates, user authentication, and order processing.
+
+Disclaimer:
+
+This project is for educational purposes only and is not intended for production use. It should not be used as a basis for real-world eCommerce websites without significant security and scalability enhancements.
+
+Getting Started:
+
+To get started with this project, follow the installation instructions in the README.md file. You can set up a local development environment to explore and modify the code.
+
+Contributions:
+
+Contributions to this project are welcome! Feel free to fork the repository, make changes, and submit pull requests. However, please keep in mind the educational nature of this project and ensure that any contributions align with its goals.
+
+License:
+
+This project is licensed under the MIT License.
+
+Happy learning and coding! 🚀
+
+
 # E-commerce-Multikart
 ![multikart image](multikart.png)
 
 
-# class ImageExample(AbstractModel):
-#     image = models.ImageField(upload_to = 'media/categories/')
-
-#     class Meta:
-#         verbose_name = 'Category'
-#         verbose_name_plural = 'Categories'
-
-# class Tag(AbstractModel):
-#     title = models.CharField(max_length = 30, db_index = True)             
-
-#     def __str__(self):
-#         return self.title
-
-
-# class Story(AbstractModel):
-#     tags = models.ManyToManyField(Tag, through = 'StoryTag' )              many to many
-#     author = models.ForeignKey(User, on_delete = models.Cascade )          one    to many
-
- new_product.main_version.product_id.get_absolute_url
-
- 
-class ImageInline(admin.TabularInline):
-    model = ProductImage
-    extra = 0
-
-
-class ProductVersionAdmin(admin.ModelAdmin):
-    inlines = [ImageInline]
-
-class ProductAdmin(admin.ModelAdmin):
-    inlines = [ ImageInline, ProductVersionInline]
-
-admin.site.register(Product, ProductAdmin)
-
-
-# rsgplyanccjavxjk
 

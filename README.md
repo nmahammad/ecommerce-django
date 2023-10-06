@@ -1,6 +1,6 @@
 Description:
 
-Welcome to the Django eCommerce Learning Project! This project is a hands-on exploration of building an eCommerce website using the Django web framework. It serves as an educational resource for those looking to gain practical experience in web development and Django specifically.
+Welcome to the eCommerce Project built using Django framework! This project is a hands-on exploration of building an eCommerce website using the Django web framework. It serves as an educational resource for those looking to gain practical experience in web development and Django specifically.
 
 The frontend template used in this project has been sourced from the internet and is used for educational purposes only. We extend our thanks to the original creators for their work. Please note that this template is not intended for commercial use and may be subject to licensing restrictions.
 

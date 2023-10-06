@@ -1,7 +1,5 @@
 # Welcome to the eCommerce Project with Django 🌐
 
-![Django Image](https://images.app.goo.gl/cWsZdoxjkK7dphzB9) 
-
 ## Project Overview 🚀
 
 This project is a hands-on exploration of building an eCommerce website using the Django web framework. It serves as an **educational resource** for those looking to gain practical experience in web development and Django specifically.
@@ -15,10 +13,6 @@ This project was developed as a part of the completion project for a software en
 ## Disclaimer ⚠️
 
 **This project is for educational purposes only** and is not intended for production use. It should not be used as a basis for real-world eCommerce websites without significant security and scalability enhancements.
-
-## Getting Started 🏁
-
-To get started with this project, follow the **installation instructions** in the `README.md` file. You can set up a local development environment to explore and modify the code.
 
 ## Contributions 🤝
 
